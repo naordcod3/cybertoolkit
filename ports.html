@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Common Ports & Protocols</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/png" href="images/icon.png">
+</head>
+<body class="bg-black text-green-400 font-mono">
+
+  <!--navigation bar (from nav.html)-->
+  <div id="nav-placeholder"></div>
+
+  <script>
+      // Load navigation bar from nav.html
+      fetch("nav.html")
+          .then(response => response.text())
+          .then(data => {
+              document.getElementById("nav-placeholder").innerHTML = data;
+          });
+  </script>
+
+    <br>
+    <h1 class="text-center text-4xl mt-20">Common Ports & Protocols</h1>
+    <input type="text" id="search" class="block mx-auto my-6 p-2 w-1/2 text-black" placeholder="Search for a port or service..." onkeyup="filterPorts()">
+
+    <div class="table-container overflow-x-auto px-4">
+        <table id="ports-table" class="w-full border-collapse border border-green-400 text-left">
+            <tr class="bg-black hover:bg-green-900 transition-all">
+                <td class="p-3 border border-green-400">20</td>
+                <td class="p-3 border border-green-400">TCP</td>
+                <td class="p-3 border border-green-400">FTP Data Transfer</td>
+                <td class="p-3 border border-green-400 text-center">
+                    <button class="copy-btn text-green-400 hover:text-green-200 transition-all p-2 border border-green-400 rounded-md" onclick="copyPort(20)">
+                        <i class="fas fa-copy"></i> Copy
+                    </button>
+                </td>
+            </tr>
+            
+            <tr class="bg-black hover:bg-green-900 transition-all">
+                <td class="p-3 border border-green-400">21</td>
+                <td class="p-3 border border-green-400">TCP</td>
+                <td class="p-3 border border-green-400">FTP - File Transfer Protocol</td>
+                <td class="p-3 border border-green-400 text-center">
+                    <button class="copy-btn text-green-400 hover:text-green-200 transition-all p-2 border border-green-400 rounded-md" onclick="copyPort(21)">
+                        <i class="fas fa-copy"></i> Copy
+                    </button>
+                </td>
+            </tr>
+            
+            <tr class="bg-black hover:bg-green-900 transition-all">
+                <td class="p-3 border border-green-400">22</td>
+                <td class="p-3 border border-green-400">TCP</td>
+                <td class="p-3 border border-green-400">SSH - Secure Shell</td>
+                <td class="p-3 border border-green-400 text-center">
+                    <button class="copy-btn text-green-400 hover:text-green-200 transition-all p-2 border border-green-400 rounded-md" onclick="copyPort(22)">
+                        <i class="fas fa-copy"></i> Copy
+                    </button>
+                </td>
+            </tr>
+            
+            <tr class="bg-black hover:bg-green-900 transition-all">
+                <td class="p-3 border border-green-400">23</td>
+                <td class="p-3 border border-green-400">TCP</td>
+                <td class="p-3 border border-green-400">Telnet - Remote Login</td>
+                <td class="p-3 border border-green-400 text-center">
+                    <button class="copy-btn text-green-400 hover:text-green-200 transition-all p-2 border border-green-400 rounded-md" onclick="copyPort(23)">
+                        <i class="fas fa-copy"></i> Copy
+                    </button>
+                </td>
+            </tr>
+            
+            <tr class="bg-black hover:bg-green-900 transition-all">
+                <td class="p-3 border border-green-400">25</td>
+                <td class="p-3 border border-green-400">TCP</td>
+                <td class="p-3 border border-green-400">SMTP - Send Email</td>
+                <td class="p-3 border border-green-400 text-center">
+                    <button class="copy-btn text-green-400 hover:text-green-200 transition-all p-2 border border-green-400 rounded-md" onclick="copyPort(25)">
+                        <i class="fas fa-copy"></i> Copy
+                    </button>
+                </td>
+            </tr>
+            
+            <tr class="bg-black hover:bg-green-900 transition-all">
+                <td class="p-3 border border-green-400">53</td>
+                <td class="p-3 border border-green-400">TCP/UDP</td>
+                <td class="p-3 border border-green-400">DNS - Domain Name System</td>
+                <td class="p-3 border border-green-400 text-center">
+                    <button class="copy-btn text-green-400 hover:text-green-200 transition-all p-2 border border-green-400 rounded-md" onclick="copyPort(53)">
+                        <i class="fas fa-copy"></i> Copy
+                    </button>
+                </td>
+            </tr>
+            
+            <tr class="bg-black hover:bg-green-900 transition-all">
+                <td class="p-3 border border-green-400">67</td>
+                <td class="p-3 border border-green-400">UDP</td>
+                <td class="p-3 border border-green-400">DHCP Server</td>
+                <td class="p-3 border border-green-400 text-center">
+                    <button class="copy-btn text-green-400 hover:text-green-200 transition-all p-2 border border-green-400 rounded-md" onclick="copyPort(67)">
+                        <i class="fas fa-copy"></i> Copy
+                    </button>
+                </td>
+            </tr>
+            
+            <tr class="bg-black hover:bg-green-900 transition-all">
+                <td class="p-3 border border-green-400">68</td>
+                <td class="p-3 border border-green-400">UDP</td>
+                <td class="p-3 border border-green-400">DHCP Client</td>
+                <td class="p-3 border border-green-400 text-center">
+                    <button class="copy-btn text-green-400 hover:text-green-200 transition-all p-2 border border-green-400 rounded-md" onclick="copyPort(68)">
+                        <i class="fas fa-copy"></i> Copy
+                    </button>
+                </td>
+            </tr>
+            
+            <tr class="bg-black hover:bg-green-900 transition-all">
+                <td class="p-3 border border-green-400">80</td>
+                <td class="p-3 border border-green-400">TCP</td>
+                <td class="p-3 border border-green-400">HTTP - Web Traffic</td>
+                <td class="p-3 border border-green-400 text-center">
+                    <button class="copy-btn text-green-400 hover:text-green-200 transition-all p-2 border border-green-400 rounded-md" onclick="copyPort(80)">
+                        <i class="fas fa-copy"></i> Copy
+                    </button>
+                </td>
+            </tr>
+            
+            <tr class="bg-black hover:bg-green-900 transition-all">
+                <td class="p-3 border border-green-400">443</td>
+                <td class="p-3 border border-green-400">TCP</td>
+                <td class="p-3 border border-green-400">HTTPS - Secure Web Traffic</td>
+                <td class="p-3 border border-green-400 text-center">
+                    <button class="copy-btn text-green-400 hover:text-green-200 transition-all p-2 border border-green-400 rounded-md" onclick="copyPort(443)">
+                        <i class="fas fa-copy"></i> Copy
+                    </button>
+                </td>
+            </tr>
+            
+            <tr class="bg-black hover:bg-green-900 transition-all">
+                <td class="p-3 border border-green-400">445</td>
+                <td class="p-3 border border-green-400">TCP</td>
+                <td class="p-3 border border-green-400">SMB - Windows File Sharing</td>
+                <td class="p-3 border border-green-400 text-center">
+                    <button class="copy-btn text-green-400 hover:text-green-200 transition-all p-2 border border-green-400 rounded-md" onclick="copyPort(445)">
+                        <i class="fas fa-copy"></i> Copy
+                    </button>
+                </td>
+            </tr>
+            
+            <tr class="bg-black hover:bg-green-900 transition-all">
+                <td class="p-3 border border-green-400">3389</td>
+                <td class="p-3 border border-green-400">TCP</td>
+                <td class="p-3 border border-green-400">RDP - Remote Desktop Protocol</td>
+                <td class="p-3 border border-green-400 text-center">
+                    <button class="copy-btn text-green-400 hover:text-green-200 transition-all p-2 border border-green-400 rounded-md" onclick="copyPort(3389)">
+                        <i class="fas fa-copy"></i> Copy
+                    </button>
+                </td>
+            </tr>
+            
+
+        </table>
+    </div>
+
+    <script>
+        function filterPorts() {
+            let input = document.getElementById("search").value.toLowerCase();
+            let rows = document.querySelectorAll("#ports-table tr");
+
+            rows.forEach((row, index) => {
+                if (index === 0) return; // Skip header row
+
+                let cells = row.getElementsByTagName("td");
+                let match = false;
+
+                for (let i = 0; i < cells.length; i++) {
+                    if (cells[i].innerText.toLowerCase().includes(input)) {
+                        match = true;
+                        break;
+                    }
+                }
+
+                row.style.display = match ? "" : "none";
+            });
+        }
+
+        function copyPort(port) {
+            navigator.clipboard.writeText(port);
+            alert("Copied: " + port);
+        }
+    </script>
+
+</body>
+</html>

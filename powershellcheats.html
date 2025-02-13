@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quick PowerShell Commands</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/png" href="images/icon.png">
+</head>
+
+<body class="bg-black text-green-400 font-mono">
+  <!--navigation bar (from nav.html)-->
+  <div id="nav-placeholder"></div>
+
+  <script>
+      // Load navigation bar from nav.html
+      fetch("nav.html")
+          .then(response => response.text())
+          .then(data => {
+              document.getElementById("nav-placeholder").innerHTML = data;
+          });
+  </script>
+
+    <!-- Title -->
+    <h1 class="text-center text-4xl mt-16 text-green-400 font-bold">Quick PowerShell Commands</h1>
+    <p class="text-center text-lg text-green-300 mt-4">Useful commands to quickly add users to Active Directory.</p>
+
+    <!-- Table for Commands -->
+    <div class="table-container overflow-x-auto px-4 mt-6">
+        <table class="w-full border-collapse border border-green-400 text-left">
+            <tr class="bg-black text-green-300 text-lg">
+                <th class="p-3 border border-green-400">Department</th>
+                <th class="p-3 border border-green-400">PowerShell Command</th>
+                <th class="p-3 border border-green-400">Explanation</th>
+                <th class="p-3 border border-green-400 text-center">Copy</th>
+            </tr>
+
+            <!-- Managers -->
+            <tr class="bg-black hover:bg-green-900 transition-all">
+                <td class="p-3 border border-green-400">Managers</td>
+                <td class="p-3 border border-green-400">
+                    New-ADUser -Name "Managers1" -AccountPassword (ConvertTo-SecureString "Aa123456789!!" -AsPlainText -Force) -Enabled $true -Path "OU=Managers,DC=gil,DC=com"<br>
+                    New-ADUser -Name "Managers2" -AccountPassword (ConvertTo-SecureString "Aa123456789!!" -AsPlainText -Force) -Enabled $true -Path "OU=Managers,DC=gil,DC=com"<br>
+                    New-ADUser -Name "Managers3" -AccountPassword (ConvertTo-SecureString "Aa123456789!!" -AsPlainText -Force) -Enabled $true -Path "OU=Managers,DC=gil,DC=com"<br>
+                    New-ADUser -Name "Managers4" -AccountPassword (ConvertTo-SecureString "Aa123456789!!" -AsPlainText -Force) -Enabled $true -Path "OU=Managers,DC=gil,DC=com"<br>
+                    New-ADUser -Name "Managers5" -AccountPassword (ConvertTo-SecureString "Aa123456789!!" -AsPlainText -Force) -Enabled $true -Path "OU=Managers,DC=gil,DC=com"
+                </td>
+                <td class="p-3 border border-green-400">Creates 5 users in the Managers department.</td>
+                <td class="p-3 border border-green-400 text-center">
+                    <button class="copy-btn text-green-400 hover:text-green-200 transition-all p-2 border border-green-400 rounded-md" onclick="copyCommand(this)">
+                        <i class="fas fa-copy"></i> Copy
+                    </button>
+                </td>
+            </tr>
+
+            <!-- HR -->
+            <tr class="bg-black hover:bg-green-900 transition-all">
+                <td class="p-3 border border-green-400">HR</td>
+                <td class="p-3 border border-green-400">
+                    New-ADUser -Name "HR1" -AccountPassword (ConvertTo-SecureString "Aa123456789!!" -AsPlainText -Force) -Enabled $true -Path "OU=HR,DC=gil,DC=com"<br>
+                    New-ADUser -Name "HR2" -AccountPassword (ConvertTo-SecureString "Aa123456789!!" -AsPlainText -Force) -Enabled $true -Path "OU=HR,DC=gil,DC=com"
+                </td>
+                <td class="p-3 border border-green-400">Creates 5 users in the HR department.</td>
+                <td class="p-3 border border-green-400 text-center">
+                    <button class="copy-btn text-green-400 hover:text-green-200 transition-all p-2 border border-green-400 rounded-md" onclick="copyCommand(this)">
+                        <i class="fas fa-copy"></i> Copy
+                    </button>
+                </td>
+            </tr>
+
+            <!-- Finance -->
+            <tr class="bg-black hover:bg-green-900 transition-all">
+                <td class="p-3 border border-green-400">Finance</td>
+                <td class="p-3 border border-green-400">
+                    New-ADUser -Name "Finance1" -AccountPassword (ConvertTo-SecureString "Aa123456789!!" -AsPlainText -Force) -Enabled $true -Path "OU=Finance,DC=gil,DC=com"
+                </td>
+                <td class="p-3 border border-green-400">Creates 5 users in the Finance department.</td>
+                <td class="p-3 border border-green-400 text-center">
+                    <button class="copy-btn text-green-400 hover:text-green-200 transition-all p-2 border border-green-400 rounded-md" onclick="copyCommand(this)">
+                        <i class="fas fa-copy"></i> Copy
+                    </button>
+                </td>
+            </tr>
+
+            <!-- Add Marketing, Development, IT rows below in the same format -->
+
+        </table>
+    </div>
+
+    <!-- Copy to Clipboard Script -->
+    <script>
+        function copyCommand(btn) {
+            let command = btn.closest("tr").querySelector("td:nth-child(2)").innerText.trim();
+            navigator.clipboard.writeText(command);
+            alert("Copied: " + command);
+        }
+    </script>
+
+</body>
+</html>

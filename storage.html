@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HDD & Storage Management</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/png" href="images/icon.png">
+</head>
+<body class="bg-black text-green-400 font-mono">
+    
+  <!--navigation bar (from nav.html)-->
+  <div id="nav-placeholder"></div>
+
+  <script>
+      // Load navigation bar from nav.html
+      fetch("nav.html")
+          .then(response => response.text())
+          .then(data => {
+              document.getElementById("nav-placeholder").innerHTML = data;
+          });
+  </script>
+
+
+
+
+    <div class="container mx-auto p-6 mt-16">
+        <h1 class="text-center text-4xl mb-6">💾 HDD & Storage Management</h1>
+        <p class="text-center mb-4 text-lg">Generate commands for PowerShell & DiskPart.</p>
+
+        <!-- Command Generator -->
+        <div class="border border-green-400 p-6 rounded-lg bg-black">
+            <h2 class="text-2xl mb-4 text-green-200">🔧 Generate Storage Commands</h2>
+            
+            <label class="block mb-2">📌 Select Task:</label>
+            <select id="task" class="w-full bg-black border border-green-400 p-2 mb-4 text-green-400">
+                <option value="set-online">Set Disk Online</option>
+                <option value="initialize-disk">Initialize Disk</option>
+                <option value="create-partition">Create Partition</option>
+                <option value="merge-disks">Merge Disks</option>
+                <option value="format-disk">Format Disk</option>
+                <option value="convert-disk">Convert to GPT</option>
+            </select>
+
+            <label class="block mb-2">🖴 Enter Disk Number(s) (comma-separated for multiple disks):</label>
+            <input type="text" id="disk-number" class="w-full bg-black border border-green-400 p-2 mb-4 text-green-400" placeholder="e.g. 1,2,3">
+
+            <label class="block mb-2">📏 Partition Size (GB, required for partition tasks):</label>
+            <input type="text" id="partition-size" class="w-full bg-black border border-green-400 p-2 mb-4 text-green-400" placeholder="e.g. 10">
+
+            <button onclick="generateCommands()" class="w-full bg-green-700 hover:bg-green-500 text-black p-2 mt-4 rounded">
+                🚀 Generate Commands
+            </button>
+
+            <p class="mt-4 text-green-300">💻 PowerShell Command:</p>
+            <pre id="output-powershell" class="bg-black p-3 border border-green-400 rounded text-green-300"></pre>
+
+            <p class="mt-4 text-green-300">📜 DiskPart Script:</p>
+            <pre id="output-diskpart" class="bg-black p-3 border border-green-400 rounded text-green-300"></pre>
+
+            <button onclick="downloadDiskPartScript()" class="w-full bg-blue-700 hover:bg-blue-500 text-black p-2 mt-4 rounded">
+                ⬇️ Download DiskPart Script
+            </button>
+        </div>
+    </div>
+
+    <script>
+        function generateCommands() {
+            let task = document.getElementById("task").value;
+            let disks = document.getElementById("disk-number").value.split(",").map(d => d.trim());
+            let size = document.getElementById("partition-size").value;
+
+            let psCommand = "";
+            let diskPartCommand = "";
+
+            switch (task) {
+                case "set-online":
+                    psCommand = disks.map(d => `Set-Disk -Number ${d} -IsOffline $false`).join(" && ");
+                    diskPartCommand = disks.map(d => `select disk ${d}\nonline disk`).join("\n");
+                    break;
+                case "initialize-disk":
+                    psCommand = disks.map(d => `Initialize-Disk -Number ${d} -PartitionStyle GPT`).join(" && ");
+                    diskPartCommand = disks.map(d => `select disk ${d}\nconvert gpt`).join("\n");
+                    break;
+                case "create-partition":
+                    psCommand = disks.map(d => `New-Partition -DiskNumber ${d} -Size ${size}GB`).join(" && ");
+                    diskPartCommand = disks.map(d => `select disk ${d}\ncreate partition primary size=${size * 1024}`).join("\n");
+                    break;
+                case "merge-disks":
+                    psCommand = `New-Volume -DiskNumber ${disks.join(",")} -Size ${size}GB -ResiliencySetting Simple`;
+                    diskPartCommand = `select disk ${disks.join("\nselect disk ")}\ncreate volume stripe`;
+                    break;
+                case "format-disk":
+                    psCommand = disks.map(d => `Format-Volume -DriveLetter X -FileSystem NTFS -Force`).join(" && ");
+                    diskPartCommand = disks.map(d => `select volume ${d}\nformat fs=ntfs quick`).join("\n");
+                    break;
+                default:
+                    psCommand = "⚠️ Please select a valid task!";
+                    diskPartCommand = "⚠️ Please select a valid task!";
+            }
+
+            document.getElementById("output-powershell").textContent = psCommand;
+            document.getElementById("output-diskpart").textContent = diskPartCommand;
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class Assignments</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/png" href="images/icon.png">
+
+</head>
+<body class="bg-black text-green-400 font-mono">
+   <!--navigation bar (from nav.html)-->
+   <div id="nav-placeholder"></div>
+
+   <script>
+       // Load navigation bar from nav.html
+       fetch("nav.html")
+           .then(response => response.text())
+           .then(data => {
+               document.getElementById("nav-placeholder").innerHTML = data;
+           });
+   </script>
+
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const dropdownBtn = document.getElementById("networkingDropdownBtn");
+        const dropdownMenu = document.getElementById("networkingDropdown");
+
+        // Toggle dropdown on button click
+        dropdownBtn.addEventListener("click", function () {
+            dropdownMenu.classList.toggle("hidden");
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener("click", function (event) {
+            if (!dropdownBtn.contains(event.target) && !dropdownMenu.contains(event.target)) {
+                dropdownMenu.classList.add("hidden");
+            }
+        });
+    });
+</script>
+
+    
+    <br>
+    <h1 class="text-center text-4xl mt-8">Class Assignments</h1>
+    
+    <section class="p-6">
+        <div class="bg-black bg-opacity-80 p-4 rounded-lg shadow-lg border border-green-400">
+            <button onclick="toggleAssignment('assignment1')" class="w-full text-left text-green-300 text-2xl font-bold flex justify-between items-center">
+                Assignment 1: PowerShell AD Setup <i class="fas fa-chevron-down"></i>
+            </button>
+            <div id="assignment1" class="hidden mt-4">
+                <p class="text-green-200">Set up a Domain Controller (`Gil.com`) and configure Active Directory.</p>
+                <pre class="bg-green-900 p-3 rounded text-black overflow-x-auto mt-2">
+# Install Active Directory Services
+Install-WindowsFeature -Name AD-Domain-Services -IncludeManagementTools
+
+# Create a New Forest and Set Up the Domain
+Install-ADDSForest -DomainName "Gil.com" -DomainNetBiosName "GIL" -InstallDns:$true -Force
+
+# Create OUs
+New-ADOrganizationalUnit -Name "Managers"
+New-ADOrganizationalUnit -Name "HR"
+New-ADOrganizationalUnit -Name "Finance"
+New-ADOrganizationalUnit -Name "Marketing"
+New-ADOrganizationalUnit -Name "Development"
+New-ADOrganizationalUnit -Name "IT"
+
+# Create Users in Each Department (Example for HR)
+for ($i=1; $i -le 5; $i++) {
+    New-ADUser -Name "HRUser$i" -AccountPassword (ConvertTo-SecureString "Pass123!" -AsPlainText -Force) -Enabled $true -Path "OU=HR,DC=Gil,DC=com"
+}
+
+# Create Security Groups and Add Users (Example for HR)
+New-ADGroup -Name "HRGroup" -GroupCategory Security -GroupScope Global -Path "OU=HR,DC=Gil,DC=com"
+Get-ADUser -Filter {Name -like "HRUser*"} | ForEach-Object {Add-ADGroupMember -Identity "HRGroup" -Members $_.SamAccountName}
+
+# Join Windows 10 Clients to the Domain (Run on the Client Machines)
+Add-Computer -DomainName "Gil.com" -Credential Gil\Admin -Restart
+
+# Block PowerShell for Marketing
+
+# Block CMD for Finance
+
+                </pre>
+                <button onclick="toggleInstructions('instructions1')" class="mt-2 bg-blue-600 hover:bg-blue-400 text-black font-bold py-2 px-4 rounded">Show Step-by-Step Instructions</button>
+                <div id="instructions1" class="hidden mt-4 p-3 bg-green-900 rounded">
+                    <ul class="list-disc pl-6 text-green-300">
+                        <li>Open PowerShell as Administrator.</li>
+                        <li>Click the assignment title to expand the details.</li>
+                        <li>To install Active Directory, run:<br> <code>Install-WindowsFeature -Name AD-Domain-Services -IncludeManagementTools</code></li>
+                        <li>To set up the domain controller, run:<br> <code>Install-ADDSForest -DomainName "Gil.com" -DomainNetBiosName "GIL" -InstallDns:$true -Force</code></li>
+                        <li>To create OUs, use:<br> <code>New-ADOrganizationalUnit -Name "DepartmentName"</code></li>
+                        <li>To add users, run:<br> <code>New-ADUser -Name "User1" -AccountPassword (ConvertTo-SecureString "Pass123!" -AsPlainText -Force) -Enabled $true -Path "OU=Department,DC=Gil,DC=com"</code></li>
+                        <li>To create security groups, run:<br> <code>New-ADGroup -Name "HRGroup" -GroupCategory Security -GroupScope Global -Path "OU=HR,DC=Gil,DC=com"</code></li>
+                        <li>To join client machines to the domain, use:<br> <code>Add-Computer -DomainName "Gil.com" -Credential Gil\Admin -Restart</code></li>
+                        <li><tr>
+                            <td>Block PowerShell for Marketing</td>
+                            <br>
+                            <td>Create a GPO to disable PowerShell script execution for all users in the Marketing OU</td>
+                            <td>
+                                <pre class="bg-green-900 p-3 rounded text-black overflow-x-auto">
+                        # Create the GPO
+                        New-GPO -Name "Block_PowerShell_Marketing"
+                        
+                        # Link the GPO to the Marketing OU
+                        New-GPLink -Name "Block_PowerShell_Marketing" -Target "OU=Marketing,DC=Gil,DC=com"
+                        
+                        # Disable PowerShell script execution via Registry in the GPO
+                        Set-GPRegistryValue -Name "Block_PowerShell_Marketing" -Key "HKLM\Software\Policies\Microsoft\Windows\System" -ValueName "EnableScripts" -Type DWord -Value 0
+                        
+                        # Apply the GPO immediately
+                        gpupdate /force
+                                </pre>
+                            </td>
+                            <td class="text-center">
+                                <button class="copy-btn text-green-400" onclick="copyCommand(this)">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        </li>
+                        <li>
+                            <td>Block CMD for Finance</td>
+                            <br>
+                            <td>Create a GPO to disable Command Prompt for all users in the Finance OU</td>
+                            <td>
+                                <pre class="bg-green-900 p-3 rounded text-black overflow-x-auto">
+                        # Create the GPO
+                        New-GPO -Name "Block_CMD_Finance"
+                        
+                        # Link the GPO to the Finance OU
+                        New-GPLink -Name "Block_CMD_Finance" -Target "OU=Finance,DC=Gil,DC=com"
+                        
+                        # Disable CMD via Registry in the GPO
+                        Set-GPRegistryValue -Name "Block_CMD_Finance" -Key "HKLM\Software\Policies\Microsoft\Windows\System" -ValueName "DisableCMD" -Type DWord -Value 1
+                        
+                        # Apply the GPO immediately
+                        gpupdate /force
+                                </pre>
+                            </td>
+                            <td class="text-center">
+                                <button class="copy-btn text-green-400" onclick="copyCommand(this)">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        </li>
+                
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- Assignment 2: Windows Server & AD Deployment -->
+<div class="bg-black bg-opacity-80 p-4 rounded-lg shadow-lg border border-green-400 mt-6">
+    <button onclick="toggleAssignment('assignment2')" class="w-full text-left text-green-300 text-2xl font-bold flex justify-between items-center">
+        Assignment 2: Windows Server & AD Deployment <i class="fas fa-chevron-down"></i>
+    </button>
+    <div id="assignment2" class="hidden mt-4">
+        <p class="text-green-200">
+            Set up a Windows Server environment with Active Directory, user groups, and storage management.
+        </p>
+        <pre class="bg-green-900 p-3 rounded text-black overflow-x-auto mt-2">
+# Step 1: Create Virtual Machines
+# - 3 Windows 10 VMs
+# - 2 Windows Server 2022 VMs (No GUI)
+# - Install VMware Tools and take snapshots
+
+# Step 2: Configure Networking (172.16.0.0/16)
+# - Assign IP addresses based on topology
+# - Ensure all machines can communicate
+
+# Step 3: Promote the Domain Controller (172.16.0.100)
+Install-WindowsFeature -Name AD-Domain-Services -IncludeManagementTools
+Install-ADDSForest -DomainName "gil.com" -DomainNetBiosName "GIL" -InstallDns:$true -Force
+
+# Step 4: Join All Machines to the Domain
+Add-Computer -DomainName "gil.com" -Credential gil\Admin -Restart
+
+# Step 5: Create Organizational Units and Users in AD
+New-ADOrganizationalUnit -Name "Managers"
+New-ADOrganizationalUnit -Name "Finance"
+New-ADOrganizationalUnit -Name "HR"
+New-ADOrganizationalUnit -Name "Marketing"
+New-ADOrganizationalUnit -Name "IT"
+New-ADOrganizationalUnit -Name "Development"
+
+for ($i=1; $i -le 5; $i++) {
+    New-ADUser -Name "HRUser$i" -AccountPassword (ConvertTo-SecureString "Pass123!" -AsPlainText -Force) -Enabled $true -Path "OU=HR,DC=gil,DC=com"
+}
+
+# Step 6: Configure Storage Server (172.16.0.110)
+# - Add 6 HDDs (5GB each)
+# - Create 6 partitions (4x 2.5GB, 2x 10GB)
+New-VHD -Path "C:\Storage\Disk1.vhdx" -SizeBytes 5GB -Dynamic
+New-Partition -DiskNumber 1 -UseMaximumSize -AssignDriveLetter | Format-Volume -FileSystem NTFS -NewFileSystemLabel "Storage1"
+
+# Step 7: Set Up Security Groups & Permissions in AD
+New-ADGroup -Name "HRGroup" -GroupCategory Security -GroupScope Global -Path "OU=HR,DC=gil,DC=com"
+Get-ADUser -Filter {Name -like "HRUser*"} | ForEach-Object {Add-ADGroupMember -Identity "HRGroup" -Members $_.SamAccountName}
+
+# Step 8: Share Storage Based on Department
+New-SmbShare -Name "HR_Share" -Path "C:\HR" -FullAccess "HRGroup"
+
+# Step 9: Verify Access
+# - Log in with a user from each department
+# - Ensure users can only access their assigned shared folder
+        </pre>
+
+        <button onclick="toggleInstructions('instructions2')" class="mt-2 bg-blue-600 hover:bg-blue-400 text-black font-bold py-2 px-4 rounded">
+            Show Step-by-Step Instructions
+        </button>
+
+        <div id="instructions2" class="hidden mt-4 p-3 bg-green-900 rounded">
+            <ul class="list-disc pl-6 text-green-300">
+                <li>Create 5 virtual machines (3 Windows 10, 2 Windows Server 2022 without GUI).</li>
+                <li>Install VMware Tools and take a snapshot for each machine.</li>
+                <li>Set up networking so all VMs can communicate within `172.16.0.0/16`.</li>
+                <li>Promote the `172.16.0.100` server as a Domain Controller for `gil.com`.</li>
+                <li>Join all machines, including servers, to the domain.</li>
+                <li>Rename computers as specified in the network diagram.</li>
+                <li>Create Organizational Units (OUs) in Active Directory.</li>
+                <li>Create 6 departments and add 5 users per department.</li>
+                <li>Set up a Storage Server (`172.16.0.110`) with six new HDDs.</li>
+                <li>Partition disks into 4x `2.5GB` and 2x `10GB` partitions.</li>
+                <li>Assign and configure shared storage with AD security groups.</li>
+                <li>Verify that each department's users can access only their allocated storage.</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+    </section>
+    
+    <script>
+        function toggleAssignment(id) {
+            let element = document.getElementById(id);
+            element.classList.toggle('hidden');
+        }
+        function toggleInstructions(id) {
+            let element = document.getElementById(id);
+            element.classList.toggle('hidden');
+        }
+        function copyAssignment(id) {
+            let text = document.querySelector(`#${id} pre`).innerText;
+            navigator.clipboard.writeText(text);
+            alert("Copied assignment commands to clipboard");
+        }
+    </script>
+</body>
+</html>

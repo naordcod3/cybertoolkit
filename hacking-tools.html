@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IP Info Tool | The Dark Web</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/png" href="images/icon.png">
+</head>
+<body class="bg-black text-green-400 font-mono">
+
+  <!--navigation bar (from nav.html)-->
+  <div id="nav-placeholder"></div>
+  <script>
+      fetch("nav.html")
+          .then(response => response.text())
+          .then(data => {
+              document.getElementById("nav-placeholder").innerHTML = data;
+          });
+  </script>
+
+  <br>
+  <section class="text-center mt-10 px-4">
+      <h2 class="text-4xl font-bold neon-text">IP Info Tool</h2>
+      <p class="text-lg mt-2 text-green-300">Get detailed information about your IP address or any IP address below.</p>
+  </section>
+
+  <!-- IP Info Section -->
+  <section class="p-6 bg-black bg-opacity-80 shadow-lg rounded-lg text-center border border-green-400 mt-16 mx-10">
+      <h3 class="text-xl font-bold text-green-300">🌍 Your IP Info</h3>
+      <div class="mt-4 text-green-200">
+          <p><strong>IP Address:</strong> <span id="user-ip">Loading...</span></p>
+          <p><strong>City:</strong> <span id="city">Loading...</span></p>
+          <p><strong>Region:</strong> <span id="region">Loading...</span></p>
+          <p><strong>Country:</strong> <span id="country">Loading...</span></p>
+          <p><strong>ISP:</strong> <span id="isp">Loading...</span></p>
+          <p><strong>System Info:</strong> <span id="os-info">Loading...</span></p>
+          <p><strong>Browser:</strong> <span id="browser-info">Loading...</span></p>
+      </div>
+  </section>
+
+  <br>
+
+  <!-- Enter IP to Get Info Section -->
+  <section class="p-6 bg-black bg-opacity-80 shadow-lg rounded-lg text-center border border-green-400 mt-16 mx-10">
+      <h3 class="text-xl font-bold text-green-300">🔍 Get Info About Any IP</h3>
+      <input type="text" id="input-ip" placeholder="Enter IP Address" class="mt-4 bg-black text-green-200 border border-green-400 p-2 w-1/2 rounded">
+      <button onclick="getIpInfo()" class="mt-4 bg-green-600 hover:bg-green-400 text-black font-bold py-2 px-4 rounded">Get Info</button>
+      <div class="mt-4 text-green-200">
+          <p><strong>IP Address:</strong> <span id="input-user-ip">N/A</span></p>
+          <p><strong>City:</strong> <span id="input-city">N/A</span></p>
+          <p><strong>Region:</strong> <span id="input-region">N/A</span></p>
+          <p><strong>Country:</strong> <span id="input-country">N/A</span></p>
+          <p><strong>ISP:</strong> <span id="input-isp">N/A</span></p>
+      </div>
+  </section>
+
+  <br>
+
+  <!-- DNS Lookup Section -->
+  <section class="p-6 bg-black bg-opacity-80 shadow-lg rounded-lg text-center border border-green-400 mt-16 mx-10">
+      <h3 class="text-xl font-bold text-green-300">🔍 DNS Lookup</h3>
+      <input type="text" id="dns-input" placeholder="Enter Domain" class="mt-4 bg-black text-green-200 border border-green-400 p-2 w-1/2 rounded">
+      <button onclick="getDnsInfo()" class="mt-4 bg-green-600 hover:bg-green-400 text-black font-bold py-2 px-4 rounded">Get DNS</button>
+      <div class="mt-4 text-green-200">
+          <p><strong>DNS Records:</strong> <span id="dns-records">N/A</span></p>
+      </div>
+  </section>
+
+  <br>
+
+  <!-- Port Scanning Section -->
+  <section class="p-6 bg-black bg-opacity-80 shadow-lg rounded-lg text-center border border-green-400 mt-16 mx-10">
+      <h3 class="text-xl font-bold text-green-300">🔍 Port Scan Tool</h3>
+      <input type="text" id="port-input" placeholder="Enter IP Address" class="mt-4 bg-black text-green-200 border border-green-400 p-2 w-1/2 rounded">
+      <button onclick="scanPorts()" class="mt-4 bg-green-600 hover:bg-green-400 text-black font-bold py-2 px-4 rounded">Scan Ports</button>
+      <div class="mt-4 text-green-200">
+          <p><strong>Open Ports:</strong> <span id="open-ports">N/A</span></p>
+      </div>
+  </section>
+
+  <br>
+
+  <!-- Traceroute Section -->
+  <section class="p-6 bg-black bg-opacity-80 shadow-lg rounded-lg text-center border border-green-400 mt-16 mx-10">
+      <h3 class="text-xl font-bold text-green-300">🌐 Traceroute Tool</h3>
+      <input type="text" id="traceroute-input" placeholder="Enter Domain or IP" class="mt-4 bg-black text-green-200 border border-green-400 p-2 w-1/2 rounded">
+      <button onclick="performTraceroute()" class="mt-4 bg-green-600 hover:bg-green-400 text-black font-bold py-2 px-4 rounded">Trace Route</button>
+      <div class="mt-4 text-green-200">
+          <pre id="traceroute-result">N/A</pre>
+      </div>
+  </section>
+
+  <br>
+
+  <!-- VPN/Proxy Check Section -->
+  <section class="p-6 bg-black bg-opacity-80 shadow-lg rounded-lg text-center border border-green-400 mt-16 mx-10">
+      <h3 class="text-xl font-bold text-green-300">🛡️ VPN/Proxy Check</h3>
+      <input type="text" id="vpn-input" placeholder="Enter IP Address" class="mt-4 bg-black text-green-200 border border-green-400 p-2 w-1/2 rounded">
+      <button onclick="checkVpn()" class="mt-4 bg-green-600 hover:bg-green-400 text-black font-bold py-2 px-4 rounded">Check VPN</button>
+      <div class="mt-4 text-green-200">
+          <p><strong>VPN Status:</strong> <span id="vpn-status">N/A</span></p>
+      </div>
+  </section>
+
+  <script>
+      // Get user public IP and geolocation
+      fetch("https://ipinfo.io/json?token=c6f1b46389828f")
+          .then(response => response.json())
+          .then(data => {
+              document.getElementById("user-ip").textContent = data.ip;
+              document.getElementById("city").textContent = data.city || "N/A";
+              document.getElementById("region").textContent = data.region || "N/A";
+              document.getElementById("country").textContent = data.country || "N/A";
+              document.getElementById("isp").textContent = data.org || "N/A";
+          })
+          .catch(() => {
+              document.getElementById("user-ip").textContent = "Failed to fetch IP";
+              document.getElementById("city").textContent = "Failed to fetch city";
+              document.getElementById("region").textContent = "Failed to fetch region";
+              document.getElementById("country").textContent = "Failed to fetch country";
+              document.getElementById("isp").textContent = "Failed to fetch ISP";
+          });
+
+      // Get system info
+      document.getElementById("os-info").textContent = navigator.platform;
+      document.getElementById("browser-info").textContent = navigator.userAgent;
+
+      // Function to get info about the entered IP
+      function getIpInfo() {
+          const ip = document.getElementById("input-ip").value;
+          if (ip) {
+              fetch(`https://ipinfo.io/${ip}/json?token=c6f1b46389828f`)
+                  .then(response => response.json())
+                  .then(data => {
+                      document.getElementById("input-user-ip").textContent = data.ip || "N/A";
+                      document.getElementById("input-city").textContent = data.city || "N/A";
+                      document.getElementById("input-region").textContent = data.region || "N/A";
+                      document.getElementById("input-country").textContent = data.country || "N/A";
+                      document.getElementById("input-isp").textContent = data.org || "N/A";
+                  })
+                  .catch(() => {
+                      document.getElementById("input-user-ip").textContent = "Failed to fetch IP";
+                      document.getElementById("input-city").textContent = "Failed to fetch city";
+                      document.getElementById("input-region").textContent = "Failed to fetch region";
+                      document.getElementById("input-country").textContent = "Failed to fetch country";
+                      document.getElementById("input-isp").textContent = "Failed to fetch ISP";
+                  });
+          } else {
+              alert("Please enter a valid IP address.");
+          }
+      }
+
+      // DNS Lookup function
+      function getDnsInfo() {
+          const domain = document.getElementById("dns-input").value;
+          if (domain) {
+              fetch(`https://dns.google/resolve?name=${domain}&type=A`)
+                  .then(response => response.json())
+                  .then(data => {
+                      document.getElementById("dns-records").textContent = JSON.stringify(data.Answer || "No records found", null, 2);
+                  })
+                  .catch(() => {
+                      document.getElementById("dns-records").textContent = "Failed to fetch DNS records.";
+                  });
+          } else {
+              alert("Please enter a valid domain.");
+          }
+      }
+
+      // Port scanning function
+      function scanPorts() {
+          const ip = document.getElementById("port-input").value;
+          if (ip) {
+              fetch(`https://api.shodan.io/shodan/host/${ip}?key=DAr8yyFwNhcMShukyuiEPEjkIt5WtEYn`)
+                  .then(response => response.json())
+                  .then(data => {
+                      if (data.ports && data.ports.length > 0) {
+                          document.getElementById("open-ports").textContent = `Open Ports: ${data.ports.join(', ')}`;
+                      } else {
+                          document.getElementById("open-ports").textContent = "No open ports found.";
+                      }
+                  })
+                  .catch(() => {
+                      document.getElementById("open-ports").textContent = "Failed to scan ports. Ensure your API key is valid.";
+                  });
+          } else {
+              alert("Please enter a valid IP address.");
+          }
+      }
+
+      // Traceroute function
+      function performTraceroute() {
+          const target = document.getElementById("traceroute-input").value;
+          if (target) {
+              fetch(`https://api.ip-api.com/${target}?fields=as,city,country,query&lang=en`)
+                  .then(response => response.json())
+                  .then(data => {
+                      if (data.query) {
+                          document.getElementById("traceroute-result").textContent = `Traceroute result for ${target}:\nAS: ${data.as}\nCity: ${data.city}\nCountry: ${data.country}\nIP: ${data.query}`;
+                      } else {
+                          document.getElementById("traceroute-result").textContent = "Unable to trace route.";
+                      }
+                  })
+                  .catch(() => {
+                      document.getElementById("traceroute-result").textContent = "Failed to perform traceroute.";
+                  });
+          } else {
+              alert("Please enter a valid domain or IP address.");
+          }
+      }
+
+      // VPN/Proxy check function
+      function checkVpn() {
+          const ip = document.getElementById("vpn-input").value;
+          if (ip) {
+              fetch(`https://vpnapi.io/api/${ip}`)
+                  .then(response => response.json())
+                  .then(data => {
+                      document.getElementById("vpn-status").textContent = data.vpn ? "VPN detected" : "No VPN detected";
+                  })
+                  .catch(() => {
+                      document.getElementById("vpn-status").textContent = "Failed to check VPN status.";
+                  });
+          } else {
+              alert("Please enter a valid IP address.");
+          }
+      }
+  </script>
+</body>
+</html>

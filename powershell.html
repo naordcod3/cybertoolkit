@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PowerShell Full Command List</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/png" href="images/icon.png">
+
+</head>
+<body class="bg-black text-green-400 font-mono">
+  <!--navigation bar (from nav.html)-->
+  <div id="nav-placeholder"></div>
+
+  <script>
+      // Load navigation bar from nav.html
+      fetch("nav.html")
+          .then(response => response.text())
+          .then(data => {
+              document.getElementById("nav-placeholder").innerHTML = data;
+          });
+  </script>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const dropdownBtn = document.getElementById("networkingDropdownBtn");
+        const dropdownMenu = document.getElementById("networkingDropdown");
+
+        // Toggle dropdown on button click
+        dropdownBtn.addEventListener("click", function () {
+            dropdownMenu.classList.toggle("hidden");
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener("click", function (event) {
+            if (!dropdownBtn.contains(event.target) && !dropdownMenu.contains(event.target)) {
+                dropdownMenu.classList.add("hidden");
+            }
+        });
+    });
+</script>
+
+    
+    <br>
+    <h1 class="text-center text-4xl mt-8">PowerShell Full Command List</h1>
+    <input type="text" id="search" class="block mx-auto my-6 p-2 w-1/2 text-black" placeholder="Search for a command..." onkeyup="filterCommands()">
+    
+    <div class="table-container overflow-x-auto px-4">
+        <table class="w-full border-collapse border border-green-400 text-left">
+            <table id="commands-table" class="w-full border-collapse border border-green-400 text-left">
+
+           <tr class="bg-black hover:bg-green-900 transition-all">
+    <td class="p-3 border border-green-400">Get-NetAdapter</td>
+    <td class="p-3 border border-green-400">Displays network adapters</td>
+    <td class="p-3 border border-green-400">Get-NetAdapter</td>
+    <td class="p-3 border border-green-400 text-center">
+        <button class="copy-btn text-green-400 hover:text-green-200 transition-all p-2 border border-green-400 rounded-md" onclick="copyCommand(this)">
+            <i class="fas fa-copy"></i> Copy
+        </button>
+    </td>
+</tr>
+<tr class="bg-black hover:bg-green-900 transition-all">
+    <td class="p-3 border border-green-400">New-NetIPAddress</td>
+    <td class="p-3 border border-green-400">Assigns a static IP address</td>
+    <td class="p-3 border border-green-400">New-NetIPAddress -InterfaceAlias Ethernet -IPAddress 192.168.0.1 -PrefixLength 24</td>
+    <td class="p-3 border border-green-400 text-center">
+        <button class="copy-btn text-green-400 hover:text-green-200 transition-all p-2 border border-green-400 rounded-md" onclick="copyCommand(this)">
+            <i class="fas fa-copy"></i> Copy
+        </button>
+    </td>
+</tr>
+<tr class="bg-black hover:bg-green-900 transition-all">
+    <td class="p-3 border border-green-400">Set-NetIPAddress</td>
+    <td class="p-3 border border-green-400">Modifies an existing IP address</td>
+    <td class="p-3 border border-green-400">Set-NetIPAddress -InterfaceAlias Ethernet -IPAddress 192.168.0.1 -PrefixLength 24</td>
+    <td class="p-3 border border-green-400 text-center">
+        <button class="copy-btn text-green-400 hover:text-green-200 transition-all p-2 border border-green-400 rounded-md" onclick="copyCommand(this)">
+            <i class="fas fa-copy"></i> Copy
+        </button>
+    </td>
+</tr>
+<tr class="bg-black hover:bg-green-900 transition-all">
+    <td class="p-3 border border-green-400">Get-WindowsFeature</td>
+    <td class="p-3 border border-green-400">Displays available Windows features</td>
+    <td class="p-3 border border-green-400">Get-WindowsFeature</td>
+    <td class="p-3 border border-green-400 text-center">
+        <button class="copy-btn text-green-400 hover:text-green-200 transition-all p-2 border border-green-400 rounded-md" onclick="copyCommand(this)">
+            <i class="fas fa-copy"></i> Copy
+        </button>
+    </td>
+</tr>
+<tr class="bg-black hover:bg-green-900 transition-all">
+    <td class="p-3 border border-green-400">Install-WindowsFeature</td>
+    <td class="p-3 border border-green-400">Installs a Windows feature or role</td>
+    <td class="p-3 border border-green-400">Install-WindowsFeature -Name AD-Domain-Services -IncludeManagementTools</td>
+    <td class="p-3 border border-green-400 text-center">
+        <button class="copy-btn text-green-400 hover:text-green-200 transition-all p-2 border border-green-400 rounded-md" onclick="copyCommand(this)">
+            <i class="fas fa-copy"></i> Copy
+        </button>
+    </td>
+</tr>
+<tr class="bg-black hover:bg-green-900 transition-all">
+    <td class="p-3 border border-green-400">Install-ADDSForest</td>
+    <td class="p-3 border border-green-400">Creates a new Active Directory Forest</td>
+    <td class="p-3 border border-green-400">Install-ADDSForest -DomainName "example.com" -DomainNetBiosName "EXAMPLE" -InstallDns:$true</td>
+    <td class="p-3 border border-green-400 text-center">
+        <button class="copy-btn text-green-400 hover:text-green-200 transition-all p-2 border border-green-400 rounded-md" onclick="copyCommand(this)">
+            <i class="fas fa-copy"></i> Copy
+        </button>
+    </td>
+</tr>
+<tr class="bg-black hover:bg-green-900 transition-all">
+    <td class="p-3 border border-green-400">Add-Computer</td>
+    <td class="p-3 border border-green-400">Joins a computer to a domain</td>
+    <td class="p-3 border border-green-400">Add-Computer -DomainName example.com -Restart</td>
+    <td class="p-3 border border-green-400 text-center">
+        <button class="copy-btn text-green-400 hover:text-green-200 transition-all p-2 border border-green-400 rounded-md" onclick="copyCommand(this)">
+            <i class="fas fa-copy"></i> Copy
+        </button>
+    </td>
+</tr>
+<tr class="bg-black hover:bg-green-900 transition-all">
+    <td class="p-3 border border-green-400">Get-ADUser</td>
+    <td class="p-3 border border-green-400">Lists all users in Active Directory</td>
+    <td class="p-3 border border-green-400">Get-ADUser -Filter *</td>
+    <td class="p-3 border border-green-400 text-center">
+        <button class="copy-btn text-green-400 hover:text-green-200 transition-all p-2 border border-green-400 rounded-md" onclick="copyCommand(this)">
+            <i class="fas fa-copy"></i> Copy
+        </button>
+    </td>
+</tr>
+<tr class="bg-black hover:bg-green-900 transition-all">
+    <td class="p-3 border border-green-400">Get-ADComputer</td>
+    <td class="p-3 border border-green-400">Lists all computers in Active Directory</td>
+    <td class="p-3 border border-green-400">Get-ADComputer -Filter *</td>
+    <td class="p-3 border border-green-400 text-center">
+        <button class="copy-btn text-green-400 hover:text-green-200 transition-all p-2 border border-green-400 rounded-md" onclick="copyCommand(this)">
+            <i class="fas fa-copy"></i> Copy
+        </button>
+    </td>
+</tr>
+<tr class="bg-black hover:bg-green-900 transition-all">
+    <td class="p-3 border border-green-400">Set-NetFirewallProfile</td>
+    <td class="p-3 border border-green-400">Disables Windows Firewall</td>
+    <td class="p-3 border border-green-400">Set-NetFirewallProfile -Profile Domain,Public,Private -Enabled False</td>
+    <td class="p-3 border border-green-400 text-center">
+        <button class="copy-btn text-green-400 hover:text-green-200 transition-all p-2 border border-green-400 rounded-md" onclick="copyCommand(this)">
+            <i class="fas fa-copy"></i> Copy
+            <tr class="bg-black hover:bg-green-900 transition-all">
+                <td class="p-3 border border-green-400">Get-NetAdapter</td>
+                <td class="p-3 border border-green-400">Displays network adapters</td>
+                <td class="p-3 border border-green-400">Get-NetAdapter</td>
+                <td class="p-3 border border-green-400 text-center">
+                    <button class="copy-btn text-green-400 hover:text-green-200 transition-all p-2 border border-green-400 rounded-md" onclick="copyCommand(this)">
+                        <i class="fas fa-copy"></i> Copy
+                    </button>
+                </td>
+            </tr>
+            <tr class="bg-black hover:bg-green-900 transition-all">
+                <td class="p-3 border border-green-400">New-NetIPAddress</td>
+                <td class="p-3 border border-green-400">Assigns a static IP address</td>
+                <td class="p-3 border border-green-400">New-NetIPAddress -InterfaceAlias Ethernet -IPAddress 192.168.0.1 -PrefixLength 24</td>
+                <td class="p-3 border border-green-400 text-center">
+                    <button class="copy-btn text-green-400 hover:text-green-200 transition-all p-2 border border-green-400 rounded-md" onclick="copyCommand(this)">
+                        <i class="fas fa-copy"></i> Copy
+                    </button>
+                </td>
+            </tr>
+            <tr class="bg-black hover:bg-green-900 transition-all">
+                <td class="p-3 border border-green-400">Set-NetIPAddress</td>
+                <td class="p-3 border border-green-400">Modifies an existing IP address</td>
+                <td class="p-3 border border-green-400">Set-NetIPAddress -InterfaceAlias Ethernet -IPAddress 192.168.0.1 -PrefixLength 24</td>
+                <td class="p-3 border border-green-400 text-center">
+                    <button class="copy-btn text-green-400 hover:text-green-200 transition-all p-2 border border-green-400 rounded-md" onclick="copyCommand(this)">
+                        <i class="fas fa-copy"></i> Copy
+                    </button>
+                </td>
+            </tr>
+            <tr class="bg-black hover:bg-green-900 transition-all">
+                <td class="p-3 border border-green-400">Get-WindowsFeature</td>
+                <td class="p-3 border border-green-400">Displays available Windows features</td>
+                <td class="p-3 border border-green-400">Get-WindowsFeature</td>
+                <td class="p-3 border border-green-400 text-center">
+                    <button class="copy-btn text-green-400 hover:text-green-200 transition-all p-2 border border-green-400 rounded-md" onclick="copyCommand(this)">
+                        <i class="fas fa-copy"></i> Copy
+                    </button>
+                </td>
+            </tr>
+            <tr class="bg-black hover:bg-green-900 transition-all">
+                <td class="p-3 border border-green-400">Install-WindowsFeature</td>
+                <td class="p-3 border border-green-400">Installs a Windows feature or role</td>
+                <td class="p-3 border border-green-400">Install-WindowsFeature -Name AD-Domain-Services -IncludeManagementTools</td>
+                <td class="p-3 border border-green-400 text-center">
+                    <button class="copy-btn text-green-400 hover:text-green-200 transition-all p-2 border border-green-400 rounded-md" onclick="copyCommand(this)">
+                        <i class="fas fa-copy"></i> Copy
+                    </button>
+                </td>
+            </tr>
+            <tr class="bg-black hover:bg-green-900 transition-all">
+                <td class="p-3 border border-green-400">Install-ADDSForest</td>
+                <td class="p-3 border border-green-400">Creates a new Active Directory Forest</td>
+                <td class="p-3 border border-green-400">Install-ADDSForest -DomainName "example.com" -DomainNetBiosName "EXAMPLE" -InstallDns:$true</td>
+                <td class="p-3 border border-green-400 text-center">
+                    <button class="copy-btn text-green-400 hover:text-green-200 transition-all p-2 border border-green-400 rounded-md" onclick="copyCommand(this)">
+                        <i class="fas fa-copy"></i> Copy
+                    </button>
+                </td>
+            </tr>
+            <tr class="bg-black hover:bg-green-900 transition-all">
+                <td class="p-3 border border-green-400">Add-Computer</td>
+                <td class="p-3 border border-green-400">Joins a computer to a domain</td>
+                <td class="p-3 border border-green-400">Add-Computer -DomainName example.com -Restart</td>
+                <td class="p-3 border border-green-400 text-center">
+                    <button class="copy-btn text-green-400 hover:text-green-200 transition-all p-2 border border-green-400 rounded-md" onclick="copyCommand(this)">
+                        <i class="fas fa-copy"></i> Copy
+                    </button>
+                </td>
+            </tr>
+            <tr class="bg-black hover:bg-green-900 transition-all">
+                <td class="p-3 border border-green-400">Get-ADUser</td>
+                <td class="p-3 border border-green-400">Lists all users in Active Directory</td>
+                <td class="p-3 border border-green-400">Get-ADUser -Filter *</td>
+                <td class="p-3 border border-green-400 text-center">
+                    <button class="copy-btn text-green-400 hover:text-green-200 transition-all p-2 border border-green-400 rounded-md" onclick="copyCommand(this)">
+                        <i class="fas fa-copy"></i> Copy
+                    </button>
+                </td>
+            </tr>
+            <tr class="bg-black hover:bg-green-900 transition-all">
+                <td class="p-3 border border-green-400">Get-ADComputer</td>
+                <td class="p-3 border border-green-400">Lists all computers in Active Directory</td>
+                <td class="p-3 border border-green-400">Get-ADComputer -Filter *</td>
+                <td class="p-3 border border-green-400 text-center">
+                    <button class="copy-btn text-green-400 hover:text-green-200 transition-all p-2 border border-green-400 rounded-md" onclick="copyCommand(this)">
+                        <i class="fas fa-copy"></i> Copy
+                    </button>
+                </td>
+            </tr>
+            <tr class="bg-black hover:bg-green-900 transition-all">
+                <td class="p-3 border border-green-400">Set-NetFirewallProfile</td>
+                <td class="p-3 border border-green-400">Disables Windows Firewall</td>
+                <td class="p-3 border border-green-400">Set-NetFirewallProfile -Profile Domain,Public,Private -Enabled False</td>
+                <td class="p-3 border border-green-400 text-center">
+                    <button class="copy-btn text-green-400 hover:text-green-200 transition-all p-2 border border-green-400 rounded-md" onclick="copyCommand(this)">
+                        <i class="fas fa-copy"></i> Copy
+                    </button>
+                </td>
+            </tr>
+            <tr class="bg-black hover:bg-green-900 transition-all">
+                <td class="p-3 border border-green-400">Remove-Computer</td>
+                <td class="p-3 border border-green-400">Removes a computer from the domain</td>
+                <td class="p-3 border border-green-400">Remove-Computer -UnjoinDomainCredential DOMAIN\Administrator -PassThru -Restart -Force</td>
+                <td class="p-3 border border-green-400 text-center">
+                    <button class="copy-btn text-green-400 hover:text-green-200 transition-all p-2 border border-green-400 rounded-md" onclick="copyCommand(this)">
+                        <i class="fas fa-copy"></i> Copy
+                    </button>
+                </td>
+            </tr>
+            <tr class="bg-black hover:bg-green-900 transition-all">
+                <td class="p-3 border border-green-400">Set-ADOrganizationalUnit</td>
+                <td class="p-3 border border-green-400">Modifies an Organizational Unit</td>
+                <td class="p-3 border border-green-400">Set-ADOrganizationalUnit -Identity "OU=IT,DC=example,DC=com" -Description "Updated IT OU"</td>
+                <td class="p-3 border border-green-400 text-center">
+                    <button class="copy-btn text-green-400 hover:text-green-200 transition-all p-2 border border-green-400 rounded-md" onclick="copyCommand(this)">
+                        <i class="fas fa-copy"></i> Copy
+                    </button>
+                </td>
+            </tr>
+            
+            <tr class="bg-black hover:bg-green-900 transition-all">
+                <td class="p-3 border border-green-400">New-Partition</td>
+                <td class="p-3 border border-green-400">Creates a new disk partition</td>
+                <td class="p-3 border border-green-400">New-Partition -DiskNumber 1 -UseMaximumSize -AssignDriveLetter</td>
+                <td class="p-3 border border-green-400 text-center">
+                    <button class="copy-btn text-green-400 hover:text-green-200 transition-all p-2 border border-green-400 rounded-md" onclick="copyCommand(this)">
+                        <i class="fas fa-copy"></i> Copy
+                    </button>
+                </td>
+            </tr>
+            
+            <tr class="bg-black hover:bg-green-900 transition-all">
+                <td class="p-3 border border-green-400">ipconfig /all</td>
+                <td class="p-3 border border-green-400">Displays all network configuration</td>
+                <td class="p-3 border border-green-400">ipconfig /all</td>
+                <td class="p-3 border border-green-400 text-center">
+                    <button class="copy-btn text-green-400 hover:text-green-200 transition-all p-2 border border-green-400 rounded-md" onclick="copyCommand(this)">
+                        <i class="fas fa-copy"></i> Copy
+                    </button>
+                </td>
+            </tr>
+            
+            <tr class="bg-black hover:bg-green-900 transition-all">
+                <td class="p-3 border border-green-400">Remove-ADUser</td>
+                <td class="p-3 border border-green-400">Deletes an Active Directory user</td>
+                <td class="p-3 border border-green-400">Remove-ADUser -Identity "JohnDoe" -Confirm:$false</td>
+                <td class="p-3 border border-green-400 text-center">
+                    <button class="copy-btn text-green-400 hover:text-green-200 transition-all p-2 border border-green-400 rounded-md" onclick="copyCommand(this)">
+                        <i class="fas fa-copy"></i> Copy
+                    </button>
+                </td>
+            </tr>
+            
+            <tr class="bg-black hover:bg-green-900 transition-all">
+                <td class="p-3 border border-green-400">Get-Command</td>
+                <td class="p-3 border border-green-400">Lists all available PowerShell commands</td>
+                <td class="p-3 border border-green-400">Get-Command</td>
+                <td class="p-3 border border-green-400 text-center">
+                    <button class="copy-btn text-green-400 hover:text-green-200 transition-all p-2 border border-green-400 rounded-md" onclick="copyCommand(this)">
+                        <i class="fas fa-copy"></i> Copy
+                    </button>
+                </td>
+            </tr>
+            
+            <tr class="bg-black hover:bg-green-900 transition-all">
+                <td class="p-3 border border-green-400">New-GPO</td>
+                <td class="p-3 border border-green-400">Creates a new Group Policy Object</td>
+                <td class="p-3 border border-green-400">New-GPO -Name "SecurityPolicy"</td>
+                <td class="p-3 border border-green-400 text-center">
+                    <button class="copy-btn text-green-400 hover:text-green-200 transition-all p-2 border border-green-400 rounded-md" onclick="copyCommand(this)">
+                        <i class="fas fa-copy"></i> Copy
+                    </button>
+                </td>
+            </tr>
+            
+            <tr class="bg-black hover:bg-green-900 transition-all">
+                <td class="p-3 border border-green-400">Set-GPRegistryValue</td>
+                <td class="p-3 border border-green-400">Sets a registry value in a Group Policy Object</td>
+                <td class="p-3 border border-green-400">Set-GPRegistryValue -Name "SecurityPolicy" -Key "HKLM\Software\Policies\Microsoft\Windows\System" -ValueName "DisableCMD" -Type DWord -Value 1</td>
+                <td class="p-3 border border-green-400 text-center">
+                    <button class="copy-btn text-green-400 hover:text-green-200 transition-all p-2 border border-green-400 rounded-md" onclick="copyCommand(this)">
+                        <i class="fas fa-copy"></i> Copy
+                    </button>
+                </td>
+            </tr>
+                        
+            
+        </button>
+    </td>
+</tr>
+<tr class="bg-black hover:bg-green-900 transition-all">
+    <td class="p-3 border border-green-400">Set-DnsClientServerAddress</td>
+    <td class="p-3 border border-green-400">Configures the DNS server address for a network adapter</td>
+    <td class="p-3 border border-green-400">Set-DnsClientServerAddress -InterfaceAlias "Ethernet" -ServerAddresses "192.168.X.X"</td>
+    <td class="p-3 border border-green-400 text-center">
+        <button class="copy-btn text-green-400 hover:text-green-200 transition-all p-2 border border-green-400 rounded-md" onclick="copyCommand(this)">
+            <i class="fas fa-copy"></i> Copy
+        </button>
+    </td>
+</tr>
+<tr class="bg-black hover:bg-green-900 transition-all">
+    <td class="p-3 border border-green-400">New-ADOrganizationalUnit</td>
+    <td class="p-3 border border-green-400">Creates a new Active Directory Organizational Unit</td>
+    <td class="p-3 border border-green-400">New-ADOrganizationalUnit -Name "IT" -Path "DC=Gil,DC=com"</td>
+    <td class="p-3 border border-green-400 text-center">
+        <button class="copy-btn text-green-400 hover:text-green-200 transition-all p-2 border border-green-400 rounded-md" onclick="copyCommand(this)">
+            <i class="fas fa-copy"></i> Copy
+        </button>
+    </td>
+</tr>
+
+
+        </table>
+    </div>
+    
+    <script>
+        function filterCommands() {
+            let input = document.getElementById("search").value.toLowerCase();
+            let rows = document.querySelectorAll("#commands-table tr");
+    
+            rows.forEach((row, index) => {
+                if (index === 0) return; // Skip the header row
+    
+                let cells = row.getElementsByTagName("td");
+                let match = false;
+    
+                for (let i = 0; i < cells.length; i++) {
+                    if (cells[i].innerText.toLowerCase().includes(input)) {
+                        match = true;
+                        break;
+                    }
+                }
+    
+                row.style.display = match ? "" : "none";
+            });
+        }
+    
+        function copyCommand(btn) {
+            let command = btn.closest("tr").getElementsByTagName("td")[2].textContent;
+            navigator.clipboard.writeText(command);
+            alert("Copied: " + command);
+        }
+    </script>
+    
+</body>
+</html>

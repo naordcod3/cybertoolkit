@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <br>
+    <title>THE DARK WEB</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/png" href="images/icon.png">
+</head>
+<body class="bg-black text-green-400 font-mono">
+    <!-- Matrix Background -->
+    <canvas id="matrix" class="fixed top-0 left-0 w-full h-full -z-10"></canvas>
+
+    <!-- Progress Bar -->
+    <div id="progress-bar" class="fixed top-0 left-0 w-0 h-1 bg-green-400 transition-all"></div>
+
+    
+    <!--navigation bar (from nav.html)-->
+    <div id="nav-placeholder"></div>
+
+    <script>
+        // Load navigation bar from nav.html
+        fetch("nav.html")
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("nav-placeholder").innerHTML = data;
+            });
+    </script>
+    
+
+    <!-- Hero Section -->
+    <section class="hero text-center mt-20 px-4">
+        <h1 class="text-5xl font-bold neon-text glitch-text">Welcome to the Cyber Underground</h1>
+        <p class="text-lg mt-4 w-3/4 mx-auto text-green-300 font-semibold">
+            The Dark Web is a hidden part of the internet, cloaked in layers of encryption. 
+            It’s a space for privacy, anonymity, and cybersecurity challenges.
+        </p>
+    </section>    
+
+    <!-- Features Section (Updated Tiles) -->
+     <!-- Full Site Navigation Tiles -->
+     <section class="features grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-4/5 mx-auto mt-12">
+
+        <a href="hacking-tools.html">
+            <div class="card">
+                <h2 class="text-2xl font-bold">🛠️ Hacking Tools</h2>
+                <p>Explore powerful pentesting tools.</p>
+            </div>
+        </a>
+
+        <a href="assignments.html">
+            <div class="card">
+                <h2 class="text-2xl font-bold">📖 Assignments</h2>
+                <p>Master cybersecurity challenges.</p>
+            </div>
+        </a>
+
+        <a href="router-config.html">
+            <div class="card">
+                <h2 class="text-2xl font-bold">🌐 Network Configs</h2>
+                <p>Quickly generate router & switch configs.</p>
+            </div>
+        </a>
+
+        <a href="powershell.html">
+            <div class="card">
+                <h2 class="text-2xl font-bold">⚡ PowerShell</h2>
+                <p>Automate & manage Windows systems.</p>
+            </div>
+        </a>
+
+        <a href="storage.html">
+            <div class="card">
+                <h2 class="text-2xl font-bold">💾 Storage Management</h2>
+                <p>Learn about disk partitions & volumes.</p>
+            </div>
+        </a>
+
+        <a href="ad-generator.html">
+            <div class="card">
+                <h2 class="text-2xl font-bold">🖥️ Active Directory</h2>
+                <p>Generate AD configurations instantly.</p>
+            </div>
+        </a>
+
+        <a href="dhcp-generator.html">
+            <div class="card">
+                <h2 class="text-2xl font-bold">📡 DHCP Config</h2>
+                <p>Set up DHCP servers and clients.</p>
+            </div>
+        </a>
+
+        <a href="ports.html">
+            <div class="card">
+                <h2 class="text-2xl font-bold">🔢 Common Ports</h2>
+                <p>Reference key networking ports.</p>
+            </div>
+        </a>
+
+        <a href="https://threatmap.checkpoint.com/" target="_blank">
+            <div class="card">
+                <h2 class="text-2xl font-bold">🌎 Cyber Threat Map</h2>
+                <p>View real-time cyber attack data.</p>
+            </div>
+        </a>
+
+    </section>
+
+</body>
+</html>

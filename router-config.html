@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Router Configuration Generator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+</head>
+<body class="bg-black text-green-400 font-mono relative">
+    <canvas id="matrixCanvas" class="absolute top-0 left-0 w-full h-full opacity-20"></canvas>
+
+<!-- Navigation -->
+<header class="navbar fixed top-0 left-0 w-full p-5 bg-black bg-opacity-90 shadow-lg text-2xl border-b border-green-400 z-50 flex items-center justify-between">
+    <h1 class="logo text-green-400 text-3xl font-bold">🚀 Cyber Toolkit</h1>
+    <nav class="flex space-x-8">
+        <a href="index.html" class="hover:text-green-200 transition-all">🏠 Home</a>
+        <a href="hacking-tools.html" class="hover:text-green-200 transition-all">🛠️ Hacking Tools</a>
+        <a href="assignments.html" class="hover:text-green-200 transition-all">📖 Assignments</a>
+
+        <!-- Windows Server Dropdown -->
+        <div class="relative group">
+            <button class="hover:text-green-200 transition-all focus:outline-none">
+                🖥️ Windows Server ▼
+            </button>
+            <div class="absolute hidden group-hover:flex hover:flex flex-col bg-black bg-opacity-90 border border-green-400 mt-2 w-56 p-2 rounded-lg">
+                <a href="powershell.html" class="hover:bg-green-700 p-2 rounded transition-all block">⚡ PowerShell</a>
+                <a href="storage.html" class="hover:bg-green-700 p-2 rounded transition-all block">💾 Storage Management</a>
+            </div>
+        </div>
+
+        <!-- Networking Dropdown -->
+        <div class="relative group">
+            <button class="hover:text-green-200 transition-all focus:outline-none">
+                🌐 Networking ▼
+            </button>
+            <div class="absolute hidden group-hover:flex hover:flex flex-col bg-black bg-opacity-90 border border-green-400 mt-2 w-56 p-2 rounded-lg">
+                <a href="router-config.html" class="hover:bg-green-700 p-2 rounded transition-all block">🚀 Router Config</a>
+                <a href="switch-config.html" class="hover:bg-green-700 p-2 rounded transition-all block">🔧 Switch Config</a>
+                <a href="switch3-config.html" class="hover:bg-green-700 p-2 rounded transition-all block">⚙️ L3 Switch Config</a>
+                <a href="layer3-nac.html" class="hover:bg-green-700 p-2 rounded transition-all block">🔒 L3 NAC Config</a>
+                <a href="ospf-generator.html" class="hover:bg-green-700 p-2 rounded transition-all block">🌐 OSPF Config</a>
+                <a href="dhcp-generator.html" class="hover:bg-green-700 p-2 rounded transition-all block">📡 DHCP Config</a>
+                <a href="ports.html" class="hover:bg-green-700 p-2 rounded transition-all block">🔢 Common Ports</a>
+            </div>
+        </div>
+
+        <a href="https://threatmap.checkpoint.com/" target="_blank" class="hover:text-green-200 transition-all">🌎 Cyber Threat Map</a>
+    </nav>
+</header>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const dropdownBtn = document.getElementById("networkingDropdownBtn");
+        const dropdownMenu = document.getElementById("networkingDropdown");
+
+        // Toggle dropdown on button click
+        dropdownBtn.addEventListener("click", function () {
+            dropdownMenu.classList.toggle("hidden");
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener("click", function (event) {
+            if (!dropdownBtn.contains(event.target) && !dropdownMenu.contains(event.target)) {
+                dropdownMenu.classList.add("hidden");
+            }
+        });
+    });
+</script>
+
+
+    <section class="text-center mt-10 relative z-10">
+        <h1 class="text-3xl font-bold text-green-300">Router Configuration Generator</h1>
+        <p class="text-green-200 mt-2">Dynamically generate Cisco CLI commands for **Router Interfaces and Router-on-a-Stick.**</p>
+
+        <!-- Router-on-a-Stick Configuration -->
+        <div class="mt-6">
+            <h2 class="text-xl text-green-300">Router-on-a-Stick (Sub-Interfaces)</h2>
+            <div id="router-stick"></div>
+            <button id="addRouterStick" class="mt-4 bg-green-600 hover:bg-green-400 text-black font-bold py-2 px-4 rounded">
+                + Add Sub-Interface
+            </button>
+        </div>
+
+        <!-- Standard Interfaces -->
+        <div class="mt-6">
+            <h2 class="text-xl text-green-300">Standard Interfaces</h2>
+            <div id="router-interfaces"></div>
+            <button id="addRouterInterface" class="mt-4 bg-green-600 hover:bg-green-400 text-black font-bold py-2 px-4 rounded">
+                + Add Interface
+            </button>
+        </div>
+
+        <!-- Generate CLI Button -->
+        <button id="generateRouterCLI" class="mt-6 bg-green-600 hover:bg-green-400 text-black font-bold py-2 px-4 rounded">
+            Generate Router CLI
+        </button>
+
+        <!-- CLI Output -->
+        <div class="mt-6 bg-black p-4 border border-green-400 text-left text-green-200 rounded">
+            <h3 class="text-green-300 font-bold">Generated Router Configuration</h3>
+            <pre id="routerOutput" class="language-bash"></pre>
+            <button id="copyRouterCLI" class="mt-4 bg-green-700 hover:bg-green-500 text-black font-bold py-1 px-3 rounded">
+                📋 Copy to Clipboard
+            </button>
+        </div>
+    </section>
+
+    <script>
+        document.getElementById("addRouterStick").addEventListener("click", function () {
+            let container = document.getElementById("router-stick");
+            let newEntry = document.createElement("div");
+            newEntry.className = "router-stick-entry mt-2 flex space-x-2";
+            newEntry.innerHTML = `
+                <select class="stick-interface bg-black border border-green-400 text-green-300 p-2">
+                      <option value="GigabitEthernet 0/0">Gig 0/0</option>
+                    <option value="GigabitEthernet 0/1">Gig 0/1</option>
+                    <option value="GigabitEthernet 0/2">Gig 0/2</option>
+                    <option value="GigabitEthernet 0/3">Gig 0/3</option>
+                    <option value="GigabitEthernet 0/4">Gig 0/4</option>
+                    <option value="GigabitEthernet 0/5">Gig 0/5</option>
+                    <option value="GigabitEthernet 0/6">Gig 0/6</option>
+                    <option value="GigabitEthernet 0/7">Gig 0/7</option>
+                    <option value="GigabitEthernet 0/8">Gig 0/8</option>
+                    <option value="GigabitEthernet 0/9">Gig 0/9</option>
+                </select>
+                <input type="text" class="stick-sub bg-black border border-green-400 text-green-300 p-2" placeholder="Sub-Interface ID (e.g., 3)">
+                <input type="text" class="stick-ip bg-black border border-green-400 text-green-300 p-2" placeholder="IP Address">
+                <input type="text" class="stick-prefix bg-black border border-green-400 text-green-300 p-2" placeholder="Prefix (e.g., /19)">
+            `;
+            container.appendChild(newEntry);
+        });
+
+        document.getElementById("addRouterInterface").addEventListener("click", function () {
+            let container = document.getElementById("router-interfaces");
+            let newEntry = document.createElement("div");
+            newEntry.className = "router-interface mt-2 flex space-x-2";
+            newEntry.innerHTML = `
+                <select class="router-port bg-black border border-green-400 text-green-300 p-2">
+                    <option value="GigabitEthernet 0/0">Gig 0/0</option>
+                    <option value="GigabitEthernet 0/1">Gig 0/1</option>
+                    <option value="GigabitEthernet 0/2">Gig 0/2</option>
+                    <option value="GigabitEthernet 0/3">Gig 0/3</option>
+                    <option value="GigabitEthernet 0/4">Gig 0/4</option>
+                    <option value="GigabitEthernet 0/5">Gig 0/5</option>
+                    <option value="GigabitEthernet 0/6">Gig 0/6</option>
+                    <option value="GigabitEthernet 0/7">Gig 0/7</option>
+                    <option value="GigabitEthernet 0/8">Gig 0/8</option>
+                    <option value="GigabitEthernet 0/9">Gig 0/9</option>
+                </select>
+                <input type="text" class="router-ip bg-black border border-green-400 text-green-300 p-2" placeholder="IP Address">
+                <input type="text" class="router-prefix bg-black border border-green-400 text-green-300 p-2" placeholder="Prefix (e.g., /27)">
+            `;
+            container.appendChild(newEntry);
+        });
+
+        document.getElementById("generateRouterCLI").addEventListener("click", function () {
+            let output = "enable\nconfigure terminal\n";
+
+            // Router-on-a-Stick
+            document.querySelectorAll(".router-stick-entry").forEach(entry => {
+                let intType = entry.querySelector(".stick-interface").value.trim();
+                let subInt = entry.querySelector(".stick-sub").value.trim();
+                let ip = entry.querySelector(".stick-ip").value.trim();
+                let prefix = entry.querySelector(".stick-prefix").value.trim();
+
+                if (intType && subInt && ip && prefix) {
+                    let subnet = convertPrefixToSubnet(prefix);
+                    output += `interface ${intType}.${subInt}\n encapsulation dot1Q ${subInt}\n ip address ${ip} ${subnet}\n no shutdown\n exit\n\n`;
+                }
+            });
+
+            // Standard Interfaces
+            document.querySelectorAll(".router-interface").forEach(entry => {
+                let port = entry.querySelector(".router-port").value.trim();
+                let ip = entry.querySelector(".router-ip").value.trim();
+                let prefix = entry.querySelector(".router-prefix").value.trim();
+
+                if (port && ip && prefix) {
+                    let subnet = convertPrefixToSubnet(prefix);
+                    output += `interface ${port}\n ip address ${ip} ${subnet}\n no shutdown\n exit\n\n`;
+                }
+            });
+
+            document.getElementById("routerOutput").textContent = output;
+            Prism.highlightAll();
+        });
+
+        document.getElementById("copyRouterCLI").addEventListener("click", function () {
+            navigator.clipboard.writeText(document.getElementById("routerOutput").textContent);
+            alert("Router CLI commands copied to clipboard!");
+        });
+
+        function convertPrefixToSubnet(prefix) {
+            let mapping = { "/19": "255.255.224.0", "/24": "255.255.255.0", "/27": "255.255.255.224" };
+            return mapping[prefix] || "255.255.255.0"; 
+        }
+    </script>
+
+</body>
+</html>

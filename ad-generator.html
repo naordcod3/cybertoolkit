@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PowerShell AD Generator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/png" href="images/icon.png">
+</head>
+<body class="bg-black text-green-400 font-mono">
+
+    <!-- Load Navigation -->
+    <div id="nav-placeholder"></div>
+    <script>
+        fetch("nav.html")
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("nav-placeholder").innerHTML = data;
+            });
+    </script>
+
+    <div class="container mx-auto p-6 mt-16">
+        <h1 class="text-center text-4xl mb-6">⚡ PowerShell Active Directory Generator</h1>
+        <p class="text-center mb-4 text-lg">Generate AD scripts for users, groups, OUs, GPOs, and installations.</p>
+
+        <!-- Generator Form -->
+        <div class="border border-green-400 p-6 rounded-lg bg-black">
+            <h2 class="text-2xl mb-4 text-green-200">🔧 Generate PowerShell Commands</h2>
+
+            <label class="block mb-2">📌 Select Task:</label>
+            <select id="task" class="w-full bg-black border border-green-400 p-2 mb-4 text-green-400">
+                <option value="install-ad">Install Active Directory</option>
+                <option value="create-user">Create AD Users</option>
+                <option value="create-ou">Create Organizational Units</option>
+                <option value="create-group">Create Security Groups</option>
+                <option value="create-gpo">Create Group Policy Object (GPO)</option>
+                <option value="add-user-group">Add Users to Security Group</option>
+            </select>
+
+            <label class="block mb-2">📝 Enter Name(s) (comma-separated for multiple entries):</label>
+            <input type="text" id="names" class="w-full bg-black border border-green-400 p-2 mb-4 text-green-400" placeholder="e.g. HRUser1, ITUser2">
+
+            <label class="block mb-2">📌 Enter OU Path (for Users/Groups/OUs):</label>
+            <input type="text" id="ou-path" class="w-full bg-black border border-green-400 p-2 mb-4 text-green-400" placeholder='e.g. "OU=IT,DC=gil,DC=com"'>
+
+            <label class="block mb-2">🔑 Enter Group Name (for Groups/GPOs):</label>
+            <input type="text" id="group-name" class="w-full bg-black border border-green-400 p-2 mb-4 text-green-400" placeholder="e.g. HRGroup">
+
+            <button onclick="generateCommands()" class="w-full bg-green-700 hover:bg-green-500 text-black p-2 mt-4 rounded">
+                🚀 Generate PowerShell Script
+            </button>
+
+            <p class="mt-4 text-green-300">💻 Generated PowerShell Command:</p>
+            <pre id="output-powershell" class="bg-black p-3 border border-green-400 rounded text-green-300"></pre>
+
+            <button onclick="copyToClipboard()" class="w-full bg-blue-700 hover:bg-blue-500 text-black p-2 mt-4 rounded">
+                📋 Copy to Clipboard
+            </button>
+
+            <button onclick="downloadScript()" class="w-full bg-yellow-700 hover:bg-yellow-500 text-black p-2 mt-4 rounded">
+                ⬇️ Download Script
+            </button>
+        </div>
+    </div>
+
+    <script>
+        function generateCommands() {
+            let task = document.getElementById("task").value;
+            let names = document.getElementById("names").value.split(",").map(n => n.trim());
+            let ouPath = document.getElementById("ou-path").value;
+            let groupName = document.getElementById("group-name").value;
+
+            let command = "";
+
+            switch (task) {
+                case "install-ad":
+                    command = `Install-WindowsFeature -Name AD-Domain-Services -IncludeManagementTools\nInstall-ADDSForest -DomainName "gil.com" -DomainNetBiosName "GIL" -InstallDns:$true -Force`;
+                    break;
+                case "create-user":
+                    command = names.map(n => `New-ADUser -Name "${n}" -SamAccountName "${n}" -UserPrincipalName "${n}@gil.com" -AccountPassword (ConvertTo-SecureString "Aa123456789!!" -AsPlainText -Force) -Enabled $true -Path "${ouPath}"`).join("\n");
+                    break;
+                case "create-ou":
+                    command = names.map(n => `New-ADOrganizationalUnit -Name "${n}" -Path "${ouPath}"`).join("\n");
+                    break;
+                case "create-group":
+                    command = `New-ADGroup -Name "${groupName}" -GroupCategory Security -GroupScope Global -Path "${ouPath}"`;
+                    break;
+                case "create-gpo":
+                    command = `New-GPO -Name "${groupName}" | New-GPLink -Target "${ouPath}"`;
+                    break;
+                case "add-user-group":
+                    command = names.map(n => `Add-ADGroupMember -Identity "${groupName}" -Members "${n}"`).join("\n");
+                    break;
+                default:
+                    command = "⚠️ Please select a valid task!";
+            }
+
+            document.getElementById("output-powershell").textContent = command;
+        }
+
+        function copyToClipboard() {
+            let text = document.getElementById("output-powershell").textContent;
+            navigator.clipboard.writeText(text);
+            alert("📋 PowerShell command copied!");
+        }
+
+        function downloadScript() {
+            let text = document.getElementById("output-powershell").textContent;
+            let blob = new Blob([text], { type: "text/plain" });
+            let link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = "powershell_script.ps1";
+            link.click();
+        }
+    </script>
+
+</body>
+</html>
