@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linux Command Generator | The Dark Web</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/png" href="images/icon.png">
+</head>
+<body class="bg-gray-900 text-gray-100 font-sans min-h-screen">
+    <div id="nav-placeholder"></div>
+    <script>
+        $(function(){
+            $("#nav-placeholder").load("nav.html");
+        });
+    </script>
+
+    <div class="container mx-auto px-4 py-8 max-w-6xl mt-16">
+        <h1 class="text-5xl font-bold text-center mb-12 bg-gradient-to-r from-green-400 to-blue-500 bg-clip-text text-transparent">
+            Linux Command Generator
+        </h1>
+
+        <!-- Main Content Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Left Panel: Command Categories -->
+            <div class="lg:col-span-1 space-y-6">
+                <div class="bg-gray-800 rounded-xl p-6 shadow-lg">
+                    <h2 class="text-xl font-semibold mb-4 text-green-400">Choose Command Type</h2>
+                    
+                    <!-- Command Type Buttons -->
+                    <div class="space-y-3">
+                        <button data-category="File Operations" class="command-type-btn w-full text-left px-4 py-3 rounded-lg bg-gray-700 hover:bg-gray-600 transition-all flex items-center space-x-3">
+                            <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                            </svg>
+                            <span>File Operations</span>
+                        </button>
+                        
+                        <button data-category="System Information" class="command-type-btn w-full text-left px-4 py-3 rounded-lg bg-gray-700 hover:bg-gray-600 transition-all flex items-center space-x-3">
+                            <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"/>
+                            </svg>
+                            <span>System Information</span>
+                        </button>
+                        
+                        <button data-category="User Management" class="command-type-btn w-full text-left px-4 py-3 rounded-lg bg-gray-700 hover:bg-gray-600 transition-all flex items-center space-x-3">
+                            <svg class="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+                            </svg>
+                            <span>User Management</span>
+                        </button>
+
+                        <button data-category="Root Access" class="command-type-btn w-full text-left px-4 py-3 rounded-lg bg-gray-700 hover:bg-gray-600 transition-all flex items-center space-x-3">
+                            <svg class="w-5 h-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                            </svg>
+                            <span>Root Access</span>
+                        </button>
+                        
+                        <button data-category="Compression" class="command-type-btn w-full text-left px-4 py-3 rounded-lg bg-gray-700 hover:bg-gray-600 transition-all flex items-center space-x-3">
+                            <svg class="w-5 h-5 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"/>
+                            </svg>
+                            <span>Compression</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Center Panel: Command Options -->
+            <div class="lg:col-span-2 space-y-6">
+                <!-- Command Selection -->
+                <div class="bg-gray-800 rounded-xl p-6 shadow-lg">
+                    <h2 class="text-xl font-semibold mb-4 text-green-400">Select Command</h2>
+                    <select id="commandSelect" class="w-full bg-gray-700 text-gray-100 px-4 py-3 rounded-lg border-2 border-gray-600 focus:border-green-400 focus:ring-0 transition-all">
+                        <option value="">Choose a command...</option>
+                        <!-- Options will be populated based on command type selection -->
+                    </select>
+                </div>
+
+                <!-- Command Builder -->
+                <div class="bg-gray-800 rounded-xl p-6 shadow-lg">
+                    <h2 class="text-xl font-semibold mb-4 text-green-400">Command Options</h2>
+                    <div id="optionsContainer" class="space-y-4 mb-6">
+                        <!-- Options will be dynamically added here -->
+                    </div>
+
+                    <!-- Generated Command -->
+                    <div class="bg-gray-900 rounded-lg p-4 font-mono border-2 border-gray-700">
+                        <code id="generatedCommand" class="text-green-400"></code>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="flex space-x-4 mt-4">
+                        <button id="copyCommand" class="flex-1 bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-lg transition-colors flex items-center justify-center space-x-2">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                            </svg>
+                            <span>Copy Command</span>
+                        </button>
+                        <button id="clearCommand" class="flex-1 bg-gray-600 hover:bg-gray-700 text-white px-6 py-2 rounded-lg transition-colors flex items-center justify-center space-x-2">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                            </svg>
+                            <span>Clear</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Command Info -->
+                <div id="commandInfo" class="bg-gray-800 rounded-xl p-6 shadow-lg" style="display: none;">
+                    <h2 class="text-xl font-semibold mb-4 text-green-400">Command Help</h2>
+                    <p id="commandDescription" class="text-gray-300 mb-4"></p>
+                    
+                    <h3 class="font-semibold text-green-400 mb-2">Examples:</h3>
+                    <div id="commandExamples" class="bg-gray-900 rounded-lg p-4 font-mono text-gray-300"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Add this new code at the start of the script section
+        const commandCategories = {
+            'File Operations': [
+                'pwd', 'cd', 'ls', 'mkdir', 'touch', 'nano', 'cat', 'echo', 'find', 'grep', 'history', 'tail', 'head', 'less'
+            ],
+            'System Information': [
+                'uname', 'df', 'top', 'free', 'ifconfig'
+            ],
+            'User Management': [
+                'adduser', 'deluser', 'passwd', 'groups', 'usermod', 'groupadd', 'groupdel', 'chown', 'id'
+            ],
+            'Root Access': [
+                'sudo passwd', 'sudo', 'su'
+            ],
+            'Compression': [
+                'tar', 'gzip', 'zip', 'unzip'
+            ]
+        };
+
+        // Update the event handling for command type buttons
+        document.querySelectorAll('.command-type-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                // Remove active state from all buttons
+                document.querySelectorAll('.command-type-btn').forEach(btn => {
+                    btn.classList.remove('bg-gray-600');
+                    btn.classList.add('bg-gray-700');
+                });
+                
+                // Add active state to clicked button
+                this.classList.remove('bg-gray-700');
+                this.classList.add('bg-gray-600');
+                
+                // Get the category and update command select options
+                const category = this.dataset.category;
+                const commandSelect = document.getElementById('commandSelect');
+                commandSelect.innerHTML = '<option value="">Choose a command...</option>';
+                
+                commandCategories[category].forEach(command => {
+                    const option = document.createElement('option');
+                    option.value = command;
+                    option.textContent = command;
+                    commandSelect.appendChild(option);
+                });
+                
+                // Clear the options container and generated command
+                document.getElementById('optionsContainer').innerHTML = '';
+                document.getElementById('generatedCommand').textContent = '';
+                document.getElementById('commandInfo').style.display = 'none';
+            });
+        });
+
+        // Command templates and options
+        const commandTemplates = {
+            // Basic Commands
+            clear: {
+                base: 'clear',
+                options: {
+                    'x': 'Don\'t clear scrollback buffer'
+                },
+                examples: {
+                    'basic': 'clear',
+                    'no-scrollback': 'clear -x'
+                },
+                description: 'Clear the terminal screen',
+                needsPath: false
+            },
+            history: {
+                base: 'history',
+                options: {
+                    'c': 'Clear history',
+                    'n': 'Read history from file',
+                    'd': 'Delete history entry'
+                },
+                examples: {
+                    'basic': 'history',
+                    'clear': 'history -c',
+                    'last10': 'history 10'
+                },
+                description: 'Show command history',
+                needsPath: false
+            },
+            find: {
+                base: 'find',
+                options: {
+                    'name': 'Search by name',
+                    'type': 'Search by type',
+                    'size': 'Search by size',
+                    'mtime': 'Search by modification time'
+                },
+                examples: {
+                    'basic': 'find . -name "*.txt"',
+                    'files': 'find . -type f',
+                    'directories': 'find . -type d'
+                },
+                description: 'Search for files in a directory hierarchy',
+                needsPath: true
+            },
+            grep: {
+                base: 'grep',
+                options: {
+                    'i': 'Case insensitive',
+                    'r': 'Recursive search',
+                    'n': 'Show line numbers',
+                    'v': 'Invert match'
+                },
+                examples: {
+                    'basic': 'grep "pattern" file.txt',
+                    'recursive': 'grep -r "pattern" .',
+                    'case-insensitive': 'grep -i "pattern" file.txt'
+                },
+                description: 'Search for patterns in files',
+                needsPath: true
+            },
+            pwd: {
+                base: 'pwd',
+                options: {
+                    'L': 'Print logical path',
+                    'P': 'Print physical path'
+                },
+                examples: {
+                    'basic': 'pwd',
+                    'logical': 'pwd -L'
+                },
+                description: 'Print current working directory',
+                needsPath: false
+            },
+            cd: {
+                base: 'cd',
+                options: {
+                    '~': 'Home directory',
+                    '-': 'Previous directory',
+                    '..': 'Parent directory'
+                },
+                examples: {
+                    'home': 'cd ~',
+                    'parent': 'cd ..',
+                    'previous': 'cd -',
+                    'specific': 'cd /path/to/directory'
+                },
+                description: 'Change current directory',
+                needsPath: true,
+                specialCommand: true
+            },
+            mkdir: {
+                base: 'mkdir',
+                options: {
+                    'p': 'Create parent directories',
+                    'v': 'Verbose output',
+                    'm': 'Set permissions'
+                },
+                examples: {
+                    'basic': 'mkdir newdir',
+                    'parents': 'mkdir -p path/to/newdir',
+                    'permissions': 'mkdir -m 755 newdir'
+                },
+                description: 'Create new directory',
+                needsPath: true
+            },
+            touch: {
+                base: 'touch',
+                options: {
+                    'a': 'Change access time only',
+                    'm': 'Change modification time only',
+                    'c': 'Do not create file'
+                },
+                examples: {
+                    'basic': 'touch newfile.txt',
+                    'multiple': 'touch file1.txt file2.txt',
+                    'timestamp': 'touch -m file.txt'
+                },
+                description: 'Create a new empty file or update file timestamps',
+                needsPath: true
+            },
+            cat: {
+                base: 'cat',
+                options: {
+                    'n': 'Number all lines',
+                    'b': 'Number non-blank lines',
+                    'E': 'Show line endings'
+                }
+            },
+            echo: {
+                base: 'echo',
+                options: {
+                    'n': 'No newline',
+                    'e': 'Enable interpretation of backslash escapes',
+                    'E': 'Disable interpretation of backslash escapes'
+                }
+            },
+            nano: {
+                base: 'nano',
+                options: {
+                    'B': 'Backup file on save',
+                    'l': 'Enable line numbers',
+                    'v': 'View mode (read-only)',
+                    'w': 'Disable word wrap'
+                },
+                examples: {
+                    'basic': 'nano file.txt',
+                    'with-line-numbers': 'nano -l file.txt',
+                    'read-only': 'nano -v file.txt',
+                    'no-word-wrap': 'nano -w file.txt'
+                },
+                description: 'Simple text editor for the command line',
+                needsPath: true
+            },
+            // File Operations
+            ls: {
+                base: 'ls',
+                options: {
+                    'l': 'Long listing format',
+                    'a': 'Show hidden files',
+                    'h': 'Human readable sizes',
+                    'R': 'Recursive listing',
+                    'A': 'Show hidden files (except . and ..)'
+                },
+                examples: {
+                    'basic': 'ls',
+                    'show-hidden': 'ls -a',
+                    'detailed-hidden': 'ls -la',
+                    'almost-all': 'ls -A',
+                    'human-readable': 'ls -lh'
+                },
+                description: 'List directory contents, use -a or -A to show hidden files',
+                needsPath: false
+            },
+            cp: {
+                base: 'cp',
+                options: {
+                    'r': 'Recursive copy',
+                    'i': 'Interactive (prompt before overwrite)',
+                    'v': 'Verbose output',
+                    'p': 'Preserve attributes'
+                }
+            },
+            mv: {
+                base: 'mv',
+                options: {
+                    'i': 'Interactive (prompt before overwrite)',
+                    'v': 'Verbose output',
+                    'n': 'No overwrite',
+                    'u': 'Update only if source is newer'
+                }
+            },
+            rm: {
+                base: 'rm',
+                options: {
+                    'r': 'Recursive removal',
+                    'f': 'Force removal',
+                    'i': 'Interactive mode',
+                    'v': 'Verbose output'
+                }
+            },
+            chmod: {
+                base: 'chmod',
+                options: {
+                    'R': 'Recursive',
+                    'v': 'Verbose'
+                },
+                mode: true,
+                examples: {
+                    'file': 'chmod 755 file.txt',
+                    'directory': 'chmod -R 755 directory'
+                }
+            },
+
+            // System Information
+            uname: {
+                base: 'uname',
+                options: {
+                    'a': 'All information',
+                    'r': 'Kernel release',
+                    'n': 'Network hostname',
+                    'm': 'Machine hardware',
+                    'p': 'Processor type'
+                }
+            },
+            df: {
+                base: 'df',
+                options: {
+                    'h': 'Human readable',
+                    'T': 'Show filesystem type',
+                    'a': 'Show all filesystems',
+                    'i': 'Show inode info'
+                }
+            },
+            top: {
+                base: 'top',
+                options: {
+                    'b': 'Batch mode',
+                    'n': 'Number of iterations',
+                    'p': 'Monitor specific PIDs',
+                    'u': 'Show specific user processes'
+                }
+            },
+            free: {
+                base: 'free',
+                options: {
+                    'h': 'Human readable',
+                    'm': 'Show in MB',
+                    'g': 'Show in GB',
+                    's': 'Update continuously'
+                }
+            },
+            ifconfig: {
+                base: 'ifconfig',
+                options: {
+                    'a': 'Show all interfaces',
+                    'v': 'Verbose output',
+                    's': 'Short list',
+                    'u': 'Show interface status'
+                }
+            },
+
+            // User Management
+            adduser: {
+                base: 'adduser',
+                options: {
+                    'system': 'Create a system user',
+                    'group': 'Create a user group',
+                    'home': 'Specify home directory',
+                    'shell': 'Specify shell',
+                    'disabled-password': 'No password login',
+                    'disabled-login': 'No login allowed',
+                    'gecos': 'GECOS field',
+                    'ingroup': 'Add user to existing group'
+                },
+                examples: {
+                    'basic': 'adduser username',
+                    'system user': 'adduser --system username',
+                    'with group': 'adduser --ingroup groupname username',
+                    'system account': 'adduser --system --group --no-create-home username'
+                },
+                description: 'Create a new user account (interactive, Debian-based systems)',
+                needsPath: false,
+                additionalInputs: [
+                    {
+                        id: 'username',
+                        label: 'Username',
+                        type: 'text',
+                        placeholder: 'Enter username'
+                    },
+                    {
+                        id: 'group',
+                        label: 'Group (optional)',
+                        type: 'text',
+                        placeholder: 'groupname',
+                        flag: 'ingroup'
+                    }
+                ]
+            },
+            deluser: {
+                base: 'deluser',
+                options: {
+                    'remove-home': 'Remove home directory',
+                    'remove-all-files': 'Remove all files owned by user',
+                    'backup': 'Backup files before removing',
+                    'system': 'Only remove if system user'
+                },
+                examples: {
+                    'basic': 'deluser username',
+                    'with-home': 'deluser --remove-home username',
+                    'with-backup': 'deluser --backup --remove-home username',
+                    'system-user': 'deluser --system username'
+                },
+                description: 'Delete a user account and related files (Debian-based systems)',
+                needsPath: false
+            },
+            passwd: {
+                base: 'passwd',
+                options: {
+                    'l': 'Lock account',
+                    'u': 'Unlock account',
+                    'd': 'Delete password',
+                    'e': 'Expire password'
+                }
+            },
+            groups: {
+                base: 'groups',
+                options: {
+                    'a': 'Show all groups',
+                    'r': 'Real ID',
+                    'g': 'Print group IDs'
+                }
+            },
+            sudo: {
+                base: 'sudo',
+                options: {
+                    'i': 'Simulate initial login',
+                    's': 'Run shell',
+                    'u': 'Run command as a different user',
+                    'k': 'Reset timestamp (forget sudo password)',
+                    'v': 'Validate and update timestamp',
+                    'l': 'List user privileges',
+                    'S': 'Read password from stdin'
+                },
+                examples: {
+                    'basic': 'sudo command',
+                    'as user': 'sudo -u username command',
+                    'shell': 'sudo -i',
+                    'list privileges': 'sudo -l',
+                    'reset password': 'sudo -k'
+                },
+                description: 'Execute a command as another user (typically root)',
+                needsPath: false,
+                additionalInputs: [
+                    {
+                        id: 'command',
+                        label: 'Command to Execute',
+                        type: 'text',
+                        placeholder: 'Enter command to run as root'
+                    },
+                    {
+                        id: 'username',
+                        label: 'Run as User (optional)',
+                        type: 'text',
+                        placeholder: 'username',
+                        flag: 'u'
+                    }
+                ]
+            },
+            su: {
+                base: 'su',
+                options: {
+                    'l': 'Provide a login environment',
+                    'c': 'Pass a command',
+                    'm': 'Preserve environment',
+                    'p': 'Preserve environment',
+                    's': 'Specify shell'
+                },
+                examples: {
+                    'basic': 'su',
+                    'as user': 'su username',
+                    'with command': 'su -c "command"',
+                    'login shell': 'su -l',
+                    'preserve env': 'su -p'
+                },
+                description: 'Switch user or become superuser',
+                needsPath: false,
+                additionalInputs: [
+                    {
+                        id: 'username',
+                        label: 'Username (optional)',
+                        type: 'text',
+                        placeholder: 'Leave empty for root'
+                    },
+                    {
+                        id: 'command',
+                        label: 'Command (optional)',
+                        type: 'text',
+                        placeholder: 'Command to execute as user',
+                        flag: 'c'
+                    }
+                ]
+            },
+            tail: {
+                base: 'tail',
+                options: {
+                    'n': 'Number of lines to show',
+                    'f': 'Follow file changes',
+                    'q': 'Quiet mode',
+                    'v': 'Verbose mode'
+                },
+                examples: {
+                    'basic': 'tail file.txt',
+                    'follow': 'tail -f file.txt',
+                    'lines': 'tail -n 20 file.txt'
+                },
+                description: 'Output the last part of files',
+                needsPath: true
+            },
+            head: {
+                base: 'head',
+                options: {
+                    'n': 'Number of lines to show',
+                    'q': 'Quiet mode',
+                    'v': 'Verbose mode'
+                },
+                examples: {
+                    'basic': 'head file.txt',
+                    'lines': 'head -n 20 file.txt'
+                },
+                description: 'Output the first part of files',
+                needsPath: true
+            },
+            less: {
+                base: 'less',
+                options: {
+                    'N': 'Show line numbers',
+                    'S': 'Chop long lines',
+                    'i': 'Case-insensitive search',
+                    'X': 'Leave content on screen'
+                },
+                examples: {
+                    'basic': 'less file.txt',
+                    'with-numbers': 'less -N file.txt',
+                    'multiple': 'less file1.txt file2.txt'
+                },
+                description: 'View file content with pagination',
+                needsPath: true
+            },
+            // Compression
+            tar: {
+                base: 'tar',
+                options: {
+                    'c': 'Create archive',
+                    'x': 'Extract archive',
+                    'v': 'Verbose output',
+                    'f': 'Specify filename',
+                    'z': 'Use gzip compression'
+                },
+                examples: {
+                    'create': 'tar -cvf archive.tar files/',
+                    'create-gzip': 'tar -czvf archive.tar.gz files/',
+                    'extract': 'tar -xvf archive.tar',
+                    'extract-gzip': 'tar -xzvf archive.tar.gz'
+                },
+                description: 'Create or extract tar archives, optionally with compression',
+                needsPath: true
+            },
+            gzip: {
+                base: 'gzip',
+                options: {
+                    'd': 'Decompress',
+                    'k': 'Keep original file',
+                    'v': 'Verbose output',
+                    'r': 'Recursive (for directories)'
+                },
+                examples: {
+                    'compress': 'gzip file.txt',
+                    'decompress': 'gzip -d file.txt.gz',
+                    'keep-original': 'gzip -k file.txt'
+                },
+                description: 'Compress or decompress files using gzip format',
+                needsPath: true
+            },
+            zip: {
+                base: 'zip',
+                options: {
+                    'r': 'Recursive (for directories)',
+                    'e': 'Encrypt',
+                    'v': 'Verbose output',
+                    'u': 'Update existing archive'
+                },
+                examples: {
+                    'basic': 'zip archive.zip file.txt',
+                    'directory': 'zip -r archive.zip directory/',
+                    'encrypted': 'zip -e archive.zip file.txt'
+                },
+                description: 'Create zip archives with optional encryption',
+                needsPath: true
+            },
+            unzip: {
+                base: 'unzip',
+                options: {
+                    'l': 'List contents',
+                    'q': 'Quiet mode',
+                    't': 'Test archive',
+                    'd': 'Extract to directory'
+                },
+                examples: {
+                    'basic': 'unzip archive.zip',
+                    'list': 'unzip -l archive.zip',
+                    'extract-to': 'unzip archive.zip -d /target/directory'
+                },
+                description: 'Extract zip archives',
+                needsPath: true
+            },
+            // Add these new user management commands
+            usermod: {
+                base: 'usermod',
+                options: {
+                    'G': 'Add to supplementary groups',
+                    'L': 'Lock user account',
+                    'U': 'Unlock user account',
+                    's': 'Change login shell',
+                    'd': 'Change home directory'
+                },
+                examples: {
+                    'add-to-group': 'usermod -aG docker username',
+                    'change-shell': 'usermod -s /bin/bash username',
+                    'lock-account': 'usermod -L username'
+                },
+                description: 'Modify user account settings',
+                needsPath: false
+            },
+            groupadd: {
+                base: 'groupadd',
+                options: {
+                    'g': 'Specify GID',
+                    'f': 'Force creation',
+                    'r': 'Create system group',
+                    'p': 'Set group password'
+                },
+                examples: {
+                    'basic': 'groupadd developers',
+                    'with-gid': 'groupadd -g 1001 developers',
+                    'system': 'groupadd -r systemgroup'
+                },
+                description: 'Create a new group',
+                needsPath: false
+            },
+            groupdel: {
+                base: 'groupdel',
+                options: {
+                    'f': 'Force removal',
+                    'R': 'Remove group from chroot directory'
+                },
+                examples: {
+                    'basic': 'groupdel developers',
+                    'force': 'groupdel -f developers'
+                },
+                description: 'Delete a group',
+                needsPath: false
+            },
+            chown: {
+                base: 'chown',
+                options: {
+                    'R': 'Recursive',
+                    'v': 'Verbose output',
+                    'f': 'Suppress error messages',
+                    'h': 'Affect symbolic links'
+                },
+                examples: {
+                    'basic': 'chown user:group file.txt',
+                    'recursive': 'chown -R user:group directory/',
+                    'user-only': 'chown user file.txt'
+                },
+                description: 'Change file owner and group',
+                needsPath: true
+            },
+            id: {
+                base: 'id',
+                options: {
+                    'u': 'Print user ID',
+                    'g': 'Print group ID',
+                    'G': 'Print all group IDs',
+                    'n': 'Print names instead of numbers'
+                },
+                examples: {
+                    'basic': 'id username',
+                    'user-id': 'id -u username',
+                    'group-names': 'id -Gn username'
+                },
+                description: 'Print user and group information',
+                needsPath: false
+            },
+            'sudo passwd': {
+                base: 'sudo passwd',
+                options: {
+                    'l': 'Lock the user account',
+                    'u': 'Unlock the user account',
+                    'd': 'Delete password',
+                    'e': 'Expire password',
+                    'n': 'Set minimum password lifetime',
+                    'x': 'Set maximum password lifetime',
+                    'w': 'Set warning period',
+                    'i': 'Set inactive period'
+                },
+                examples: {
+                    'basic': 'sudo passwd username',
+                    'lock account': 'sudo passwd -l username',
+                    'unlock account': 'sudo passwd -u username',
+                    'expire password': 'sudo passwd -e username',
+                    'root password': 'sudo passwd root'
+                },
+                description: 'Set or change user password (requires root privileges)',
+                needsPath: false,
+                additionalInputs: [
+                    {
+                        id: 'username',
+                        label: 'Username',
+                        type: 'text',
+                        placeholder: 'Enter username (or root)'
+                    }
+                ]
+            }
+        };
+
+        // Event listeners for dropdowns
+        document.querySelectorAll('select').forEach(select => {
+            select.addEventListener('change', (e) => {
+                // Clear other dropdowns when one is selected
+                document.querySelectorAll('select').forEach(otherSelect => {
+                    if (otherSelect !== e.target) {
+                        otherSelect.value = '';
+                    }
+                });
+                
+                // Clear the command display
+                document.getElementById('generatedCommand').textContent = '';
+                
+                // Update the command builder
+                updateCommandBuilder(e);
+            });
+        });
+
+        function updateCommandBuilder(e) {
+            const command = e.target.value;
+            const template = commandTemplates[command];
+            const optionsContainer = document.getElementById('optionsContainer');
+            const commandInfo = document.getElementById('commandInfo');
+            
+            // Clear existing options
+            optionsContainer.innerHTML = '';
+            
+            if (template) {
+                // Show command info
+                commandInfo.style.display = 'block';
+                document.getElementById('commandDescription').textContent = template.description;
+                
+                // Show examples
+                const examplesHtml = Object.entries(template.examples)
+                    .map(([name, example]) => `<div><span class="text-gray-500">${name}:</span> ${example}</div>`)
+                    .join('');
+                document.getElementById('commandExamples').innerHTML = examplesHtml;
+                
+                // Show path input if needed
+                const pathInput = document.getElementById('pathInput');
+                pathInput.style.display = template.needsPath ? 'block' : 'none';
+                
+                // Add additional inputs if they exist
+                if (template.additionalInputs) {
+                    template.additionalInputs.forEach(input => {
+                        const div = document.createElement('div');
+                        div.className = 'mb-4';
+                        div.innerHTML = `
+                            <label class="block text-sm text-gray-300 mb-2">${input.label}:</label>
+                            <input type="text" 
+                                   id="${input.id}" 
+                                   class="w-full bg-gray-700 text-gray-100 px-3 py-2 rounded-lg border-2 border-gray-600 focus:border-green-400 focus:ring-0 transition-all"
+                                   placeholder="${input.placeholder}"
+                                   data-flag="${input.flag || ''}"
+                            >
+                        `;
+                        optionsContainer.appendChild(div);
+                    });
+                }
+                
+                // Create checkboxes for each option
+                Object.entries(template.options).forEach(([flag, description]) => {
+                    const div = document.createElement('div');
+                    div.innerHTML = `
+                        <label class="inline-flex items-center">
+                            <input type="checkbox" class="form-checkbox" data-flag="${flag}">
+                            <span class="ml-2">-${flag} (${description})</span>
+                        </label>
+                    `;
+                    optionsContainer.appendChild(div);
+                });
+
+                // Add mode input for chmod
+                if (template.mode) {
+                    const modeInput = document.createElement('div');
+                    modeInput.innerHTML = `
+                        <label class="block mt-2">
+                            Mode:
+                            <input type="text" id="modeInput" class="bg-gray-800 text-green-400 p-1 rounded ml-2" 
+                                   placeholder="e.g., 755">
+                        </label>
+                    `;
+                    optionsContainer.appendChild(modeInput);
+                }
+
+                // Add event listeners
+                optionsContainer.querySelectorAll('input').forEach(input => {
+                    input.addEventListener('input', generateCommand);
+                    input.addEventListener('change', generateCommand);
+                });
+                
+                if (template.mode) {
+                    document.getElementById('modeInput').addEventListener('input', generateCommand);
+                }
+            } else {
+                commandInfo.style.display = 'none';
+            }
+        }
+
+        function generateCommand() {
+            const selectedCommand = document.querySelector('#commandSelect').value;
+            
+            if (selectedCommand && commandTemplates[selectedCommand]) {
+                let command = commandTemplates[selectedCommand].base;
+                const template = commandTemplates[selectedCommand];
+                
+                // Handle additional inputs
+                if (template.additionalInputs) {
+                    const inputs = template.additionalInputs.map(input => {
+                        const element = document.getElementById(input.id);
+                        const value = element?.value?.trim();
+                        if (!value) return '';
+                        
+                        if (input.flag) {
+                            return `-${input.flag} "${value}"`;
+                        }
+                        
+                        // Special handling for sudo/su commands
+                        if (selectedCommand === 'sudo' && input.id === 'command') {
+                            return value;
+                        }
+                        if (selectedCommand === 'su' && input.id === 'username') {
+                            return value;
+                        }
+                        if (selectedCommand === 'su' && input.id === 'command') {
+                            return `-c "${value}"`;
+                        }
+                        
+                        return value;
+                    }).filter(Boolean);
+                    
+                    if (inputs.length > 0) {
+                        command += ' ' + inputs.join(' ');
+                    }
+                }
+                
+                // Handle checkboxes
+                const flags = [];
+                document.querySelectorAll('input[type="checkbox"]:checked').forEach(checkbox => {
+                    flags.push('-' + checkbox.dataset.flag);
+                });
+                
+                if (flags.length > 0) {
+                    // For su/sudo, put flags before the command
+                    if (selectedCommand === 'sudo' || selectedCommand === 'su') {
+                        const commandParts = command.split(' ');
+                        const baseCommand = commandParts[0];
+                        const restCommand = commandParts.slice(1).join(' ');
+                        command = `${baseCommand} ${flags.join(' ')} ${restCommand}`;
+                    } else {
+                        command += ' ' + flags.join(' ');
+                    }
+                }
+                
+                document.getElementById('generatedCommand').textContent = command.trim();
+            }
+        }
+
+        // Copy command functionality
+        document.getElementById('copyCommand').addEventListener('click', () => {
+            const command = document.getElementById('generatedCommand').textContent;
+            if (command) {
+                navigator.clipboard.writeText(command).then(() => {
+                    const button = document.getElementById('copyCommand');
+                    button.textContent = 'Copied!';
+                    button.classList.add('bg-green-700');
+                    setTimeout(() => {
+                        button.textContent = 'Copy Command';
+                        button.classList.remove('bg-green-700');
+                    }, 2000);
+                });
+            }
+        });
+
+        // Add keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey && e.key === 'c') {
+                document.getElementById('copyCommand').click();
+            }
+        });
+    </script>
+</body>
+</html> 

@@ -6,28 +6,66 @@ document.addEventListener("DOMContentLoaded", () => {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
     
-    const letters = "01abcdefghijklmnopqrstuvwxyz";
-    const fontSize = 16;
+    // Improved character set with better visibility
+    const letters = "アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲンヌ0123456789";
+    const fontSize = 16; // Increased font size for better visibility
     const columns = Math.floor(canvas.width / fontSize);
     const drops = new Array(columns).fill(1);
     
-    function drawMatrix() {
-        ctx.fillStyle = "rgba(0, 0, 0, 0.15)"; // Slightly slower fade-out
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = "#00ff00";
-        ctx.font = `${fontSize}px monospace`;
+    // Add gradient effect
+    const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+    gradient.addColorStop(0, '#0f0'); // Bright green at top
+    gradient.addColorStop(1, '#003300'); // Darker green at bottom
     
+    function drawMatrix() {
+        ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        ctx.font = `${fontSize}px "MS Gothic", monospace`;
+        
         drops.forEach((y, i) => {
-            const text = letters[Math.floor(Math.random() * letters.length)];
             const x = i * fontSize;
-            ctx.fillText(text, x, y);
-            drops[i] = y > canvas.height || Math.random() > 0.98 ? 0 : y + fontSize;
+            
+            // Only create 3 characters for the trail (lead + 2 trail)
+            for (let j = 0; j < 3; j++) {
+                const text = letters[Math.floor(Math.random() * letters.length)];
+                const yPos = y - (j * fontSize);
+                
+                if (j === 0) {
+                    // Leading character
+                    ctx.fillStyle = "rgba(0, 255, 0, 0.8)";
+                    ctx.shadowBlur = 2;
+                    ctx.shadowColor = "rgba(0, 255, 0, 0.5)";
+                } else {
+                    // Trail characters with quick fade
+                    ctx.shadowBlur = 0;
+                    ctx.fillStyle = `rgba(0, 255, 0, ${0.3 / j})`;
+                }
+                
+                ctx.fillText(text, x, yPos);
+            }
+            
+            // Slower fall speed
+            if (y > canvas.height && Math.random() > 0.99) {
+                drops[i] = 0;
+            } else {
+                drops[i] += fontSize * 0.15;
+            }
         });
     }
     
-    setInterval(drawMatrix, 40);
+    // Smoother animation
+    requestAnimationFrame(function animate() {
+        drawMatrix();
+        requestAnimationFrame(animate);
+    });
     
-
+    // Resize handler
+    window.addEventListener('resize', () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    });
+    
     // Smooth Tile Expansion
     document.querySelectorAll(".topic-card").forEach((card) => {
         card.addEventListener("click", () => {
@@ -171,27 +209,12 @@ function copyPassword() {
         return;
     }
 
-    navigator.clipboard.writeText(passw
-
-    function copyPassword() {
-        let password = document.getElementById("generated-password").textContent;
-
-        if (!password) {
-            alert("No password generated yet!");
-            return;
-        }
-
-        navigator.clipboard.writeText(password).then(() => {
-            alert("Password copied to clipboard!");
-        }).catch(err => {
-            console.error("Copy failed", err);
-        });
-    }
-
-
-
-
-
+    navigator.clipboard.writeText(password).then(() => {
+        alert("Password copied to clipboard!");
+    }).catch(err => {
+        console.error("Copy failed", err);
+    });
+}
 
 // Generate Fake Hash (Base64)
 function generateHash() {

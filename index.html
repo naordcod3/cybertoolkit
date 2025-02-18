@@ -3,110 +3,322 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <br>
     <title>THE DARK WEB</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="globals.css">
     <link rel="stylesheet" href="styles.css">
+    <link rel="preload" href="/styles/main.css" as="style">
+
     <link rel="icon" type="image/png" href="images/icon.png">
 </head>
-<body class="bg-black text-green-400 font-mono">
+<body class="bg-gray-900 text-gray-100 font-sans min-h-screen">
     <!-- Matrix Background -->
-    <canvas id="matrix" class="fixed top-0 left-0 w-full h-full -z-10"></canvas>
+    <canvas id="matrix" class="fixed top-0 left-0 w-full h-full opacity-20 -z-10"></canvas>
 
-    <!-- Progress Bar -->
-    <div id="progress-bar" class="fixed top-0 left-0 w-0 h-1 bg-green-400 transition-all"></div>
-
-    
-    <!--navigation bar (from nav.html)-->
+    <!-- Navigation -->
     <div id="nav-placeholder"></div>
+    
+    <!-- Sidebar placeholder -->
+    <div id="sidebar-placeholder"></div>
+
+    <!-- Main content -->
+    <main class="container mx-auto px-4 sm:px-6 lg:px-8 pb-96">
+        <!-- Hero Section -->
+        <section class="text-center mt-20 mb-16">
+            <h1 class="text-6xl font-bold mb-6 bg-gradient-to-r from-green-400 to-blue-500 bg-clip-text text-transparent">
+                Welcome to the Cyber Underground
+            </h1>
+            <p class="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+                The Dark Web is a hidden part of the internet, cloaked in layers of encryption. 
+                It's a space for privacy, anonymity, and cybersecurity challenges.
+            </p>
+        </section>
+
+        <!-- Features Grid -->
+        <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-16 auto-rows-fr">
+            <!-- Hacking Tools Card -->
+            <a href="hacking-tools.html" class="group">
+                <div class="bg-gray-800/80 backdrop-blur rounded-xl p-6 shadow-lg border-l-4 border-green-400 transition-all duration-200 hover:shadow-xl hover:bg-gray-800 hover:scale-[1.02] h-full">
+                    <div class="flex items-center gap-4 mb-4">
+                        <i class="fas fa-tools text-3xl text-green-400 group-hover:text-blue-400 transition-colors"></i>
+                        <h2 class="text-2xl font-bold text-green-400 group-hover:text-blue-400 transition-colors">Hacking Tools</h2>
+                    </div>
+                    <p class="text-gray-300">Explore powerful pentesting tools and security utilities.</p>
+                </div>
+            </a>
+
+            <!-- Assignments Card -->
+            <a href="assignments.html" class="group">
+                <div class="bg-gray-800/80 backdrop-blur rounded-xl p-6 shadow-lg border-l-4 border-green-400 transition-all duration-200 hover:shadow-xl hover:bg-gray-800 hover:scale-[1.02] h-full">
+                    <div class="flex items-center gap-4 mb-4">
+                        <i class="fas fa-book text-3xl text-green-400 group-hover:text-blue-400 transition-colors"></i>
+                        <h2 class="text-2xl font-bold text-green-400 group-hover:text-blue-400 transition-colors">Assignments</h2>
+                    </div>
+                    <p class="text-gray-300">Master cybersecurity through hands-on challenges.</p>
+                </div>
+            </a>
+
+            <!-- Network Configs Card -->
+            <a href="router-config.html" class="group">
+                <div class="bg-gray-800/80 backdrop-blur rounded-xl p-6 shadow-lg border-l-4 border-green-400 transition-all duration-200 hover:shadow-xl hover:bg-gray-800 hover:scale-[1.02] h-full">
+                    <div class="flex items-center gap-4 mb-4">
+                        <i class="fas fa-network-wired text-3xl text-green-400 group-hover:text-blue-400 transition-colors"></i>
+                        <h2 class="text-2xl font-bold text-green-400 group-hover:text-blue-400 transition-colors">Network Configs</h2>
+                    </div>
+                    <p class="text-gray-300">Generate router & switch configurations instantly.</p>
+                </div>
+            </a>
+
+            <!-- PowerShell Card -->
+            <a href="powershell.html" class="group">
+                <div class="bg-gray-800/80 backdrop-blur rounded-xl p-6 shadow-lg border-l-4 border-green-400 transition-all duration-200 hover:shadow-xl hover:bg-gray-800 hover:scale-[1.02] h-full">
+                    <div class="flex items-center gap-4 mb-4">
+                        <i class="fas fa-terminal text-3xl text-green-400 group-hover:text-blue-400 transition-colors"></i>
+                        <h2 class="text-2xl font-bold text-green-400 group-hover:text-blue-400 transition-colors">PowerShell</h2>
+                    </div>
+                    <p class="text-gray-300">Automate Windows systems with powerful scripts.</p>
+                </div>
+            </a>
+
+            <!-- Active Directory Card -->
+            <a href="ad-generator.html" class="group">
+                <div class="bg-gray-800/80 backdrop-blur rounded-xl p-6 shadow-lg border-l-4 border-green-400 transition-all duration-200 hover:shadow-xl hover:bg-gray-800 hover:scale-[1.02] h-full">
+                    <div class="flex items-center gap-4 mb-4">
+                        <i class="fas fa-users-cog text-3xl text-green-400 group-hover:text-blue-400 transition-colors"></i>
+                        <h2 class="text-2xl font-bold text-green-400 group-hover:text-blue-400 transition-colors">Active Directory</h2>
+                    </div>
+                    <p class="text-gray-300">Generate AD configurations and manage users.</p>
+                </div>
+            </a>
+
+            <!-- Quiz Card -->
+            <a href="quiz.html" class="group">
+                <div class="bg-gray-800/80 backdrop-blur rounded-xl p-6 shadow-lg border-l-4 border-green-400 transition-all duration-200 hover:shadow-xl hover:bg-gray-800 hover:scale-[1.02] h-full">
+                    <div class="flex items-center gap-4 mb-4">
+                        <i class="fas fa-question-circle text-3xl text-green-400 group-hover:text-blue-400 transition-colors"></i>
+                        <h2 class="text-2xl font-bold text-green-400 group-hover:text-blue-400 transition-colors">Quiz</h2>
+                    </div>
+                    <p class="text-gray-300">Prepare for the big test with practice questions.</p>
+                </div>
+            </a>
+
+            <!-- Windows Server Card -->
+            <div class="group relative" id="windowsCard">
+                <div class="bg-gray-800/80 backdrop-blur rounded-xl p-6 shadow-lg border-l-4 border-green-400 transition-all duration-200 hover:shadow-xl hover:bg-gray-800 hover:scale-[1.02] cursor-pointer h-full flex flex-col">
+                    <div class="flex items-center gap-4 mb-4">
+                        <i class="fab fa-windows text-3xl text-green-400 group-hover:text-blue-400 transition-colors"></i>
+                        <h2 class="text-2xl font-bold text-green-400 group-hover:text-blue-400 transition-colors">Windows Server</h2>
+                        <i class="fas fa-chevron-down text-green-400 ml-auto transform transition-transform duration-200" id="windowsArrow"></i>
+                    </div>
+                    <p class="text-gray-300 mb-4">Master Windows Server administration.</p>
+                    
+                    <!-- Dropdown Links -->
+                    <div class="space-y-2 hidden absolute top-full left-0 w-full bg-gray-800/95 backdrop-blur rounded-lg shadow-xl border border-green-400/20 p-4 mt-2 z-10" id="windowsDropdown">
+                        <a href="windows-server-basics.html" class="flex items-center gap-2 text-gray-300 hover:text-white py-2 transition-colors">
+                            <i class="fas fa-book text-green-400"></i>
+                            <span>Server Basics</span>
+                        </a>
+                        <a href="active-directory.html" class="flex items-center gap-2 text-gray-300 hover:text-white py-2 transition-colors">
+                            <i class="fas fa-users text-green-400"></i>
+                            <span>Active Directory</span>
+                        </a>
+                        <a href="powershell.html" class="flex items-center gap-2 text-gray-300 hover:text-white py-2 transition-colors">
+                            <i class="fas fa-terminal text-green-400"></i>
+                            <span>PowerShell Commands</span>
+                        </a>
+                        <a href="storage.html" class="flex items-center gap-2 text-gray-300 hover:text-white py-2 transition-colors">
+                            <i class="fas fa-hdd text-green-400"></i>
+                            <span>Storage</span>
+                        </a>
+                        <a href="ad-generator.html" class="flex items-center gap-2 text-gray-300 hover:text-white py-2 transition-colors">
+                            <i class="fas fa-users-cog text-green-400"></i>
+                            <span>AD Generator</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Networking Card -->
+            <div class="group relative" id="networkingCard">
+                <div class="bg-gray-800/80 backdrop-blur rounded-xl p-6 shadow-lg border-l-4 border-green-400 transition-all duration-200 hover:shadow-xl hover:bg-gray-800 hover:scale-[1.02] cursor-pointer h-full flex flex-col">
+                    <div class="flex items-center gap-4 mb-4">
+                        <i class="fas fa-network-wired text-3xl text-green-400 group-hover:text-blue-400 transition-colors"></i>
+                        <h2 class="text-2xl font-bold text-green-400 group-hover:text-blue-400 transition-colors">Networking</h2>
+                        <i class="fas fa-chevron-down text-green-400 ml-auto transform transition-transform duration-200" id="networkingArrow"></i>
+                    </div>
+                    <p class="text-gray-300 mb-4">Configure network devices and protocols.</p>
+                    
+                    <!-- Dropdown Links -->
+                    <div class="space-y-2 hidden absolute top-full left-0 w-full bg-gray-800/95 backdrop-blur rounded-lg shadow-xl border border-green-400/20 p-4 mt-2 z-10" id="networkingDropdown">
+                        <a href="network-basics.html" class="flex items-center gap-2 text-gray-300 hover:text-white py-2 transition-colors">
+                            <i class="fas fa-book text-green-400"></i>
+                            <span>Network Basics</span>
+                        </a>
+                        <a href="router-config.html" class="flex items-center gap-2 text-gray-300 hover:text-white py-2 transition-colors">
+                            <i class="fas fa-server text-green-400"></i>
+                            <span>Router Config</span>
+                        </a>
+                        <a href="switch-config.html" class="flex items-center gap-2 text-gray-300 hover:text-white py-2 transition-colors">
+                            <i class="fas fa-network-wired text-green-400"></i>
+                            <span>Switch Config</span>
+                        </a>
+                        <a href="switch3-config.html" class="flex items-center gap-2 text-gray-300 hover:text-white py-2 transition-colors">
+                            <i class="fas fa-cog text-green-400"></i>
+                            <span>L3 Switch Config</span>
+                        </a>
+                        <a href="layer3-nac.html" class="flex items-center gap-2 text-gray-300 hover:text-white py-2 transition-colors">
+                            <i class="fas fa-lock text-green-400"></i>
+                            <span>L3 NAC Config</span>
+                        </a>
+                        <a href="ospf-generator.html" class="flex items-center gap-2 text-gray-300 hover:text-white py-2 transition-colors">
+                            <i class="fas fa-globe text-green-400"></i>
+                            <span>OSPF Config</span>
+                        </a>
+                        <a href="dhcp-generator.html" class="flex items-center gap-2 text-gray-300 hover:text-white py-2 transition-colors">
+                            <i class="fas fa-wifi text-green-400"></i>
+                            <span>DHCP Config</span>
+                        </a>
+                        <a href="ports.html" class="flex items-center gap-2 text-gray-300 hover:text-white py-2 transition-colors">
+                            <i class="fas fa-plug text-green-400"></i>
+                            <span>Common Ports</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Linux Card -->
+            <div class="group relative" id="linuxCard">
+                <div class="bg-gray-800/80 backdrop-blur rounded-xl p-6 shadow-lg border-l-4 border-green-400 transition-all duration-200 hover:shadow-xl hover:bg-gray-800 hover:scale-[1.02] cursor-pointer h-full flex flex-col">
+                    <div class="flex items-center gap-4 mb-4">
+                        <i class="fab fa-linux text-3xl text-green-400 group-hover:text-blue-400 transition-colors"></i>
+                        <h2 class="text-2xl font-bold text-green-400 group-hover:text-blue-400 transition-colors">Linux</h2>
+                        <i class="fas fa-chevron-down text-green-400 ml-auto transform transition-transform duration-200" id="linuxArrow"></i>
+                    </div>
+                    <p class="text-gray-300 mb-4">Access Linux commands and resources.</p>
+                    
+                    <!-- Dropdown Links -->
+                    <div class="space-y-2 hidden absolute top-full left-0 w-full bg-gray-800/95 backdrop-blur rounded-lg shadow-xl border border-green-400/20 p-4 mt-2 z-10" id="linuxDropdown">
+                        <a href="linux-basics.html" class="flex items-center gap-2 text-gray-300 hover:text-white py-2 transition-colors">
+                            <i class="fas fa-book text-green-400"></i>
+                            <span>Linux Basics</span>
+                        </a>
+                        <a href="linux-resources.html" class="flex items-center gap-2 text-gray-300 hover:text-white py-2 transition-colors">
+                            <i class="fas fa-tools text-green-400"></i>
+                            <span>Linux Resources</span>
+                        </a>
+                        <a href="linux-generator.html" class="flex items-center gap-2 text-gray-300 hover:text-white py-2 transition-colors">
+                            <i class="fas fa-terminal text-green-400"></i>
+                            <span>Command Generator</span>
+                        </a>
+                        <a href="linux-backgrounds.html" class="flex items-center gap-2 text-gray-300 hover:text-white py-2 transition-colors">
+                            <i class="fas fa-image text-green-400"></i>
+                            <span>Backgrounds</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Matrix Controller -->
+    <div id="matrixController" class="fixed top-4 right-4 bg-gray-800/90 backdrop-blur p-4 rounded-lg shadow-lg border border-green-400/20 z-50">
+        <div class="flex flex-col space-y-2">
+            <select id="matrixStyle" class="bg-gray-700 text-green-400 p-2 rounded border border-green-400/20">
+                <option value="matrix">Matrix Style</option>
+                <option value="numbers">Numbers Only</option>
+                <option value="asian">Asian Characters</option>
+            </select>
+            <button id="toggleMatrix" class="bg-green-400 hover:bg-green-500 text-gray-900 px-4 py-2 rounded transition-colors">
+                Toggle Effect
+            </button>
+        </div>
+    </div>
 
     <script>
-        // Load navigation bar from nav.html
+        // Load navigation and sidebar using fetch instead of jQuery
         fetch("nav.html")
             .then(response => response.text())
             .then(data => {
                 document.getElementById("nav-placeholder").innerHTML = data;
             });
+
+        fetch("sidebar.html")
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("sidebar-placeholder").innerHTML = data;
+                
+                // Initialize sidebar matrix controls
+                const sidebarStyleSelect = document.getElementById('sidebarMatrixStyle');
+                const sidebarToggleButton = document.getElementById('sidebarToggleMatrix');
+                
+                if (sidebarStyleSelect && sidebarToggleButton) {
+                    sidebarStyleSelect.addEventListener('change', (e) => {
+                        if (window.matrixEffect) {
+                            window.matrixEffect.setCharacterSet(e.target.value);
+                        }
+                    });
+
+                    sidebarToggleButton.addEventListener('click', () => {
+                        if (window.matrixEffect) {
+                            const isActive = window.matrixEffect.toggleEffect();
+                            sidebarToggleButton.textContent = isActive ? 'Turn Off Matrix' : 'Turn On Matrix';
+                        }
+                    });
+                }
+
+                // Initialize system info
+                fetch('https://api.ipify.org?format=json')
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById('user-ip').textContent = data.ip;
+                    })
+                    .catch(() => {
+                        document.getElementById('user-ip').textContent = 'Offline';
+                    });
+
+                const systemInfo = `${navigator.platform}`;
+                document.getElementById('system-info').textContent = systemInfo;
+            });
     </script>
-    
+    <script src="matrix.js"></script>
+    <script>
+        // Function to handle card clicks
+        function setupCardDropdown(cardId, dropdownId, arrowId) {
+            const card = document.getElementById(cardId);
+            const dropdown = document.getElementById(dropdownId);
+            const arrow = document.getElementById(arrowId);
 
-    <!-- Hero Section -->
-    <section class="hero text-center mt-20 px-4">
-        <h1 class="text-5xl font-bold neon-text glitch-text">Welcome to the Cyber Underground</h1>
-        <p class="text-lg mt-4 w-3/4 mx-auto text-green-300 font-semibold">
-            The Dark Web is a hidden part of the internet, cloaked in layers of encryption. 
-            It’s a space for privacy, anonymity, and cybersecurity challenges.
-        </p>
-    </section>    
+            card.addEventListener('click', function(e) {
+                // Prevent clicks on links from triggering the toggle
+                if (e.target.tagName === 'A' || e.target.closest('a')) {
+                    return;
+                }
+                
+                // Toggle only this dropdown
+                const isHidden = dropdown.classList.contains('hidden');
+                
+                // Close all dropdowns
+                document.querySelectorAll('[id$="Dropdown"]').forEach(el => {
+                    el.classList.add('hidden');
+                });
+                document.querySelectorAll('[id$="Arrow"]').forEach(el => {
+                    el.style.transform = 'rotate(0deg)';
+                });
+                
+                // If this dropdown was hidden, show it (otherwise it stays hidden)
+                if (isHidden) {
+                    dropdown.classList.remove('hidden');
+                    arrow.style.transform = 'rotate(180deg)';
+                }
+            });
+        }
 
-    <!-- Features Section (Updated Tiles) -->
-     <!-- Full Site Navigation Tiles -->
-     <section class="features grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-4/5 mx-auto mt-12">
-
-        <a href="hacking-tools.html">
-            <div class="card">
-                <h2 class="text-2xl font-bold">🛠️ Hacking Tools</h2>
-                <p>Explore powerful pentesting tools.</p>
-            </div>
-        </a>
-
-        <a href="assignments.html">
-            <div class="card">
-                <h2 class="text-2xl font-bold">📖 Assignments</h2>
-                <p>Master cybersecurity challenges.</p>
-            </div>
-        </a>
-
-        <a href="router-config.html">
-            <div class="card">
-                <h2 class="text-2xl font-bold">🌐 Network Configs</h2>
-                <p>Quickly generate router & switch configs.</p>
-            </div>
-        </a>
-
-        <a href="powershell.html">
-            <div class="card">
-                <h2 class="text-2xl font-bold">⚡ PowerShell</h2>
-                <p>Automate & manage Windows systems.</p>
-            </div>
-        </a>
-
-        <a href="storage.html">
-            <div class="card">
-                <h2 class="text-2xl font-bold">💾 Storage Management</h2>
-                <p>Learn about disk partitions & volumes.</p>
-            </div>
-        </a>
-
-        <a href="ad-generator.html">
-            <div class="card">
-                <h2 class="text-2xl font-bold">🖥️ Active Directory</h2>
-                <p>Generate AD configurations instantly.</p>
-            </div>
-        </a>
-
-        <a href="dhcp-generator.html">
-            <div class="card">
-                <h2 class="text-2xl font-bold">📡 DHCP Config</h2>
-                <p>Set up DHCP servers and clients.</p>
-            </div>
-        </a>
-
-        <a href="ports.html">
-            <div class="card">
-                <h2 class="text-2xl font-bold">🔢 Common Ports</h2>
-                <p>Reference key networking ports.</p>
-            </div>
-        </a>
-
-        <a href="https://threatmap.checkpoint.com/" target="_blank">
-            <div class="card">
-                <h2 class="text-2xl font-bold">🌎 Cyber Threat Map</h2>
-                <p>View real-time cyber attack data.</p>
-            </div>
-        </a>
-
-    </section>
-
+        // Setup each card dropdown independently
+        setupCardDropdown('linuxCard', 'linuxDropdown', 'linuxArrow');
+        setupCardDropdown('windowsCard', 'windowsDropdown', 'windowsArrow');
+        setupCardDropdown('networkingCard', 'networkingDropdown', 'networkingArrow');
+    </script>
 </body>
 </html>

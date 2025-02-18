@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding Network Basics</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles/globals.css">
+</head>
+<body class="bg-gray-900 text-gray-100 font-sans min-h-screen">
+    <!-- Navigation placeholder -->
+    <div id="nav-placeholder"></div>
+
+    <!-- Main content -->
+    <div class="max-w-5xl mx-auto px-4 py-8 mt-20">
+        <section class="text-center mb-16">
+            <h1 class="text-6xl font-bold mb-6 bg-gradient-to-r from-green-400 to-blue-500 bg-clip-text text-transparent">
+                Understanding Network Basics
+            </h1>
+            <p class="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+                A simple guide to understanding how computer networks work
+            </p>
+        </section>
+
+        <!-- Basic Concepts Card -->
+        <div class="bg-gray-800/80 backdrop-blur rounded-xl shadow-lg overflow-hidden border-l-4 border-green-400 p-6 mb-8">
+            <h2 class="text-3xl font-bold text-green-400 mb-4">Basic Concepts</h2>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="bg-gray-900/50 p-4 rounded-lg">
+                    <h3 class="text-xl font-semibold text-green-400 mb-2">IP Address</h3>
+                    <p class="text-gray-300">Think of an IP address like a house address. Every device on a network has its own unique address (e.g., 192.168.1.1).</p>
+                </div>
+                <div class="bg-gray-900/50 p-4 rounded-lg">
+                    <h3 class="text-xl font-semibold text-green-400 mb-2">Subnet Mask</h3>
+                    <p class="text-gray-300">Like a postal code, it defines which part of the IP address represents the network and which part represents the host.</p>
+                </div>
+                <div class="bg-gray-900/50 p-4 rounded-lg">
+                    <h3 class="text-xl font-semibold text-green-400 mb-2">Gateway</h3>
+                    <p class="text-gray-300">The gateway is like the post office - it's where devices send data when communicating with other networks.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Network Devices Card -->
+        <div class="bg-gray-800/80 backdrop-blur rounded-xl shadow-lg overflow-hidden border-l-4 border-green-400 p-6 mb-8">
+            <h2 class="text-3xl font-bold text-green-400 mb-4">Network Devices</h2>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="bg-gray-900/50 p-4 rounded-lg">
+                    <h3 class="text-xl font-semibold text-green-400 mb-2">Router</h3>
+                    <p class="text-gray-300">Routes data between different networks, like a traffic controller directing cars between different roads.</p>
+                </div>
+                <div class="bg-gray-900/50 p-4 rounded-lg">
+                    <h3 class="text-xl font-semibold text-green-400 mb-2">Switch</h3>
+                    <p class="text-gray-300">Connects devices within the same network, like a power strip connecting multiple devices to power.</p>
+                </div>
+                <div class="bg-gray-900/50 p-4 rounded-lg">
+                    <h3 class="text-xl font-semibold text-green-400 mb-2">Firewall</h3>
+                    <p class="text-gray-300">Acts as a security guard, controlling what traffic is allowed in and out of your network.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Network Tools Card -->
+        <div class="bg-gray-800/80 backdrop-blur rounded-xl shadow-lg overflow-hidden border-l-4 border-green-400 p-6 mb-8">
+            <h2 class="text-3xl font-bold text-green-400 mb-4">Common Network Tools</h2>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-gray-900/50 p-4 rounded-lg">
+                    <h3 class="text-xl font-semibold text-green-400 mb-2">ping</h3>
+                    <p class="text-gray-300">Tests if a device is reachable on the network.</p>
+                    <code class="block bg-black/30 p-2 mt-2 rounded">ping 192.168.1.1</code>
+                </div>
+                <div class="bg-gray-900/50 p-4 rounded-lg">
+                    <h3 class="text-xl font-semibold text-green-400 mb-2">ipconfig/ifconfig</h3>
+                    <p class="text-gray-300">Shows your network configuration.</p>
+                    <code class="block bg-black/30 p-2 mt-2 rounded">ipconfig /all</code>
+                </div>
+            </div>
+        </div>
+
+        <!-- Network Game -->
+        <div class="bg-gray-800/80 backdrop-blur rounded-xl shadow-lg overflow-hidden border-l-4 border-green-400 p-6 mb-8 mt-12">
+            <h2 class="text-3xl font-bold text-green-400 mb-8">IP Address Calculator Game</h2>
+            <div class="space-y-6">
+                <div class="bg-gray-900/50 p-4 rounded-lg text-center">
+                    <h3 class="text-xl font-semibold text-green-400 mb-4">Calculate the Network Address</h3>
+                    <div class="mb-4">
+                        <p class="text-lg mb-2">Given IP: <span id="given-ip" class="text-yellow-400">192.168.1.100</span></p>
+                        <p class="text-lg mb-4">Subnet Mask: <span id="subnet-mask" class="text-yellow-400">255.255.255.0</span></p>
+                    </div>
+                    <input type="text" id="network-answer" placeholder="Enter network address" 
+                           class="bg-gray-700 text-white px-4 py-2 rounded-lg w-64 text-center">
+                    <button id="check-network" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg ml-2">
+                        Check Answer
+                    </button>
+                    <button id="new-ip" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg ml-2">
+                        New IP
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Load navigation
+        $(function(){
+            $("#nav-placeholder").load("nav.html");
+        });
+
+        // IP Address Game Logic
+        document.addEventListener('DOMContentLoaded', function() {
+            const givenIpDisplay = document.getElementById('given-ip');
+            const subnetMaskDisplay = document.getElementById('subnet-mask');
+            const networkAnswer = document.getElementById('network-answer');
+            const checkNetworkBtn = document.getElementById('check-network');
+            const newIpBtn = document.getElementById('new-ip');
+
+            function generateIP() {
+                const ip = `192.168.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}`;
+                givenIpDisplay.textContent = ip;
+                return ip;
+            }
+
+            function calculateNetwork(ip, mask) {
+                const ipParts = ip.split('.').map(Number);
+                const maskParts = mask.split('.').map(Number);
+                return ipParts.map((part, i) => part & maskParts[i]).join('.');
+            }
+
+            function checkAnswer() {
+                const correctNetwork = calculateNetwork(givenIpDisplay.textContent, subnetMaskDisplay.textContent);
+                if (networkAnswer.value === correctNetwork) {
+                    alert('Correct! That is the right network address! 🎉');
+                } else {
+                    alert(`Not quite right. The correct answer is ${correctNetwork}. Keep trying! 💪`);
+                }
+            }
+
+            checkNetworkBtn.addEventListener('click', checkAnswer);
+            newIpBtn.addEventListener('click', () => {
+                generateIP();
+                networkAnswer.value = '';
+            });
+
+            // Initialize with first IP
+            generateIP();
+        });
+    </script>
+</body>
+</html> 

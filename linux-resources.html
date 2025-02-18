@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linux Resources | The Dark Web</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/png" href="images/icon.png">
+</head>
+<body class="bg-gray-900 text-gray-100 font-sans min-h-screen">
+    <!-- Subtle Matrix Background -->
+    <canvas id="matrix" class="fixed top-0 left-0 w-full h-full opacity-20 -z-10"></canvas>
+
+    <!-- Navigation placeholder -->
+    <div id="nav-placeholder"></div>
+    <script>
+        $(function(){
+            $("#nav-placeholder").load("nav.html");
+        });
+    </script>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 py-8 mt-20">
+        <!-- Hero Section -->
+        <section class="text-center mb-16">
+            <h1 class="text-6xl font-bold mb-6 bg-gradient-to-r from-green-400 to-blue-500 bg-clip-text text-transparent">
+                Linux Resources
+            </h1>
+            <p class="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+                A curated collection of security-focused Linux distributions, tools, and learning resources.
+            </p>
+        </section>
+
+        <!-- Security-Focused Distributions -->
+        <section class="mb-16">
+            <h2 class="text-3xl font-bold mb-8 text-green-400">Security-Focused Distributions</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="bg-gray-800/80 backdrop-blur rounded-xl shadow-lg overflow-hidden border-l-4 border-green-400">
+                    <div class="p-6">
+                        <div class="flex items-center gap-4 mb-4">
+                            <i class="fas fa-shield-alt text-3xl text-green-400"></i>
+                            <h3 class="text-2xl font-bold text-green-400">Kali Linux</h3>
+                        </div>
+                        <p class="text-gray-300 mb-4">Advanced Penetration Testing Distribution with over 600 pre-installed tools.</p>
+                        <a href="https://www.kali.org/downloads/" target="_blank" 
+                           class="inline-flex items-center gap-2 text-green-400 hover:text-green-300 transition-colors">
+                            <span>Download</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="bg-gray-800/80 backdrop-blur rounded-xl shadow-lg overflow-hidden border-l-4 border-green-400">
+                    <div class="p-6">
+                        <div class="flex items-center gap-4 mb-4">
+                            <i class="fas fa-feather-alt text-3xl text-green-400"></i>
+                            <h3 class="text-2xl font-bold text-green-400">ParrotOS</h3>
+                        </div>
+                        <p class="text-gray-300 mb-4">Security and Development Distribution focused on privacy and lightweight performance.</p>
+                        <a href="https://www.parrotsec.org/download/" target="_blank"
+                           class="inline-flex items-center gap-2 text-green-400 hover:text-green-300 transition-colors">
+                            <span>Download</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="bg-gray-800/80 backdrop-blur rounded-xl shadow-lg overflow-hidden border-l-4 border-green-400">
+                    <div class="p-6">
+                        <div class="flex items-center gap-4 mb-4">
+                            <i class="fas fa-user-ninja text-3xl text-green-400"></i>
+                            <h3 class="text-2xl font-bold text-green-400">BlackArch Linux</h3>
+                        </div>
+                        <p class="text-gray-300 mb-4">Arch-based Penetration Testing Distribution with over 2800 tools.</p>
+                        <a href="https://blackarch.org/downloads.html" target="_blank"
+                           class="inline-flex items-center gap-2 text-green-400 hover:text-green-300 transition-colors">
+                            <span>Download</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Essential Security Tools -->
+        <section class="mb-16">
+            <h2 class="text-3xl font-bold mb-8 text-green-400">Essential Security Tools</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="bg-gray-800/80 backdrop-blur rounded-xl shadow-lg overflow-hidden border-l-4 border-green-400">
+                    <div class="p-6">
+                        <div class="flex items-center gap-4 mb-4">
+                            <i class="fas fa-network-wired text-3xl text-green-400"></i>
+                            <h3 class="text-2xl font-bold text-green-400">Wireshark</h3>
+                        </div>
+                        <p class="text-gray-300 mb-4">The world's foremost network protocol analyzer for security analysis.</p>
+                        <a href="https://www.wireshark.org/#download" target="_blank"
+                           class="inline-flex items-center gap-2 text-green-400 hover:text-green-300 transition-colors">
+                            <span>Download</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="bg-gray-800/80 backdrop-blur rounded-xl shadow-lg overflow-hidden border-l-4 border-green-400">
+                    <div class="p-6">
+                        <div class="flex items-center gap-4 mb-4">
+                            <i class="fas fa-search text-3xl text-green-400"></i>
+                            <h3 class="text-2xl font-bold text-green-400">Nmap</h3>
+                        </div>
+                        <p class="text-gray-300 mb-4">Powerful network scanner and security auditing tool.</p>
+                        <a href="https://nmap.org/download.html" target="_blank"
+                           class="inline-flex items-center gap-2 text-green-400 hover:text-green-300 transition-colors">
+                            <span>Download</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="bg-gray-800/80 backdrop-blur rounded-xl shadow-lg overflow-hidden border-l-4 border-green-400">
+                    <div class="p-6">
+                        <div class="flex items-center gap-4 mb-4">
+                            <i class="fas fa-bug text-3xl text-green-400"></i>
+                            <h3 class="text-2xl font-bold text-green-400">Metasploit</h3>
+                        </div>
+                        <p class="text-gray-300 mb-4">The world's most used penetration testing framework.</p>
+                        <a href="https://www.metasploit.com/download" target="_blank"
+                           class="inline-flex items-center gap-2 text-green-400 hover:text-green-300 transition-colors">
+                            <span>Download</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Learning Resources -->
+        <section class="mb-16">
+            <h2 class="text-3xl font-bold mb-8 text-green-400">Learning Resources</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="bg-gray-800/80 backdrop-blur rounded-xl shadow-lg overflow-hidden border-l-4 border-green-400">
+                    <div class="p-6">
+                        <div class="flex items-center gap-4 mb-4">
+                            <i class="fas fa-terminal text-3xl text-green-400"></i>
+                            <h3 class="text-2xl font-bold text-green-400">Linux Journey</h3>
+                        </div>
+                        <p class="text-gray-300 mb-4">Master the command line with interactive Linux tutorials.</p>
+                        <a href="https://linuxjourney.com/" target="_blank"
+                           class="inline-flex items-center gap-2 text-green-400 hover:text-green-300 transition-colors">
+                            <span>Start Learning</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="bg-gray-800/80 backdrop-blur rounded-xl shadow-lg overflow-hidden border-l-4 border-green-400">
+                    <div class="p-6">
+                        <div class="flex items-center gap-4 mb-4">
+                            <i class="fas fa-box text-3xl text-green-400"></i>
+                            <h3 class="text-2xl font-bold text-green-400">Hack The Box</h3>
+                        </div>
+                        <p class="text-gray-300 mb-4">Hands-on cybersecurity training with real-world scenarios.</p>
+                        <a href="https://www.hackthebox.com/" target="_blank"
+                           class="inline-flex items-center gap-2 text-green-400 hover:text-green-300 transition-colors">
+                            <span>Start Hacking</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="bg-gray-800/80 backdrop-blur rounded-xl shadow-lg overflow-hidden border-l-4 border-green-400">
+                    <div class="p-6">
+                        <div class="flex items-center gap-4 mb-4">
+                            <i class="fas fa-graduation-cap text-3xl text-green-400"></i>
+                            <h3 class="text-2xl font-bold text-green-400">TryHackMe</h3>
+                        </div>
+                        <p class="text-gray-300 mb-4">Learn cybersecurity through guided, gamified real-world scenarios.</p>
+                        <a href="https://tryhackme.com/" target="_blank"
+                           class="inline-flex items-center gap-2 text-green-400 hover:text-green-300 transition-colors">
+                            <span>Start Learning</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Matrix Controller -->
+    <div id="matrixController" class="fixed bottom-4 right-4 bg-gray-800/90 backdrop-blur p-4 rounded-lg shadow-lg border border-green-400/20 z-50">
+        <div class="flex flex-col space-y-2">
+            <select id="matrixStyle" class="bg-gray-700 text-green-400 p-2 rounded border border-green-400/20">
+                <option value="matrix">Matrix Style</option>
+                <option value="numbers">Numbers Only</option>
+                <option value="asian">Asian Characters</option>
+            </select>
+            <button id="toggleMatrix" class="bg-green-400 hover:bg-green-500 text-gray-900 px-4 py-2 rounded transition-colors">
+                Toggle Effect
+            </button>
+        </div>
+    </div>
+
+    <script src="matrix.js"></script>
+    <script>
+        // Initialize Matrix Effect
+        const canvas = document.getElementById('matrix');
+        const matrixEffect = new MatrixEffect(canvas);
+        matrixEffect.setOpacity(0.2);
+
+        const styleSelect = document.getElementById('matrixStyle');
+        const toggleButton = document.getElementById('toggleMatrix');
+        let isMatrixActive = true;
+
+        styleSelect.addEventListener('change', (e) => {
+            matrixEffect.setCharacterSet(e.target.value);
+        });
+
+        toggleButton.addEventListener('click', () => {
+            isMatrixActive = !isMatrixActive;
+            matrixEffect.toggleEffect(isMatrixActive);
+            toggleButton.textContent = isMatrixActive ? 'Turn Off' : 'Turn On';
+        });
+    </script>
+</body>
+</html> 

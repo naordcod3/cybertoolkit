@@ -7,11 +7,12 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="styles.css">
-    <link rel="icon" type="image/png" href="images/icon.png">
+    <link rel="stylesheet" href="styles/globals.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+      <link rel="stylesheet" href="styles/globals.css">
 </head>
-<body class="bg-black text-green-400 font-mono">
-
-    <!-- Load Navigation -->
+<body class="bg-gray-900 text-gray-100 font-sans min-h-screen">
     <div id="nav-placeholder"></div>
     <script>
         fetch("nav.html")
@@ -21,51 +22,136 @@
             });
     </script>
 
-    <div class="container mx-auto p-6 mt-16">
-        <h1 class="text-center text-4xl mb-6">⚡ PowerShell Active Directory Generator</h1>
-        <p class="text-center mb-4 text-lg">Generate AD scripts for users, groups, OUs, GPOs, and installations.</p>
+    <div class="container mx-auto px-4 py-8 max-w-6xl mt-16">
+        <h1 class="text-5xl font-bold text-center mb-12 bg-gradient-to-r from-green-400 to-blue-500 bg-clip-text text-transparent">
+            PowerShell AD Generator
+        </h1>
 
-        <!-- Generator Form -->
-        <div class="border border-green-400 p-6 rounded-lg bg-black">
-            <h2 class="text-2xl mb-4 text-green-200">🔧 Generate PowerShell Commands</h2>
+        <!-- Main Content Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+            <!-- Left Panel: Configuration Types -->
+            <div class="lg:col-span-1 space-y-6">
+                <div class="bg-gray-800 rounded-xl p-6 shadow-lg">
+                    <h2 class="text-xl font-semibold mb-4 text-green-400">AD Settings</h2>
+                    
+                    <!-- Task Selection -->
+                    <div class="space-y-3">
+                        <label class="block text-sm text-gray-300">Select Task:</label>
+                        <select id="task" class="w-full bg-gray-700 text-gray-100 px-3 py-2 rounded-lg border-2 border-gray-600 focus:border-green-400 focus:ring-0 transition-all">
+                            <option value="install-ad">Install Active Directory</option>
+                            <option value="create-user">Create AD Users</option>
+                            <option value="create-ou">Create Organizational Units</option>
+                            <option value="create-group">Create Security Groups</option>
+                            <option value="create-gpo">Create Group Policy Object (GPO)</option>
+                            <option value="add-user-group">Add Users to Security Group</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
 
-            <label class="block mb-2">📌 Select Task:</label>
-            <select id="task" class="w-full bg-black border border-green-400 p-2 mb-4 text-green-400">
-                <option value="install-ad">Install Active Directory</option>
-                <option value="create-user">Create AD Users</option>
-                <option value="create-ou">Create Organizational Units</option>
-                <option value="create-group">Create Security Groups</option>
-                <option value="create-gpo">Create Group Policy Object (GPO)</option>
-                <option value="add-user-group">Add Users to Security Group</option>
-            </select>
+            <!-- Center Panel: Configuration Options -->
+            <div class="lg:col-span-3 space-y-4">
+                <!-- AD Configuration -->
+                <div class="bg-gray-800 rounded-xl p-4 shadow-lg">
+                    <h2 class="text-lg font-semibold mb-2 text-green-400">AD Configuration</h2>
+                    <div class="space-y-4">
+                        <div id="names-field" class="hidden">
+                            <label class="block text-sm text-gray-300 mb-2">Name(s) (comma-separated):</label>
+                            <input type="text" id="names" 
+                                   class="w-full bg-gray-700 text-gray-100 px-3 py-2 rounded-lg border-2 border-gray-600 focus:border-green-400 focus:ring-0 transition-all"
+                                   placeholder="e.g. HRUser1, ITUser2">
+                        </div>
+                        <div id="ou-path-field" class="hidden">
+                            <label class="block text-sm text-gray-300 mb-2">OU Path:</label>
+                            <input type="text" id="ou-path" 
+                                   class="w-full bg-gray-700 text-gray-100 px-3 py-2 rounded-lg border-2 border-gray-600 focus:border-green-400 focus:ring-0 transition-all"
+                                   placeholder='e.g. "OU=IT,DC=gil,DC=com"'>
+                        </div>
+                        <div id="group-name-field" class="hidden">
+                            <label class="block text-sm text-gray-300 mb-2">Group Name:</label>
+                            <input type="text" id="group-name" 
+                                   class="w-full bg-gray-700 text-gray-100 px-3 py-2 rounded-lg border-2 border-gray-600 focus:border-green-400 focus:ring-0 transition-all"
+                                   placeholder="e.g. HRGroup">
+                        </div>
+                    </div>
+                </div>
 
-            <label class="block mb-2">📝 Enter Name(s) (comma-separated for multiple entries):</label>
-            <input type="text" id="names" class="w-full bg-black border border-green-400 p-2 mb-4 text-green-400" placeholder="e.g. HRUser1, ITUser2">
+                <!-- Generated Configuration -->
+                <div class="bg-gray-800 rounded-xl p-4 shadow-lg">
+                    <h2 class="text-lg font-semibold mb-2 text-green-400">Generated PowerShell Script</h2>
+                    <div class="bg-gray-900 rounded-lg p-3 font-mono border-2 border-gray-700">
+                        <pre id="output-powershell" class="text-green-400 whitespace-pre-wrap text-sm language-powershell"></pre>
+                    </div>
 
-            <label class="block mb-2">📌 Enter OU Path (for Users/Groups/OUs):</label>
-            <input type="text" id="ou-path" class="w-full bg-black border border-green-400 p-2 mb-4 text-green-400" placeholder='e.g. "OU=IT,DC=gil,DC=com"'>
-
-            <label class="block mb-2">🔑 Enter Group Name (for Groups/GPOs):</label>
-            <input type="text" id="group-name" class="w-full bg-black border border-green-400 p-2 mb-4 text-green-400" placeholder="e.g. HRGroup">
-
-            <button onclick="generateCommands()" class="w-full bg-green-700 hover:bg-green-500 text-black p-2 mt-4 rounded">
-                🚀 Generate PowerShell Script
-            </button>
-
-            <p class="mt-4 text-green-300">💻 Generated PowerShell Command:</p>
-            <pre id="output-powershell" class="bg-black p-3 border border-green-400 rounded text-green-300"></pre>
-
-            <button onclick="copyToClipboard()" class="w-full bg-blue-700 hover:bg-blue-500 text-black p-2 mt-4 rounded">
-                📋 Copy to Clipboard
-            </button>
-
-            <button onclick="downloadScript()" class="w-full bg-yellow-700 hover:bg-yellow-500 text-black p-2 mt-4 rounded">
-                ⬇️ Download Script
-            </button>
+                    <!-- Action Buttons -->
+                    <div class="flex space-x-2 mt-2">
+                        <button onclick="generateCommands()" class="flex-1 bg-green-500 hover:bg-green-600 text-white px-4 py-1 rounded-lg transition-colors flex items-center justify-center space-x-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                            </svg>
+                            <span>Generate</span>
+                        </button>
+                        <button onclick="copyToClipboard()" class="flex-1 bg-gray-600 hover:bg-gray-700 text-white px-4 py-1 rounded-lg transition-colors flex items-center justify-center space-x-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                            </svg>
+                            <span>Copy</span>
+                        </button>
+                        <button onclick="downloadScript()" class="flex-1 bg-yellow-600 hover:bg-yellow-700 text-white px-4 py-1 rounded-lg transition-colors flex items-center justify-center space-x-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                            </svg>
+                            <span>Download</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
     <script>
+        document.getElementById("task").addEventListener("change", function() {
+            const task = this.value;
+            const namesField = document.getElementById("names-field");
+            const ouPathField = document.getElementById("ou-path-field");
+            const groupNameField = document.getElementById("group-name-field");
+
+            // Hide all fields first
+            namesField.classList.add("hidden");
+            ouPathField.classList.add("hidden");
+            groupNameField.classList.add("hidden");
+
+            // Show relevant fields based on task
+            switch(task) {
+                case "install-ad":
+                    // No fields needed
+                    break;
+                case "create-user":
+                    namesField.classList.remove("hidden");
+                    ouPathField.classList.remove("hidden");
+                    break;
+                case "create-ou":
+                    namesField.classList.remove("hidden");
+                    ouPathField.classList.remove("hidden");
+                    break;
+                case "create-group":
+                    groupNameField.classList.remove("hidden");
+                    ouPathField.classList.remove("hidden");
+                    break;
+                case "create-gpo":
+                    groupNameField.classList.remove("hidden");
+                    ouPathField.classList.remove("hidden");
+                    break;
+                case "add-user-group":
+                    namesField.classList.remove("hidden");
+                    groupNameField.classList.remove("hidden");
+                    break;
+            }
+        });
+
+        // Trigger the change event on page load to set initial state
+        document.getElementById("task").dispatchEvent(new Event('change'));
+
         function generateCommands() {
             let task = document.getElementById("task").value;
             let names = document.getElementById("names").value.split(",").map(n => n.trim());
@@ -93,17 +179,16 @@
                 case "add-user-group":
                     command = names.map(n => `Add-ADGroupMember -Identity "${groupName}" -Members "${n}"`).join("\n");
                     break;
-                default:
-                    command = "⚠️ Please select a valid task!";
             }
 
             document.getElementById("output-powershell").textContent = command;
+            Prism.highlightAll();
         }
 
         function copyToClipboard() {
             let text = document.getElementById("output-powershell").textContent;
             navigator.clipboard.writeText(text);
-            alert("📋 PowerShell command copied!");
+            alert("PowerShell command copied to clipboard!");
         }
 
         function downloadScript() {
@@ -115,6 +200,5 @@
             link.click();
         }
     </script>
-
 </body>
 </html>

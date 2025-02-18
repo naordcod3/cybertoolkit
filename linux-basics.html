@@ -1,0 +1,1470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding Linux Permissions</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles/globals.css">
+</head>
+<body class="bg-gray-900 text-gray-100 font-sans min-h-screen">
+    <!-- Navigation placeholder -->
+    <div id="nav-placeholder"></div>
+
+    <!-- Main content -->
+    <div class="max-w-5xl mx-auto px-4 py-8 mt-20">
+        <section class="text-center mb-16">
+            <h1 class="text-6xl font-bold mb-6 bg-gradient-to-r from-green-400 to-blue-500 bg-clip-text text-transparent">
+                Linux Basics
+            </h1>
+            <p class="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+                Master the fundamentals of Linux
+            </p>
+        </section>
+
+        <!-- Topic Selector -->
+        <div class="bg-gray-800/80 backdrop-blur rounded-xl shadow-lg overflow-hidden border-l-4 border-green-400 p-6 mb-8">
+            <h2 class="text-3xl font-bold text-green-400 mb-8">Choose a Topic</h2>
+            <div class="flex flex-wrap gap-4">
+                <button class="topic-btn bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg transition-colors active" data-topic="permissions">
+                    Permissions
+                </button>
+                <button class="topic-btn bg-gray-700 hover:bg-gray-600 text-white px-6 py-3 rounded-lg transition-colors" data-topic="storage">
+                    Storage
+                </button>
+                <button class="topic-btn bg-gray-700 hover:bg-gray-600 text-white px-6 py-3 rounded-lg transition-colors" data-topic="apt">
+                    APT
+                </button>
+                <button class="topic-btn bg-gray-700 hover:bg-gray-600 text-white px-6 py-3 rounded-lg transition-colors" data-topic="pentest">
+                    Penetration Testing
+                </button>
+                <!-- Add more topic buttons as needed -->
+            </div>
+        </div>
+
+        <!-- Topic Content -->
+        <div id="permissions-content" class="topic-section">
+            <!-- Move all existing permissions content here -->
+            <!-- Basic Concepts Card -->
+            <div class="bg-gray-800/80 backdrop-blur rounded-xl shadow-lg overflow-hidden border-l-4 border-green-400 p-6 mb-8">
+                <h2 class="text-3xl font-bold text-green-400 mb-4">Basic Concepts</h2>
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="bg-gray-900/50 p-4 rounded-lg">
+                        <h3 class="text-xl font-semibold text-green-400 mb-2">Users</h3>
+                        <p class="text-gray-300">Think of users like different people who can log into the computer. Each user has their own "account".</p>
+                    </div>
+                    <div class="bg-gray-900/50 p-4 rounded-lg">
+                        <h3 class="text-xl font-semibold text-green-400 mb-2">Groups</h3>
+                        <p class="text-gray-300">Groups are like teams. Users can be members of different groups, just like people can be on different teams.</p>
+                    </div>
+                    <div class="bg-gray-900/50 p-4 rounded-lg">
+                        <h3 class="text-xl font-semibold text-green-400 mb-2">Permissions</h3>
+                        <p class="text-gray-300">Permissions are like keys that control what users and groups can do with files and folders.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Permission Types Card -->
+            <div class="bg-gray-800/80 backdrop-blur rounded-xl shadow-lg overflow-hidden border-l-4 border-green-400 p-6 mb-8">
+                <h2 class="text-3xl font-bold text-green-400 mb-4">Permission Types</h2>
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="bg-gray-900/50 p-4 rounded-lg">
+                        <h3 class="text-xl font-semibold text-green-400 mb-2">Read (r)</h3>
+                        <p class="text-gray-300">Like being able to:</p>
+                        <ul class="list-disc list-inside text-gray-300 mt-2">
+                            <li>See what's inside a folder</li>
+                            <li>Open and read a file</li>
+                            <li>Copy a file</li>
+                        </ul>
+                    </div>
+                    <div class="bg-gray-900/50 p-4 rounded-lg">
+                        <h3 class="text-xl font-semibold text-green-400 mb-2">Write (w)</h3>
+                        <p class="text-gray-300">Like being able to:</p>
+                        <ul class="list-disc list-inside text-gray-300 mt-2">
+                            <li>Create new files</li>
+                            <li>Modify files</li>
+                            <li>Delete files</li>
+                        </ul>
+                    </div>
+                    <div class="bg-gray-900/50 p-4 rounded-lg">
+                        <h3 class="text-xl font-semibold text-green-400 mb-2">Execute (x)</h3>
+                        <p class="text-gray-300">Like being able to:</p>
+                        <ul class="list-disc list-inside text-gray-300 mt-2">
+                            <li>Enter a folder</li>
+                            <li>Run a program</li>
+                            <li>Use a script</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Permission Numbers Card -->
+            <div class="bg-gray-800/80 backdrop-blur rounded-xl shadow-lg overflow-hidden border-l-4 border-green-400 p-6 mb-8">
+                <h2 class="text-3xl font-bold text-green-400 mb-4">Permission Numbers</h2>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead>
+                            <tr class="bg-gray-900/50">
+                                <th class="p-4 text-green-400">Number</th>
+                                <th class="p-4 text-green-400">Permission</th>
+                                <th class="p-4 text-green-400">Meaning</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-700">
+                            <tr>
+                                <td class="p-4">7</td>
+                                <td class="p-4">rwx</td>
+                                <td class="p-4">Can read, write, and execute</td>
+                            </tr>
+                            <tr>
+                                <td class="p-4">6</td>
+                                <td class="p-4">rw-</td>
+                                <td class="p-4">Can read and write</td>
+                            </tr>
+                            <tr>
+                                <td class="p-4">5</td>
+                                <td class="p-4">r-x</td>
+                                <td class="p-4">Can read and execute</td>
+                            </tr>
+                            <tr>
+                                <td class="p-4">4</td>
+                                <td class="p-4">r--</td>
+                                <td class="p-4">Can only read</td>
+                            </tr>
+                            <tr>
+                                <td class="p-4">0</td>
+                                <td class="p-4">---</td>
+                                <td class="p-4">No permissions</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Common Examples Card -->
+            <div class="bg-gray-800/80 backdrop-blur rounded-xl shadow-lg overflow-hidden border-l-4 border-green-400 p-6">
+                <h2 class="text-3xl font-bold text-green-400 mb-4">Common Examples</h2>
+                <div class="space-y-4">
+                    <div class="bg-gray-900/50 p-4 rounded-lg">
+                        <h3 class="text-xl font-semibold text-green-400 mb-2">chmod 770 folder</h3>
+                        <p class="text-gray-300">
+                            7 (rwx) - Owner can do everything<br>
+                            7 (rwx) - Group can do everything<br>
+                            0 (---) - Others can do nothing
+                        </p>
+                    </div>
+                    <div class="bg-gray-900/50 p-4 rounded-lg">
+                        <h3 class="text-xl font-semibold text-green-400 mb-2">chmod 755 folder</h3>
+                        <p class="text-gray-300">
+                            7 (rwx) - Owner can do everything<br>
+                            5 (r-x) - Group can read and execute<br>
+                            5 (r-x) - Others can read and execute
+                        </p>
+                    </div>
+                    <div class="bg-gray-900/50 p-4 rounded-lg">
+                        <h3 class="text-xl font-semibold text-green-400 mb-2">chmod 644 file</h3>
+                        <p class="text-gray-300">
+                            6 (rw-) - Owner can read and write<br>
+                            4 (r--) - Group can only read<br>
+                            4 (r--) - Others can only read
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Permission Calculator Game -->
+            <div class="bg-gray-800/80 backdrop-blur rounded-xl shadow-lg overflow-hidden border-l-4 border-green-400 p-6 mb-8 mt-12">
+                <h2 class="text-3xl font-bold text-green-400 mb-8">Permission Calculator Game</h2>
+                <div class="space-y-6">
+                    <!-- Permission toggles -->
+                    <div class="grid grid-cols-3 gap-4">
+                        <div class="bg-gray-900/50 p-4 rounded-lg">
+                            <h3 class="text-xl font-semibold text-green-400 mb-2">Owner</h3>
+                            <div class="flex gap-2">
+                                <label class="inline-flex items-center">
+                                    <input type="checkbox" class="permission-toggle" data-position="0" data-value="4">
+                                    <span class="ml-2">Read</span>
+                                </label>
+                                <label class="inline-flex items-center ml-4">
+                                    <input type="checkbox" class="permission-toggle" data-position="0" data-value="2">
+                                    <span class="ml-2">Write</span>
+                                </label>
+                                <label class="inline-flex items-center ml-4">
+                                    <input type="checkbox" class="permission-toggle" data-position="0" data-value="1">
+                                    <span class="ml-2">Execute</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="bg-gray-900/50 p-4 rounded-lg">
+                            <h3 class="text-xl font-semibold text-green-400 mb-2">Group</h3>
+                            <div class="flex gap-2">
+                                <label class="inline-flex items-center">
+                                    <input type="checkbox" class="permission-toggle" data-position="1" data-value="4">
+                                    <span class="ml-2">Read</span>
+                                </label>
+                                <label class="inline-flex items-center ml-4">
+                                    <input type="checkbox" class="permission-toggle" data-position="1" data-value="2">
+                                    <span class="ml-2">Write</span>
+                                </label>
+                                <label class="inline-flex items-center ml-4">
+                                    <input type="checkbox" class="permission-toggle" data-position="1" data-value="1">
+                                    <span class="ml-2">Execute</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="bg-gray-900/50 p-4 rounded-lg">
+                            <h3 class="text-xl font-semibold text-green-400 mb-2">Others</h3>
+                            <div class="flex gap-2">
+                                <label class="inline-flex items-center">
+                                    <input type="checkbox" class="permission-toggle" data-position="2" data-value="4">
+                                    <span class="ml-2">Read</span>
+                                </label>
+                                <label class="inline-flex items-center ml-4">
+                                    <input type="checkbox" class="permission-toggle" data-position="2" data-value="2">
+                                    <span class="ml-2">Write</span>
+                                </label>
+                                <label class="inline-flex items-center ml-4">
+                                    <input type="checkbox" class="permission-toggle" data-position="2" data-value="1">
+                                    <span class="ml-2">Execute</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Result display -->
+                    <div class="bg-gray-900/50 p-4 rounded-lg">
+                        <div class="text-center">
+                            <h3 class="text-xl font-semibold text-green-400 mb-2">Current Permissions</h3>
+                            <div class="text-4xl font-mono space-x-2">
+                                <span id="numeric-permission" class="text-yellow-400">000</span>
+                                <span class="text-gray-500">=</span>
+                                <span id="symbolic-permission" class="text-green-400">---------</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Challenge section -->
+                    <div class="bg-gray-900/50 p-4 rounded-lg">
+                        <div class="text-center">
+                            <h3 class="text-xl font-semibold text-green-400 mb-2">Challenge</h3>
+                            <p class="mb-4">Set the permissions to match this target:</p>
+                            <div class="text-2xl font-mono mb-4">
+                                <span id="target-permission" class="text-blue-400">754</span>
+                            </div>
+                            <button id="check-answer" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg transition-colors">
+                                Check Answer
+                            </button>
+                            <button id="new-challenge" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-colors ml-2">
+                                New Challenge
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="storage-content" class="topic-section hidden">
+            <!-- Add this Basic Storage Concepts section before the other storage content -->
+            <div class="bg-gray-800/80 backdrop-blur rounded-xl shadow-lg overflow-hidden border-l-4 border-green-400 p-6 mb-8">
+                <h2 class="text-3xl font-bold text-green-400 mb-4">Basic Storage Concepts</h2>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <!-- Mount Points Explained -->
+                    <div class="bg-gray-900/50 p-4 rounded-lg">
+                        <h3 class="text-xl font-semibold text-green-400 mb-2">What is a Mount Point?</h3>
+                        <div class="space-y-2">
+                            <p class="text-gray-300">A mount point is like a door that gives you access to a storage device. When you mount a device, you're connecting it to a specific directory in your file system.</p>
+                            <div class="p-2 bg-black/30 rounded mt-2">
+                                <p class="text-gray-300 text-sm">Example: When you plug in a USB drive, it might be mounted at <code class="text-green-400">/media/usb</code>, making its contents accessible through that directory.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Partitions Explained -->
+                    <div class="bg-gray-900/50 p-4 rounded-lg">
+                        <h3 class="text-xl font-semibold text-green-400 mb-2">What are Partitions?</h3>
+                        <div class="space-y-2">
+                            <p class="text-gray-300">Partitions are like separate rooms on a hard drive. Each partition can have its own filesystem and be used for different purposes.</p>
+                            <div class="p-2 bg-black/30 rounded mt-2">
+                                <p class="text-gray-300 text-sm">Common practice: Separate partitions for <code class="text-green-400">/</code> (root), <code class="text-green-400">/home</code> (user files), and <code class="text-green-400">swap</code> (virtual memory)</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- File Systems Explained -->
+                    <div class="bg-gray-900/50 p-4 rounded-lg">
+                        <h3 class="text-xl font-semibold text-green-400 mb-2">Understanding File Systems</h3>
+                        <div class="space-y-2">
+                            <p class="text-gray-300">A file system is like an organizational system for your storage. It determines how data is stored and retrieved.</p>
+                            <div class="p-2 bg-black/30 rounded mt-2">
+                                <p class="text-green-400 font-semibold">Key Features:</p>
+                                <ul class="text-gray-300 text-sm list-disc list-inside">
+                                    <li>File permissions</li>
+                                    <li>File fragmentation handling</li>
+                                    <li>Journaling (crash recovery)</li>
+                                    <li>Maximum file sizes</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Device Naming Logic -->
+                    <div class="bg-gray-900/50 p-4 rounded-lg">
+                        <h3 class="text-xl font-semibold text-green-400 mb-2">Device Naming Logic</h3>
+                        <div class="space-y-2">
+                            <p class="text-gray-300">Linux uses a systematic way to name devices:</p>
+                            <div class="p-2 bg-black/30 rounded mt-2">
+                                <ul class="text-gray-300 text-sm space-y-1">
+                                    <li><code class="text-green-400">sd</code> = SATA/SCSI drives</li>
+                                    <li><code class="text-green-400">hd</code> = (older) IDE drives</li>
+                                    <li><code class="text-green-400">nvme</code> = NVMe SSDs</li>
+                                    <li><code class="text-green-400">a, b, c...</code> = Drive order</li>
+                                    <li><code class="text-green-400">1, 2, 3...</code> = Partition numbers</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Common Scenarios -->
+                    <div class="bg-gray-900/50 p-4 rounded-lg">
+                        <h3 class="text-xl font-semibold text-green-400 mb-2">Common Scenarios</h3>
+                        <div class="space-y-2">
+                            <div class="p-2 bg-black/30 rounded">
+                                <p class="text-green-400">Mounting a USB Drive</p>
+                                <code class="text-gray-300 text-sm block mt-1">sudo mount /dev/sdb1 /media/usb</code>
+                            </div>
+                            <div class="p-2 bg-black/30 rounded">
+                                <p class="text-green-400">Checking Disk Space</p>
+                                <code class="text-gray-300 text-sm block mt-1">df -h /home</code>
+                            </div>
+                            <div class="p-2 bg-black/30 rounded">
+                                <p class="text-green-400">Creating a New Partition</p>
+                                <code class="text-gray-300 text-sm block mt-1">sudo fdisk /dev/sdb</code>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Best Practices -->
+                    <div class="bg-gray-900/50 p-4 rounded-lg">
+                        <h3 class="text-xl font-semibold text-green-400 mb-2">Best Practices</h3>
+                        <div class="space-y-2">
+                            <ul class="text-gray-300 space-y-2">
+                                <li>✓ Always unmount devices before removing them</li>
+                                <li>✓ Regularly check disk space usage</li>
+                                <li>✓ Keep backups before partition changes</li>
+                                <li>✓ Use UUIDs in /etc/fstab for stability</li>
+                            </ul>
+                            <div class="p-2 bg-black/30 rounded mt-2">
+                                <p class="text-gray-300 text-sm">Tip: Use <code class="text-green-400">blkid</code> to get device UUIDs</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Storage content -->
+            <div class="bg-gray-800/80 backdrop-blur rounded-xl shadow-lg overflow-hidden border-l-4 border-green-400 p-6 mb-8">
+                <h2 class="text-3xl font-bold text-green-400 mb-4">Storage Management</h2>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <!-- Common Commands -->
+                    <div class="bg-gray-900/50 p-4 rounded-lg">
+                        <h3 class="text-xl font-semibold text-green-400 mb-2">Common Commands</h3>
+                        <div class="space-y-2">
+                            <div class="p-2 bg-black/30 rounded">
+                                <code class="text-green-400">df -h</code>
+                                <p class="text-gray-300 text-sm mt-1">Shows disk space usage</p>
+                            </div>
+                            <div class="p-2 bg-black/30 rounded">
+                                <code class="text-green-400">du -sh *</code>
+                                <p class="text-gray-300 text-sm mt-1">Shows size of files and directories</p>
+                            </div>
+                            <div class="p-2 bg-black/30 rounded">
+                                <code class="text-green-400">lsblk</code>
+                                <p class="text-gray-300 text-sm mt-1">Lists block devices (drives)</p>
+                            </div>
+                            <div class="p-2 bg-black/30 rounded">
+                                <code class="text-green-400">mount</code>
+                                <p class="text-gray-300 text-sm mt-1">Shows mounted filesystems</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- File Systems -->
+                    <div class="bg-gray-900/50 p-4 rounded-lg">
+                        <h3 class="text-xl font-semibold text-green-400 mb-2">Common File Systems</h3>
+                        <div class="space-y-2">
+                            <div class="p-2 bg-black/30 rounded">
+                                <p class="text-green-400">ext4</p>
+                                <p class="text-gray-300 text-sm">Default Linux filesystem</p>
+                            </div>
+                            <div class="p-2 bg-black/30 rounded">
+                                <p class="text-green-400">xfs</p>
+                                <p class="text-gray-300 text-sm">High-performance filesystem</p>
+                            </div>
+                            <div class="p-2 bg-black/30 rounded">
+                                <p class="text-green-400">btrfs</p>
+                                <p class="text-gray-300 text-sm">Modern filesystem with snapshots</p>
+                            </div>
+                            <div class="p-2 bg-black/30 rounded">
+                                <p class="text-green-400">swap</p>
+                                <p class="text-gray-300 text-sm">Virtual memory space</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mount Points -->
+                    <div class="bg-gray-900/50 p-4 rounded-lg">
+                        <h3 class="text-xl font-semibold text-green-400 mb-2">Common Mount Points</h3>
+                        <div class="space-y-2">
+                            <div class="p-2 bg-black/30 rounded">
+                                <code class="text-green-400">/</code>
+                                <p class="text-gray-300 text-sm">Root directory</p>
+                            </div>
+                            <div class="p-2 bg-black/30 rounded">
+                                <code class="text-green-400">/home</code>
+                                <p class="text-gray-300 text-sm">User home directories</p>
+                            </div>
+                            <div class="p-2 bg-black/30 rounded">
+                                <code class="text-green-400">/mnt</code>
+                                <p class="text-gray-300 text-sm">Temporary mount point</p>
+                            </div>
+                            <div class="p-2 bg-black/30 rounded">
+                                <code class="text-green-400">/media</code>
+                                <p class="text-gray-300 text-sm">Removable media</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Storage Management -->
+                    <div class="bg-gray-900/50 p-4 rounded-lg">
+                        <h3 class="text-xl font-semibold text-green-400 mb-2">Storage Management</h3>
+                        <div class="space-y-2">
+                            <div class="p-2 bg-black/30 rounded">
+                                <code class="text-green-400">fdisk</code>
+                                <p class="text-gray-300 text-sm">Partition management tool</p>
+                            </div>
+                            <div class="p-2 bg-black/30 rounded">
+                                <code class="text-green-400">mkfs</code>
+                                <p class="text-gray-300 text-sm">Create filesystems</p>
+                            </div>
+                            <div class="p-2 bg-black/30 rounded">
+                                <code class="text-green-400">fstab</code>
+                                <p class="text-gray-300 text-sm">Configure automatic mounts</p>
+                            </div>
+                            <div class="p-2 bg-black/30 rounded">
+                                <code class="text-green-400">LVM</code>
+                                <p class="text-gray-300 text-sm">Logical Volume Management</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add this new Device Naming section -->
+            <div class="bg-gray-800/80 backdrop-blur rounded-xl shadow-lg overflow-hidden border-l-4 border-green-400 p-6 mb-8">
+                <h2 class="text-3xl font-bold text-green-400 mb-4">Device Naming</h2>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <!-- Device Names -->
+                    <div class="bg-gray-900/50 p-4 rounded-lg">
+                        <h3 class="text-xl font-semibold text-green-400 mb-2">Drive Names</h3>
+                        <div class="space-y-2">
+                            <div class="p-2 bg-black/30 rounded">
+                                <code class="text-green-400">/dev/sda</code>
+                                <p class="text-gray-300 text-sm mt-1">First SATA/SCSI drive</p>
+                            </div>
+                            <div class="p-2 bg-black/30 rounded">
+                                <code class="text-green-400">/dev/sdb</code>
+                                <p class="text-gray-300 text-sm mt-1">Second SATA/SCSI drive</p>
+                            </div>
+                            <div class="p-2 bg-black/30 rounded">
+                                <code class="text-green-400">/dev/nvme0n1</code>
+                                <p class="text-gray-300 text-sm mt-1">First NVMe drive</p>
+                            </div>
+                            <div class="p-2 bg-black/30 rounded">
+                                <code class="text-green-400">/dev/vda</code>
+                                <p class="text-gray-300 text-sm mt-1">First virtual drive</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Partition Names -->
+                    <div class="bg-gray-900/50 p-4 rounded-lg">
+                        <h3 class="text-xl font-semibold text-green-400 mb-2">Partition Names</h3>
+                        <div class="space-y-2">
+                            <div class="p-2 bg-black/30 rounded">
+                                <code class="text-green-400">/dev/sda1</code>
+                                <p class="text-gray-300 text-sm mt-1">First partition on sda</p>
+                            </div>
+                            <div class="p-2 bg-black/30 rounded">
+                                <code class="text-green-400">/dev/sda2</code>
+                                <p class="text-gray-300 text-sm mt-1">Second partition on sda</p>
+                            </div>
+                            <div class="p-2 bg-black/30 rounded">
+                                <code class="text-green-400">/dev/nvme0n1p1</code>
+                                <p class="text-gray-300 text-sm mt-1">First partition on NVMe drive</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Special Device Paths -->
+                    <div class="bg-gray-900/50 p-4 rounded-lg">
+                        <h3 class="text-xl font-semibold text-green-400 mb-2">Special Device Paths</h3>
+                        <div class="space-y-2">
+                            <div class="p-2 bg-black/30 rounded">
+                                <code class="text-green-400">/dev/null</code>
+                                <p class="text-gray-300 text-sm mt-1">Discards all data written to it</p>
+                            </div>
+                            <div class="p-2 bg-black/30 rounded">
+                                <code class="text-green-400">/dev/zero</code>
+                                <p class="text-gray-300 text-sm mt-1">Provides endless stream of zeros</p>
+                            </div>
+                            <div class="p-2 bg-black/30 rounded">
+                                <code class="text-green-400">/dev/random</code>
+                                <p class="text-gray-300 text-sm mt-1">Generates random numbers</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Device Information -->
+                    <div class="bg-gray-900/50 p-4 rounded-lg">
+                        <h3 class="text-xl font-semibold text-green-400 mb-2">Useful Commands</h3>
+                        <div class="space-y-2">
+                            <div class="p-2 bg-black/30 rounded">
+                                <code class="text-green-400">ls -l /dev/sd*</code>
+                                <p class="text-gray-300 text-sm mt-1">List all SATA devices</p>
+                            </div>
+                            <div class="p-2 bg-black/30 rounded">
+                                <code class="text-green-400">blkid</code>
+                                <p class="text-gray-300 text-sm mt-1">Show block device attributes</p>
+                            </div>
+                            <div class="p-2 bg-black/30 rounded">
+                                <code class="text-green-400">fdisk -l</code>
+                                <p class="text-gray-300 text-sm mt-1">List all partitions</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Storage Game -->
+            <div class="bg-gray-800/80 backdrop-blur rounded-xl shadow-lg overflow-hidden border-l-4 border-green-400 p-6 mb-8 mt-12">
+                <h2 class="text-3xl font-bold text-green-400 mb-8">Device Naming Game</h2>
+                <div class="space-y-6">
+                    <div class="bg-gray-900/50 p-4 rounded-lg text-center">
+                        <h3 class="text-xl font-semibold text-green-400 mb-4">Match the Device Path</h3>
+                        <div id="device-quiz-container" class="mb-4">
+                            <p class="text-lg mb-2">Which device path would you use for: <span id="device-question" class="text-yellow-400"></span></p>
+                            <div class="space-y-2 mt-4">
+                                <button class="device-answer-btn bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-lg w-full text-left"></button>
+                                <button class="device-answer-btn bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-lg w-full text-left"></button>
+                                <button class="device-answer-btn bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-lg w-full text-left"></button>
+                                <button class="device-answer-btn bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-lg w-full text-left"></button>
+                            </div>
+                        </div>
+                        <button id="next-device-question" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg mt-4">
+                            Next Question
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="apt-content" class="topic-section hidden">
+            <!-- Basic APT Concepts Card -->
+            <div class="bg-gray-800/80 backdrop-blur rounded-xl shadow-lg overflow-hidden border-l-4 border-green-400 p-6 mb-8">
+                <h2 class="text-3xl font-bold text-green-400 mb-4">Basic APT Concepts</h2>
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="bg-gray-900/50 p-4 rounded-lg">
+                        <h3 class="text-xl font-semibold text-green-400 mb-2">What is APT?</h3>
+                        <p class="text-gray-300">APT (Advanced Package Tool) is a package management system used in Debian and its derivatives like Ubuntu. It simplifies the process of installing, updating, and removing software.</p>
+                    </div>
+                    <div class="bg-gray-900/50 p-4 rounded-lg">
+                        <h3 class="text-xl font-semibold text-green-400 mb-2">Repositories</h3>
+                        <p class="text-gray-300">Software sources that contain packages. They're like app stores for Linux, containing thousands of pre-configured software packages ready to install.</p>
+                    </div>
+                    <div class="bg-gray-900/50 p-4 rounded-lg">
+                        <h3 class="text-xl font-semibold text-green-400 mb-2">Dependencies</h3>
+                        <p class="text-gray-300">Additional packages required by software to function. APT automatically handles these, installing or updating them as needed.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add this new card in the APT section, after the Basic APT Concepts card -->
+            <div class="bg-gray-800/80 backdrop-blur rounded-xl shadow-lg overflow-hidden border-l-4 border-green-400 p-6 mb-8">
+                <h2 class="text-3xl font-bold text-green-400 mb-4">Package Operations</h2>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <!-- Installation Operations -->
+                    <div class="bg-gray-900/50 p-4 rounded-lg">
+                        <h3 class="text-xl font-semibold text-green-400 mb-2">Installation</h3>
+                        <div class="space-y-2">
+                            <div class="p-2 bg-black/30 rounded">
+                                <code class="text-green-400">sudo apt install package_name</code>
+                                <p class="text-gray-300 text-sm mt-1">Basic installation</p>
+                            </div>
+                            <div class="p-2 bg-black/30 rounded">
+                                <code class="text-green-400">sudo apt install package1 package2</code>
+                                <p class="text-gray-300 text-sm mt-1">Install multiple packages</p>
+                            </div>
+                            <div class="p-2 bg-black/30 rounded">
+                                <code class="text-green-400">sudo apt install ./package.deb</code>
+                                <p class="text-gray-300 text-sm mt-1">Install from .deb file</p>
+                            </div>
+                            <div class="p-2 bg-black/30 rounded">
+                                <code class="text-green-400">sudo apt install -y package_name</code>
+                                <p class="text-gray-300 text-sm mt-1">Install without confirmation</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Removal Operations -->
+                    <div class="bg-gray-900/50 p-4 rounded-lg">
+                        <h3 class="text-xl font-semibold text-green-400 mb-2">Removal</h3>
+                        <div class="space-y-2">
+                            <div class="p-2 bg-black/30 rounded">
+                                <code class="text-green-400">sudo apt remove package_name</code>
+                                <p class="text-gray-300 text-sm mt-1">Remove package (keeps config)</p>
+                            </div>
+                            <div class="p-2 bg-black/30 rounded">
+                                <code class="text-green-400">sudo apt purge package_name</code>
+                                <p class="text-gray-300 text-sm mt-1">Remove package and config files</p>
+                            </div>
+                            <div class="p-2 bg-black/30 rounded">
+                                <code class="text-green-400">sudo apt autoremove</code>
+                                <p class="text-gray-300 text-sm mt-1">Remove unused dependencies</p>
+                            </div>
+                            <div class="p-2 bg-black/30 rounded">
+                                <code class="text-green-400">sudo apt clean</code>
+                                <p class="text-gray-300 text-sm mt-1">Remove downloaded package files</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Update Operations -->
+                    <div class="bg-gray-900/50 p-4 rounded-lg">
+                        <h3 class="text-xl font-semibold text-green-400 mb-2">Updates</h3>
+                        <div class="space-y-2">
+                            <div class="p-2 bg-black/30 rounded">
+                                <code class="text-green-400">sudo apt update</code>
+                                <p class="text-gray-300 text-sm mt-1">Update package list</p>
+                            </div>
+                            <div class="p-2 bg-black/30 rounded">
+                                <code class="text-green-400">sudo apt upgrade</code>
+                                <p class="text-gray-300 text-sm mt-1">Upgrade installed packages</p>
+                            </div>
+                            <div class="p-2 bg-black/30 rounded">
+                                <code class="text-green-400">sudo apt full-upgrade</code>
+                                <p class="text-gray-300 text-sm mt-1">Upgrade with dependency handling</p>
+                            </div>
+                            <div class="p-2 bg-black/30 rounded">
+                                <code class="text-green-400">sudo apt dist-upgrade</code>
+                                <p class="text-gray-300 text-sm mt-1">Upgrade distribution</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Download Operations -->
+                    <div class="bg-gray-900/50 p-4 rounded-lg">
+                        <h3 class="text-xl font-semibold text-green-400 mb-2">Download</h3>
+                        <div class="space-y-2">
+                            <div class="p-2 bg-black/30 rounded">
+                                <code class="text-green-400">apt download package_name</code>
+                                <p class="text-gray-300 text-sm mt-1">Download package file only</p>
+                            </div>
+                            <div class="p-2 bg-black/30 rounded">
+                                <code class="text-green-400">apt source package_name</code>
+                                <p class="text-gray-300 text-sm mt-1">Download source code</p>
+                            </div>
+                            <div class="p-2 bg-black/30 rounded">
+                                <code class="text-green-400">sudo apt install --download-only</code>
+                                <p class="text-gray-300 text-sm mt-1">Download without installing</p>
+                            </div>
+                            <div class="p-2 bg-black/30 rounded">
+                                <code class="text-green-400">sudo apt --reinstall install</code>
+                                <p class="text-gray-300 text-sm mt-1">Download and reinstall</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Common Commands Card -->
+            <div class="bg-gray-800/80 backdrop-blur rounded-xl shadow-lg overflow-hidden border-l-4 border-green-400 p-6 mb-8">
+                <h2 class="text-3xl font-bold text-green-400 mb-4">Common Commands</h2>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="bg-gray-900/50 p-4 rounded-lg">
+                        <h3 class="text-xl font-semibold text-green-400 mb-2">System Updates</h3>
+                        <div class="space-y-2">
+                            <div class="p-2 bg-black/30 rounded">
+                                <code class="text-green-400">sudo apt update</code>
+                                <p class="text-gray-300 text-sm mt-1">Updates package list from repositories</p>
+                            </div>
+                            <div class="p-2 bg-black/30 rounded">
+                                <code class="text-green-400">sudo apt upgrade</code>
+                                <p class="text-gray-300 text-sm mt-1">Upgrades installed packages</p>
+                            </div>
+                            <div class="p-2 bg-black/30 rounded">
+                                <code class="text-green-400">sudo apt full-upgrade</code>
+                                <p class="text-gray-300 text-sm mt-1">Upgrades packages and handles dependencies</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-900/50 p-4 rounded-lg">
+                        <h3 class="text-xl font-semibold text-green-400 mb-2">Package Management</h3>
+                        <div class="space-y-2">
+                            <div class="p-2 bg-black/30 rounded">
+                                <code class="text-green-400">sudo apt install package_name</code>
+                                <p class="text-gray-300 text-sm mt-1">Installs a new package</p>
+                            </div>
+                            <div class="p-2 bg-black/30 rounded">
+                                <code class="text-green-400">sudo apt remove package_name</code>
+                                <p class="text-gray-300 text-sm mt-1">Removes a package</p>
+                            </div>
+                            <div class="p-2 bg-black/30 rounded">
+                                <code class="text-green-400">sudo apt purge package_name</code>
+                                <p class="text-gray-300 text-sm mt-1">Removes package and configuration</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Package Information Card -->
+            <div class="bg-gray-800/80 backdrop-blur rounded-xl shadow-lg overflow-hidden border-l-4 border-green-400 p-6 mb-8">
+                <h2 class="text-3xl font-bold text-green-400 mb-4">Package Information</h2>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="bg-gray-900/50 p-4 rounded-lg">
+                        <h3 class="text-xl font-semibold text-green-400 mb-2">Search & Info</h3>
+                        <div class="space-y-2">
+                            <div class="p-2 bg-black/30 rounded">
+                                <code class="text-green-400">apt search keyword</code>
+                                <p class="text-gray-300 text-sm mt-1">Search for packages</p>
+                            </div>
+                            <div class="p-2 bg-black/30 rounded">
+                                <code class="text-green-400">apt show package_name</code>
+                                <p class="text-gray-300 text-sm mt-1">Show package details</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-900/50 p-4 rounded-lg">
+                        <h3 class="text-xl font-semibold text-green-400 mb-2">List Packages</h3>
+                        <div class="space-y-2">
+                            <div class="p-2 bg-black/30 rounded">
+                                <code class="text-green-400">apt list --installed</code>
+                                <p class="text-gray-300 text-sm mt-1">List installed packages</p>
+                            </div>
+                            <div class="p-2 bg-black/30 rounded">
+                                <code class="text-green-400">apt list --upgradeable</code>
+                                <p class="text-gray-300 text-sm mt-1">List upgradeable packages</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- APT Game -->
+            <div class="bg-gray-800/80 backdrop-blur rounded-xl shadow-lg overflow-hidden border-l-4 border-green-400 p-6 mb-8 mt-12">
+                <h2 class="text-3xl font-bold text-green-400 mb-8">APT Command Challenge</h2>
+                <div class="space-y-6">
+                    <div class="bg-gray-900/50 p-4 rounded-lg text-center">
+                        <h3 class="text-xl font-semibold text-green-400 mb-4">Match the Command</h3>
+                        <div id="apt-quiz-container" class="mb-4">
+                            <p class="text-lg mb-2">What command would you use to: <span id="apt-question" class="text-yellow-400"></span></p>
+                            <div class="space-y-2 mt-4">
+                                <button class="apt-answer-btn bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-lg w-full text-left"></button>
+                                <button class="apt-answer-btn bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-lg w-full text-left"></button>
+                                <button class="apt-answer-btn bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-lg w-full text-left"></button>
+                                <button class="apt-answer-btn bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-lg w-full text-left"></button>
+                            </div>
+                        </div>
+                        <button id="next-apt-question" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-colors">
+                            Next Question
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="pentest-content" class="topic-section hidden">
+            <!-- Basic Concepts Card -->
+            <div class="bg-gray-800/80 backdrop-blur rounded-xl shadow-lg overflow-hidden border-l-4 border-green-400 p-6 mb-8">
+                <h2 class="text-3xl font-bold text-green-400 mb-4">Basic Penetration Testing Concepts</h2>
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="bg-gray-900/50 p-4 rounded-lg">
+                        <h3 class="text-xl font-semibold text-green-400 mb-2">What is Pentesting?</h3>
+                        <p class="text-gray-300">Penetration testing is the practice of testing a computer system, network or application to find security vulnerabilities that an attacker could exploit.</p>
+                    </div>
+                    <div class="bg-gray-900/50 p-4 rounded-lg">
+                        <h3 class="text-xl font-semibold text-green-400 mb-2">Methodology</h3>
+                        <p class="text-gray-300">A structured approach including reconnaissance, scanning, gaining access, maintaining access, and covering tracks.</p>
+                    </div>
+                    <div class="bg-gray-900/50 p-4 rounded-lg">
+                        <h3 class="text-xl font-semibold text-green-400 mb-2">Legal Considerations</h3>
+                        <p class="text-gray-300">Always obtain explicit permission before testing. Unauthorized testing can result in legal consequences.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Common Tools Card -->
+            <div class="bg-gray-800/80 backdrop-blur rounded-xl shadow-lg overflow-hidden border-l-4 border-green-400 p-6 mb-8">
+                <h2 class="text-3xl font-bold text-green-400 mb-4">Common Tools</h2>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <!-- Information Gathering -->
+                    <div class="bg-gray-900/50 p-4 rounded-lg">
+                        <h3 class="text-xl font-semibold text-green-400 mb-2">Information Gathering</h3>
+                        <div class="space-y-2">
+                            <div class="p-2 bg-black/30 rounded">
+                                <code class="text-green-400">nmap -sV -sC target_ip</code>
+                                <p class="text-gray-300 text-sm mt-1">Port scanning with version detection</p>
+                            </div>
+                            <div class="p-2 bg-black/30 rounded">
+                                <code class="text-green-400">whois domain.com</code>
+                                <p class="text-gray-300 text-sm mt-1">Domain information lookup</p>
+                            </div>
+                            <div class="p-2 bg-black/30 rounded">
+                                <code class="text-green-400">dig domain.com</code>
+                                <p class="text-gray-300 text-sm mt-1">DNS information gathering</p>
+                            </div>
+                            <div class="p-2 bg-black/30 rounded">
+                                <code class="text-green-400">theHarvester -d domain.com -b all</code>
+                                <p class="text-gray-300 text-sm mt-1">Email and subdomain gathering</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Vulnerability Assessment -->
+                    <div class="bg-gray-900/50 p-4 rounded-lg">
+                        <h3 class="text-xl font-semibold text-green-400 mb-2">Vulnerability Assessment</h3>
+                        <div class="space-y-2">
+                            <div class="p-2 bg-black/30 rounded">
+                                <code class="text-green-400">nikto -h target_url</code>
+                                <p class="text-gray-300 text-sm mt-1">Web server scanner</p>
+                            </div>
+                            <div class="p-2 bg-black/30 rounded">
+                                <code class="text-green-400">dirb http://target_url</code>
+                                <p class="text-gray-300 text-sm mt-1">Directory brute forcing</p>
+                            </div>
+                            <div class="p-2 bg-black/30 rounded">
+                                <code class="text-green-400">sqlmap -u "url" --dbs</code>
+                                <p class="text-gray-300 text-sm mt-1">SQL injection testing</p>
+                            </div>
+                            <div class="p-2 bg-black/30 rounded">
+                                <code class="text-green-400">wpscan --url target_url</code>
+                                <p class="text-gray-300 text-sm mt-1">WordPress vulnerability scanner</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Wireless Testing -->
+                    <div class="bg-gray-900/50 p-4 rounded-lg">
+                        <h3 class="text-xl font-semibold text-green-400 mb-2">Wireless Testing</h3>
+                        <div class="space-y-2">
+                            <div class="p-2 bg-black/30 rounded">
+                                <code class="text-green-400">airmon-ng start wlan0</code>
+                                <p class="text-gray-300 text-sm mt-1">Start wireless monitoring</p>
+                            </div>
+                            <div class="p-2 bg-black/30 rounded">
+                                <code class="text-green-400">airodump-ng wlan0mon</code>
+                                <p class="text-gray-300 text-sm mt-1">Capture wireless packets</p>
+                            </div>
+                            <div class="p-2 bg-black/30 rounded">
+                                <code class="text-green-400">kismet</code>
+                                <p class="text-gray-300 text-sm mt-1">Wireless network detector</p>
+                            </div>
+                            <div class="p-2 bg-black/30 rounded">
+                                <code class="text-green-400">wifite</code>
+                                <p class="text-gray-300 text-sm mt-1">Automated wireless auditor</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Password Attacks -->
+                    <div class="bg-gray-900/50 p-4 rounded-lg">
+                        <h3 class="text-xl font-semibold text-green-400 mb-2">Password Attacks</h3>
+                        <div class="space-y-2">
+                            <div class="p-2 bg-black/30 rounded">
+                                <code class="text-green-400">hashcat -m 0 hash.txt wordlist.txt</code>
+                                <p class="text-gray-300 text-sm mt-1">Hash cracking</p>
+                            </div>
+                            <div class="p-2 bg-black/30 rounded">
+                                <code class="text-green-400">john --wordlist=wordlist.txt hash.txt</code>
+                                <p class="text-gray-300 text-sm mt-1">Password cracking</p>
+                            </div>
+                            <div class="p-2 bg-black/30 rounded">
+                                <code class="text-green-400">hydra -l user -P pass.txt ssh://target</code>
+                                <p class="text-gray-300 text-sm mt-1">Online password brute-force</p>
+                            </div>
+                            <div class="p-2 bg-black/30 rounded">
+                                <code class="text-green-400">crunch 8 8 -t password%%</code>
+                                <p class="text-gray-300 text-sm mt-1">Password list generation</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pentesting Game -->
+            <div class="bg-gray-800/80 backdrop-blur rounded-xl shadow-lg overflow-hidden border-l-4 border-green-400 p-6 mb-8 mt-12">
+                <h2 class="text-3xl font-bold text-green-400 mb-8">Penetration Testing Challenge</h2>
+                <div class="space-y-6">
+                    <div class="bg-gray-900/50 p-4 rounded-lg text-center">
+                        <h3 class="text-xl font-semibold text-green-400 mb-4">Match the Tool</h3>
+                        <div id="pentest-quiz-container" class="mb-4">
+                            <p class="text-lg mb-2">Which tool would you use to: <span id="pentest-question" class="text-yellow-400"></span></p>
+                            <div class="space-y-2 mt-4">
+                                <button class="pentest-answer-btn bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-lg w-full text-left"></button>
+                                <button class="pentest-answer-btn bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-lg w-full text-left"></button>
+                                <button class="pentest-answer-btn bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-lg w-full text-left"></button>
+                                <button class="pentest-answer-btn bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-lg w-full text-left"></button>
+                            </div>
+                        </div>
+                        <button id="next-pentest-question" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-colors">
+                            Next Question
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Load navigation
+        $(function(){
+            $("#nav-placeholder").load("nav.html");
+        });
+
+        // Topic Selector Logic
+        document.addEventListener('DOMContentLoaded', function() {
+            const topicButtons = document.querySelectorAll('.topic-btn');
+            const topicSections = document.querySelectorAll('.topic-section');
+
+            topicButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Remove active class from all buttons
+                    topicButtons.forEach(btn => {
+                        btn.classList.remove('active');
+                        btn.classList.remove('bg-green-500');
+                        btn.classList.add('bg-gray-700');
+                    });
+                    
+                    // Add active class to clicked button
+                    button.classList.add('active');
+                    button.classList.remove('bg-gray-700');
+                    button.classList.add('bg-green-500');
+
+                    // Hide all sections
+                    document.querySelectorAll('.topic-section').forEach(section => {
+                        section.classList.add('hidden');
+                    });
+                    
+                    // Show selected section
+                    const selectedTopic = button.getAttribute('data-topic');
+                    document.getElementById(`${selectedTopic}-content`).classList.remove('hidden');
+                });
+            });
+        });
+
+        // Keep existing Permission Calculator Game Logic
+        document.addEventListener('DOMContentLoaded', function() {
+            const permToggles = document.querySelectorAll('.permission-toggle');
+            const numericDisplay = document.getElementById('numeric-permission');
+            const symbolicDisplay = document.getElementById('symbolic-permission');
+            const checkAnswerBtn = document.getElementById('check-answer');
+            const newChallengeBtn = document.getElementById('new-challenge');
+            const targetDisplay = document.getElementById('target-permission');
+
+            function updatePermissions() {
+                let permissions = [0, 0, 0];
+                permToggles.forEach(toggle => {
+                    if (toggle.checked) {
+                        const position = parseInt(toggle.dataset.position);
+                        const value = parseInt(toggle.dataset.value);
+                        permissions[position] += value;
+                    }
+                });
+
+                numericDisplay.textContent = permissions.join('');
+                symbolicDisplay.textContent = permissions
+                    .map(n => {
+                        let sym = '';
+                        sym += (n & 4) ? 'r' : '-';
+                        sym += (n & 2) ? 'w' : '-';
+                        sym += (n & 1) ? 'x' : '-';
+                        return sym;
+                    })
+                    .join('');
+            }
+
+            function generateChallenge() {
+                const nums = [0,1,2,3,4,5,6,7];
+                const challenge = Array.from({length: 3}, () => nums[Math.floor(Math.random() * nums.length)]);
+                targetDisplay.textContent = challenge.join('');
+                // Reset all toggles
+                permToggles.forEach(toggle => toggle.checked = false);
+                updatePermissions();
+            }
+
+            function checkAnswer() {
+                const current = numericDisplay.textContent;
+                const target = targetDisplay.textContent;
+                if (current === target) {
+                    alert('Correct! You set the permissions perfectly! 🎉');
+                } else {
+                    alert('Not quite right. Keep trying! 💪');
+                }
+            }
+
+            permToggles.forEach(toggle => {
+                toggle.addEventListener('change', updatePermissions);
+            });
+
+            checkAnswerBtn.addEventListener('click', checkAnswer);
+            newChallengeBtn.addEventListener('click', generateChallenge);
+
+            // Initialize with a challenge
+            generateChallenge();
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const deviceQuestions = [
+                {
+                    question: "The first partition on the first SATA drive",
+                    correct: "/dev/sda1",
+                    options: ["/dev/sda1", "/dev/sdb1", "/dev/sda", "/dev/sdb"]
+                },
+                {
+                    question: "A device that generates random numbers",
+                    correct: "/dev/random",
+                    options: ["/dev/null", "/dev/zero", "/dev/random", "/dev/urandom"]
+                },
+                {
+                    question: "The second SATA drive in the system",
+                    correct: "/dev/sdb",
+                    options: ["/dev/sda", "/dev/sdb", "/dev/sdc", "/dev/sda2"]
+                },
+                {
+                    question: "A device that discards all data written to it",
+                    correct: "/dev/null",
+                    options: ["/dev/zero", "/dev/null", "/dev/random", "/dev/sda"]
+                },
+                {
+                    question: "The first NVMe drive's first partition",
+                    correct: "/dev/nvme0n1p1",
+                    options: ["/dev/sda1", "/dev/nvme1", "/dev/nvme0n1p1", "/dev/nvme0"]
+                }
+            ];
+
+            let currentDeviceQuestion = 0;
+            const questionElement = document.getElementById('device-question');
+            const answerButtons = document.querySelectorAll('.device-answer-btn');
+            const nextButton = document.getElementById('next-device-question');
+
+            function loadDeviceQuestion() {
+                const question = deviceQuestions[currentDeviceQuestion];
+                questionElement.textContent = question.question;
+                
+                // Shuffle options
+                const shuffledOptions = [...question.options].sort(() => Math.random() - 0.5);
+                
+                answerButtons.forEach((button, index) => {
+                    button.textContent = shuffledOptions[index];
+                    button.classList.remove('bg-green-500', 'bg-red-500');
+                    button.classList.add('bg-gray-700');
+                    button.disabled = false;
+                });
+            }
+
+            function checkDeviceAnswer(selectedAnswer) {
+                const correct = deviceQuestions[currentDeviceQuestion].correct;
+                answerButtons.forEach(button => {
+                    button.disabled = true;
+                    if (button.textContent === correct) {
+                        button.classList.remove('bg-gray-700');
+                        button.classList.add('bg-green-500');
+                    } else if (button.textContent === selectedAnswer && selectedAnswer !== correct) {
+                        button.classList.remove('bg-gray-700');
+                        button.classList.add('bg-red-500');
+                    }
+                });
+            }
+
+            answerButtons.forEach(button => {
+                button.addEventListener('click', () => checkDeviceAnswer(button.textContent));
+            });
+
+            nextButton.addEventListener('click', () => {
+                currentDeviceQuestion = (currentDeviceQuestion + 1) % deviceQuestions.length;
+                loadDeviceQuestion();
+            });
+
+            // Initialize with first question
+            loadDeviceQuestion();
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const aptQuestions = [
+                {
+                    question: "Update the package list from repositories",
+                    correct: "sudo apt update",
+                    options: [
+                        "sudo apt update",
+                        "sudo apt upgrade",
+                        "sudo apt install",
+                        "sudo apt list"
+                    ]
+                },
+                {
+                    question: "Install a new package called 'firefox'",
+                    correct: "sudo apt install firefox",
+                    options: [
+                        "sudo apt get firefox",
+                        "sudo apt install firefox",
+                        "sudo apt update firefox",
+                        "sudo apt add firefox"
+                    ]
+                },
+                {
+                    question: "Remove a package and its configuration files",
+                    correct: "sudo apt purge",
+                    options: [
+                        "sudo apt remove",
+                        "sudo apt delete",
+                        "sudo apt purge",
+                        "sudo apt uninstall"
+                    ]
+                },
+                {
+                    question: "See all packages that can be upgraded",
+                    correct: "apt list --upgradeable",
+                    options: [
+                        "apt list --updates",
+                        "apt list --upgradeable",
+                        "apt show updates",
+                        "apt check-updates"
+                    ]
+                },
+                {
+                    question: "Search for packages related to 'python'",
+                    correct: "apt search python",
+                    options: [
+                        "apt find python",
+                        "apt search python",
+                        "apt list python",
+                        "apt show python"
+                    ]
+                }
+            ];
+
+            let currentAptQuestion = 0;
+            const aptQuestionElement = document.getElementById('apt-question');
+            const aptAnswerButtons = document.querySelectorAll('.apt-answer-btn');
+            const aptNextButton = document.getElementById('next-apt-question');
+
+            function loadAptQuestion() {
+                const question = aptQuestions[currentAptQuestion];
+                aptQuestionElement.textContent = question.question;
+                
+                // Shuffle options
+                const shuffledAptOptions = [...question.options].sort(() => Math.random() - 0.5);
+                
+                aptAnswerButtons.forEach((button, index) => {
+                    button.textContent = shuffledAptOptions[index];
+                    button.classList.remove('bg-green-500', 'bg-red-500');
+                    button.classList.add('bg-gray-700');
+                    button.disabled = false;
+                });
+            }
+
+            function checkAptAnswer(selectedAnswer) {
+                const correct = aptQuestions[currentAptQuestion].correct;
+                aptAnswerButtons.forEach(button => {
+                    button.disabled = true;
+                    if (button.textContent === correct) {
+                        button.classList.remove('bg-gray-700');
+                        button.classList.add('bg-green-500');
+                    } else if (button.textContent === selectedAnswer && selectedAnswer !== correct) {
+                        button.classList.remove('bg-gray-700');
+                        button.classList.add('bg-red-500');
+                    }
+                });
+            }
+
+            aptAnswerButtons.forEach(button => {
+                button.addEventListener('click', () => checkAptAnswer(button.textContent));
+            });
+
+            aptNextButton.addEventListener('click', () => {
+                currentAptQuestion = (currentAptQuestion + 1) % aptQuestions.length;
+                loadAptQuestion();
+            });
+
+            // Initialize with first question
+            loadAptQuestion();
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const pentestQuestions = [
+                {
+                    question: "Scan a target for open ports and service versions",
+                    correct: "nmap -sV -sC target_ip",
+                    options: [
+                        "nmap -sV -sC target_ip",
+                        "whois target_ip",
+                        "dig target_ip",
+                        "nikto -h target_ip"
+                    ]
+                },
+                {
+                    question: "Test a website for SQL injection vulnerabilities",
+                    correct: "sqlmap -u \"url\" --dbs",
+                    options: [
+                        "nikto -h url",
+                        "dirb http://url",
+                        "sqlmap -u \"url\" --dbs",
+                        "wpscan --url url"
+                    ]
+                },
+                {
+                    question: "Crack a password hash using a wordlist",
+                    correct: "hashcat -m 0 hash.txt wordlist.txt",
+                    options: [
+                        "john hash.txt",
+                        "hydra -P wordlist.txt hash",
+                        "crunch 8 8 hash.txt",
+                        "hashcat -m 0 hash.txt wordlist.txt"
+                    ]
+                },
+                {
+                    question: "Start monitoring wireless networks",
+                    correct: "airmon-ng start wlan0",
+                    options: [
+                        "airodump-ng wlan0",
+                        "airmon-ng start wlan0",
+                        "kismet",
+                        "wifite"
+                    ]
+                },
+                {
+                    question: "Perform directory brute-forcing on a web server",
+                    correct: "dirb http://target_url",
+                    options: [
+                        "nikto -h target_url",
+                        "wpscan --url target_url",
+                        "dirb http://target_url",
+                        "sqlmap -u target_url"
+                    ]
+                }
+            ];
+
+            let currentPentestQuestion = 0;
+            const questionElement = document.getElementById('pentest-question');
+            const answerButtons = document.querySelectorAll('.pentest-answer-btn');
+            const nextButton = document.getElementById('next-pentest-question');
+
+            function loadPentestQuestion() {
+                const question = pentestQuestions[currentPentestQuestion];
+                questionElement.textContent = question.question;
+                
+                // Shuffle options
+                const shuffledOptions = [...question.options].sort(() => Math.random() - 0.5);
+                
+                answerButtons.forEach((button, index) => {
+                    button.textContent = shuffledOptions[index];
+                    button.classList.remove('bg-green-500', 'bg-red-500');
+                    button.classList.add('bg-gray-700');
+                    button.disabled = false;
+                });
+            }
+
+            function checkPentestAnswer(selectedAnswer) {
+                const correct = pentestQuestions[currentPentestQuestion].correct;
+                answerButtons.forEach(button => {
+                    button.disabled = true;
+                    if (button.textContent === correct) {
+                        button.classList.remove('bg-gray-700');
+                        button.classList.add('bg-green-500');
+                    } else if (button.textContent === selectedAnswer && selectedAnswer !== correct) {
+                        button.classList.remove('bg-gray-700');
+                        button.classList.add('bg-red-500');
+                    }
+                });
+            }
+
+            answerButtons.forEach(button => {
+                button.addEventListener('click', () => checkPentestAnswer(button.textContent));
+            });
+
+            nextButton.addEventListener('click', () => {
+                currentPentestQuestion = (currentPentestQuestion + 1) % pentestQuestions.length;
+                loadPentestQuestion();
+            });
+
+            // Initialize with first question
+            loadPentestQuestion();
+        });
+
+        // Linux Quiz Questions
+        const linuxQuestions = [
+            {
+                question: "Change directory permissions to read, write, execute for all users",
+                correct: "chmod 777 directory_name",
+                options: [
+                    "chmod 777 directory_name",
+                    "chmod 755 directory_name",
+                    "chmod 644 directory_name",
+                    "chmod 666 directory_name"
+                ]
+            },
+            {
+                question: "List all files including hidden ones",
+                correct: "ls -la",
+                options: [
+                    "ls -l",
+                    "ls -a",
+                    "ls -la",
+                    "ls -h"
+                ]
+            },
+            {
+                question: "Change file ownership to user 'john'",
+                correct: "chown john file.txt",
+                options: [
+                    "chmod john file.txt",
+                    "chown john file.txt",
+                    "chgrp john file.txt",
+                    "usermod john file.txt"
+                ]
+            },
+            {
+                question: "Create a new directory with parent directories if they don't exist",
+                correct: "mkdir -p path/to/directory",
+                options: [
+                    "mkdir path/to/directory",
+                    "mkdir -p path/to/directory",
+                    "mkdir --parents path/to/directory",
+                    "mkdir -r path/to/directory"
+                ]
+            }
+        ];
+
+        // Fortinet Quiz Questions
+        const fortinetQuestions = [
+            {
+                question: "Show the current configuration",
+                correct: "show full-configuration",
+                options: [
+                    "show running-config",
+                    "show full-configuration",
+                    "display configuration",
+                    "get system status"
+                ]
+            },
+            {
+                question: "Enter global configuration mode",
+                correct: "config global",
+                options: [
+                    "configure terminal",
+                    "config global",
+                    "system global",
+                    "enter global"
+                ]
+            },
+            {
+                question: "Set the management interface IP",
+                correct: "set ip 192.168.1.1 255.255.255.0",
+                options: [
+                    "ip address 192.168.1.1 255.255.255.0",
+                    "set address 192.168.1.1/24",
+                    "set ip 192.168.1.1 255.255.255.0",
+                    "config ip 192.168.1.1 netmask 255.255.255.0"
+                ]
+            },
+            {
+                question: "Save the configuration",
+                correct: "execute backup config",
+                options: [
+                    "write memory",
+                    "save config",
+                    "execute backup config",
+                    "copy running-config startup-config"
+                ]
+            }
+        ];
+
+        // Function to setup quiz
+        function setupQuiz(questions, questionId, answerClass, nextButtonId) {
+            let currentQuestion = 0;
+            const questionElement = document.getElementById(questionId);
+            const answerButtons = document.querySelectorAll('.' + answerClass);
+            const nextButton = document.getElementById(nextButtonId);
+
+            if (!questionElement || !answerButtons.length || !nextButton) {
+                console.log('Quiz elements not found:', questionId);
+                return;
+            }
+
+            function loadQuestion() {
+                const question = questions[currentQuestion];
+                questionElement.textContent = question.question;
+                
+                const shuffledOptions = [...question.options].sort(() => Math.random() - 0.5);
+                
+                answerButtons.forEach((button, index) => {
+                    button.textContent = shuffledOptions[index];
+                    button.classList.remove('bg-green-500', 'bg-red-500');
+                    button.classList.add('bg-gray-700');
+                    button.disabled = false;
+                });
+            }
+
+            function checkAnswer(selectedAnswer) {
+                const correct = questions[currentQuestion].correct;
+                answerButtons.forEach(button => {
+                    button.disabled = true;
+                    if (button.textContent === correct) {
+                        button.classList.remove('bg-gray-700');
+                        button.classList.add('bg-green-500');
+                    } else if (button.textContent === selectedAnswer && selectedAnswer !== correct) {
+                        button.classList.remove('bg-gray-700');
+                        button.classList.add('bg-red-500');
+                    }
+                });
+            }
+
+            answerButtons.forEach(button => {
+                button.addEventListener('click', () => checkAnswer(button.textContent));
+            });
+
+            nextButton.addEventListener('click', () => {
+                currentQuestion = (currentQuestion + 1) % questions.length;
+                loadQuestion();
+            });
+
+            // Initialize with first question
+            loadQuestion();
+        }
+
+        // Initialize all quizzes when the document is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Setup Linux quiz
+            setupQuiz(linuxQuestions, 'linux-question', 'linux-answer-btn', 'next-linux-question');
+            
+            // Setup Fortinet quiz
+            setupQuiz(fortinetQuestions, 'fortinet-question', 'fortinet-answer-btn', 'next-fortinet-question');
+            
+            // Setup APT quiz (existing)
+            setupQuiz(aptQuestions, 'apt-question', 'apt-answer-btn', 'next-apt-question');
+            
+            // Setup Pentest quiz (existing)
+            setupQuiz(pentestQuestions, 'pentest-question', 'pentest-answer-btn', 'next-pentest-question');
+        });
+    </script>
+
+    <style>
+        .topic-btn.active {
+            background-color: rgb(34 197 94); /* green-500 */
+        }
+    </style>
+</body>
+</html> 

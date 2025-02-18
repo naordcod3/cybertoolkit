@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IT Certification Quiz</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .correct-answer {
+            background-color: rgba(34, 197, 94, 0.2); /* green-500 with opacity */
+            border: 1px solid rgb(34, 197, 94);
+        }
+        
+        .incorrect-answer {
+            background-color: rgba(239, 68, 68, 0.2); /* red-500 with opacity */
+            border: 1px solid rgb(239, 68, 68);
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white min-h-screen">
+    <!-- Include navigation -->
+    <div id="nav-placeholder"></div>
+    <script>
+        fetch('nav.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('nav-placeholder').innerHTML = data;
+            });
+    </script>
+
+    <main class="container mx-auto px-4 py-24">
+        <h1 class="text-4xl font-bold mb-8 text-center">
+            <span class="bg-gradient-to-r from-green-400 to-blue-500 bg-clip-text text-transparent">
+                IT Certification Quiz
+            </span>
+        </h1>
+
+        <!-- Quiz Categories -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+            <!-- Linux Card -->
+            <div class="bg-gray-800/50 rounded-lg p-6 border border-green-400/20 hover:border-green-400/50 transition-colors">
+                <h2 class="text-2xl font-bold mb-4 flex items-center gap-2">
+                    <i class="fab fa-linux text-green-400"></i>
+                    Linux
+                </h2>
+                <p class="text-gray-300 mb-4">Test your knowledge of Linux commands, system administration, and security.</p>
+                <button onclick="startQuiz('linux')" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md transition-colors">
+                    Start Quiz
+                </button>
+            </div>
+
+            <!-- Fortinet Card -->
+            <div class="bg-gray-800/50 rounded-lg p-6 border border-green-400/20 hover:border-green-400/50 transition-colors">
+                <h2 class="text-2xl font-bold mb-4 flex items-center gap-2">
+                    <i class="fas fa-shield-alt text-green-400"></i>
+                    Fortinet
+                </h2>
+                <p class="text-gray-300 mb-4">Test your FortiGate knowledge with firewall, VPN, and security policy questions.</p>
+                <button onclick="startQuiz('fortinet')" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md transition-colors">
+                    Start Quiz
+                </button>
+            </div>
+
+            <!-- Windows Server Card -->
+            <div class="bg-gray-800/50 rounded-lg p-6 border border-green-400/20 hover:border-green-400/50 transition-colors">
+                <h2 class="text-2xl font-bold mb-4 flex items-center gap-2">
+                    <i class="fab fa-windows text-green-400"></i>
+                    Windows Server
+                </h2>
+                <p class="text-gray-300 mb-4">Challenge yourself with Active Directory, PowerShell, and server management questions.</p>
+                <button onclick="startQuiz('windows')" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md transition-colors">
+                    Start Quiz
+                </button>
+            </div>
+
+            <!-- CCNA Card -->
+            <div class="bg-gray-800/50 rounded-lg p-6 border border-green-400/20 hover:border-green-400/50 transition-colors">
+                <h2 class="text-2xl font-bold mb-4 flex items-center gap-2">
+                    <i class="fas fa-network-wired text-green-400"></i>
+                    CCNA
+                </h2>
+                <p class="text-gray-300 mb-4">Test your networking knowledge with CCNA certification topics and commands.</p>
+                <button onclick="startQuiz('ccna')" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md transition-colors">
+                    Start Quiz
+                </button>
+            </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div id="quizContainer" class="hidden bg-gray-800/50 rounded-lg p-6 border border-green-400/20">
+            <div id="quizHeader" class="mb-6">
+                <h3 id="quizTitle" class="text-2xl font-bold mb-2"></h3>
+                <div class="flex items-center justify-between">
+                    <span id="questionCounter" class="text-gray-300"></span>
+                    <span id="timer" class="text-green-400"></span>
+                </div>
+            </div>
+            
+            <div id="questionContainer" class="mb-6">
+                <p id="questionText" class="text-lg mb-4"></p>
+                <div id="answerOptions" class="space-y-3"></div>
+            </div>
+
+            <div class="flex justify-between">
+                <button id="previousBtn" class="bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-md transition-colors">
+                    Previous
+                </button>
+                <button id="nextBtn" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md transition-colors">
+                    Next
+                </button>
+            </div>
+        </div>
+
+        <!-- Results Container -->
+        <div id="resultsContainer" class="hidden bg-gray-800/50 rounded-lg p-6 border border-green-400/20">
+            <h3 class="text-2xl font-bold mb-4">Quiz Results</h3>
+            <div id="resultsContent"></div>
+            <button onclick="resetQuiz()" class="mt-4 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md transition-colors">
+                Try Again
+            </button>
+        </div>
+    </main>
+
+    <script>
+        // Quiz data structure
+        const quizData = {
+            linux: {
+                title: "Linux Quiz",
+                questions: [
+                    {
+                        question: "Which command is used to change file permissions?",
+                        options: ["chmod", "chown", "chgrp", "chmode"],
+                        correct: 0
+                    },
+                    {
+                        question: "What command shows disk usage?",
+                        options: ["du", "df", "disk", "usage"],
+                        correct: 0
+                    },
+                    {
+                        question: "How do you list all files including hidden ones?",
+                        options: ["ls -a", "ls -l", "ls -h", "ls -r"],
+                        correct: 0
+                    },
+                    {
+                        question: "Which command is used to create a new directory?",
+                        options: ["mkdir", "mkfile", "touch", "create"],
+                        correct: 0
+                    }
+                ]
+            },
+            fortinet: {
+                title: "Fortinet Quiz",
+                questions: [
+                    {
+                        question: "What command shows the current configuration?",
+                        options: ["show full-configuration", "show running-config", "get system status", "display config"],
+                        correct: 0
+                    },
+                    {
+                        question: "How do you enter global configuration mode?",
+                        options: ["config global", "configure terminal", "system global", "enter global"],
+                        correct: 0
+                    },
+                    {
+                        question: "Which command saves the configuration?",
+                        options: ["execute backup config", "write memory", "save config", "copy run start"],
+                        correct: 0
+                    },
+                    {
+                        question: "What command shows the FortiGate system status?",
+                        options: ["get system status", "show system", "display status", "system info"],
+                        correct: 0
+                    }
+                ]
+            },
+            windows: {
+                title: "Windows Server Quiz",
+                questions: [
+                    {
+                        question: "Which PowerShell cmdlet creates a new Active Directory user?",
+                        options: ["New-ADUser", "Add-ADUser", "Create-ADUser", "Set-ADUser"],
+                        correct: 0
+                    },
+                    {
+                        question: "What command shows all running services?",
+                        options: ["Get-Service", "Show-Service", "List-Service", "Service-Get"],
+                        correct: 0
+                    }
+                ]
+            },
+            ccna: {
+                title: "CCNA Quiz",
+                questions: [
+                    {
+                        question: "Which command displays the current IP routing table?",
+                        options: ["show ip route", "show route", "show ip routing", "display routes"],
+                        correct: 0
+                    },
+                    {
+                        question: "What command configures an interface IP address?",
+                        options: ["ip address 192.168.1.1 255.255.255.0", "set ip 192.168.1.1/24", "configure ip 192.168.1.1", "ipconfig 192.168.1.1"],
+                        correct: 0
+                    },
+                    {
+                        question: "Which command enables privileged EXEC mode?",
+                        options: ["enable", "sudo", "admin", "privilege"],
+                        correct: 0
+                    },
+                    {
+                        question: "What command shows the running configuration?",
+                        options: ["show running-config", "show config", "display config", "show run"],
+                        correct: 0
+                    },
+                    {
+                        question: "Which command displays VLAN information?",
+                        options: ["show vlan", "display vlan", "show vlans", "vlan show"],
+                        correct: 0
+                    }
+                ]
+            }
+        };
+
+        let currentQuiz = null;
+        let currentQuestion = 0;
+        let score = 0;
+        let timer = null;
+
+        function startQuiz(category) {
+            currentQuiz = category;
+            currentQuestion = 0;
+            score = 0;
+            
+            document.querySelector('#quizContainer').classList.remove('hidden');
+            document.querySelector('#resultsContainer').classList.add('hidden');
+            
+            displayQuestion();
+            startTimer();
+        }
+
+        function displayQuestion() {
+            const quiz = quizData[currentQuiz];
+            const question = quiz.questions[currentQuestion];
+            
+            document.querySelector('#quizTitle').textContent = quiz.title;
+            document.querySelector('#questionCounter').textContent = `Question ${currentQuestion + 1} of ${quiz.questions.length}`;
+            document.querySelector('#questionText').textContent = question.question;
+            
+            const optionsHtml = question.options.map((option, index) => `
+                <div class="flex items-center p-3 rounded-lg transition-all duration-200" id="option-container-${index}">
+                    <input type="radio" name="answer" value="${index}" id="option${index}" class="mr-2" onchange="checkAnswerImmediate(${index})">
+                    <label for="option${index}" class="text-gray-300 hover:text-white cursor-pointer w-full">${option}</label>
+                </div>
+            `).join('');
+            
+            document.querySelector('#answerOptions').innerHTML = optionsHtml;
+            
+            // Update navigation buttons
+            document.querySelector('#previousBtn').disabled = currentQuestion === 0;
+            document.querySelector('#nextBtn').textContent = 
+                currentQuestion === quiz.questions.length - 1 ? 'Finish' : 'Next';
+        }
+
+        function checkAnswerImmediate(selectedIndex) {
+            const correct = quizData[currentQuiz].questions[currentQuestion].correct;
+            const options = document.querySelectorAll('#answerOptions > div');
+            
+            options.forEach((option, index) => {
+                if (index === correct) {
+                    option.classList.add('correct-answer');
+                }
+                if (index === selectedIndex && index !== correct) {
+                    option.classList.add('incorrect-answer');
+                }
+            });
+
+            // Disable all radio buttons after selection
+            document.querySelectorAll('input[name="answer"]').forEach(input => {
+                input.disabled = true;
+            });
+
+            // Update score immediately
+            if (selectedIndex === correct) {
+                score++;
+            }
+        }
+
+        function startTimer() {
+            let timeLeft = 300; // 5 minutes
+            const timerElement = document.querySelector('#timer');
+            
+            if (timer) clearInterval(timer);
+            
+            timer = setInterval(() => {
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                timerElement.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+                
+                if (timeLeft === 0) {
+                    clearInterval(timer);
+                    finishQuiz();
+                }
+                
+                timeLeft--;
+            }, 1000);
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            if (currentQuestion < quizData[currentQuiz].questions.length) {
+                displayQuestion();
+            } else {
+                finishQuiz();
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                displayQuestion();
+            }
+        }
+
+        function finishQuiz() {
+            clearInterval(timer);
+            
+            const quiz = quizData[currentQuiz];
+            const percentage = (score / quiz.questions.length) * 100;
+            
+            document.querySelector('#quizContainer').classList.add('hidden');
+            document.querySelector('#resultsContainer').classList.remove('hidden');
+            
+            document.querySelector('#resultsContent').innerHTML = `
+                <p class="text-xl mb-2">You scored ${score} out of ${quiz.questions.length}</p>
+                <p class="text-${percentage >= 70 ? 'green' : 'red'}-400 text-2xl font-bold">
+                    ${percentage}%
+                </p>
+            `;
+        }
+
+        function resetQuiz() {
+            document.querySelector('#quizContainer').classList.add('hidden');
+            document.querySelector('#resultsContainer').classList.add('hidden');
+            currentQuiz = null;
+            currentQuestion = 0;
+            score = 0;
+            if (timer) clearInterval(timer);
+        }
+
+        // Event Listeners
+        document.querySelector('#previousBtn').addEventListener('click', previousQuestion);
+        document.querySelector('#nextBtn').addEventListener('click', nextQuestion);
+    </script>
+</body>
+</html> 

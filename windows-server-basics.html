@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Windows Server Basics</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles/globals.css">
+</head>
+<body class="bg-gray-900 text-gray-100 font-sans min-h-screen">
+    <!-- Navigation placeholder -->
+    <div id="nav-placeholder"></div>
+
+    <!-- Main content -->
+    <div class="max-w-5xl mx-auto px-4 py-8 mt-20">
+        <section class="text-center mb-16">
+            <h1 class="text-6xl font-bold mb-6 bg-gradient-to-r from-green-400 to-blue-500 bg-clip-text text-transparent">
+                Windows Server Basics
+            </h1>
+            <p class="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+                Understanding the fundamentals of Windows Server administration
+            </p>
+        </section>
+
+        <!-- Core Concepts Card -->
+        <div class="bg-gray-800/80 backdrop-blur rounded-xl shadow-lg overflow-hidden border-l-4 border-green-400 p-6 mb-8">
+            <h2 class="text-3xl font-bold text-green-400 mb-4">Core Concepts</h2>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="bg-gray-900/50 p-4 rounded-lg">
+                    <h3 class="text-xl font-semibold text-green-400 mb-2">Domain Controller</h3>
+                    <p class="text-gray-300">The central authority for authentication and security in a Windows network. Think of it as the security guard of your network.</p>
+                </div>
+                <div class="bg-gray-900/50 p-4 rounded-lg">
+                    <h3 class="text-xl font-semibold text-green-400 mb-2">Active Directory</h3>
+                    <p class="text-gray-300">A database that stores information about network resources and users. Like a company's organizational chart and phone directory combined.</p>
+                </div>
+                <div class="bg-gray-900/50 p-4 rounded-lg">
+                    <h3 class="text-xl font-semibold text-green-400 mb-2">Group Policy</h3>
+                    <p class="text-gray-300">Rules and settings that control what users can do. Similar to setting rules and permissions for different departments.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Common Roles Card -->
+        <div class="bg-gray-800/80 backdrop-blur rounded-xl shadow-lg overflow-hidden border-l-4 border-green-400 p-6 mb-8">
+            <h2 class="text-3xl font-bold text-green-400 mb-4">Common Server Roles</h2>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-gray-900/50 p-4 rounded-lg">
+                    <h3 class="text-xl font-semibold text-green-400 mb-2">File Server</h3>
+                    <p class="text-gray-300">Stores and manages access to files and folders.</p>
+                    <code class="block bg-black/30 p-2 mt-2 rounded">Install-WindowsFeature -Name FS-FileServer</code>
+                </div>
+                <div class="bg-gray-900/50 p-4 rounded-lg">
+                    <h3 class="text-xl font-semibold text-green-400 mb-2">DHCP Server</h3>
+                    <p class="text-gray-300">Automatically assigns IP addresses to network devices.</p>
+                    <code class="block bg-black/30 p-2 mt-2 rounded">Install-WindowsFeature -Name DHCP</code>
+                </div>
+                <div class="bg-gray-900/50 p-4 rounded-lg">
+                    <h3 class="text-xl font-semibold text-green-400 mb-2">DNS Server</h3>
+                    <p class="text-gray-300">Translates domain names to IP addresses.</p>
+                    <code class="block bg-black/30 p-2 mt-2 rounded">Install-WindowsFeature -Name DNS</code>
+                </div>
+                <div class="bg-gray-900/50 p-4 rounded-lg">
+                    <h3 class="text-xl font-semibold text-green-400 mb-2">Print Server</h3>
+                    <p class="text-gray-300">Manages printers and print jobs across the network.</p>
+                    <code class="block bg-black/30 p-2 mt-2 rounded">Install-WindowsFeature -Name Print-Server</code>
+                </div>
+            </div>
+        </div>
+
+        <!-- Basic Commands Card -->
+        <div class="bg-gray-800/80 backdrop-blur rounded-xl shadow-lg overflow-hidden border-l-4 border-green-400 p-6 mb-8">
+            <h2 class="text-3xl font-bold text-green-400 mb-4">Essential PowerShell Commands</h2>
+            <div class="space-y-4">
+                <div class="bg-gray-900/50 p-4 rounded-lg">
+                    <code class="block text-green-400">Get-Service</code>
+                    <p class="text-gray-300 mt-2">Lists all services running on the server</p>
+                </div>
+                <div class="bg-gray-900/50 p-4 rounded-lg">
+                    <code class="block text-green-400">Get-EventLog -LogName System -Newest 10</code>
+                    <p class="text-gray-300 mt-2">Shows the 10 most recent system events</p>
+                </div>
+                <div class="bg-gray-900/50 p-4 rounded-lg">
+                    <code class="block text-green-400">Get-NetIPAddress</code>
+                    <p class="text-gray-300 mt-2">Displays all IP addresses configured on the server</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Interactive Quiz -->
+        <div class="bg-gray-800/80 backdrop-blur rounded-xl shadow-lg overflow-hidden border-l-4 border-green-400 p-6 mb-8 mt-12">
+            <h2 class="text-3xl font-bold text-green-400 mb-8">Server Role Quiz</h2>
+            <div class="space-y-6">
+                <div class="bg-gray-900/50 p-4 rounded-lg text-center">
+                    <h3 class="text-xl font-semibold text-green-400 mb-4">Match the Server Role</h3>
+                    <div id="quiz-container" class="mb-4">
+                        <p class="text-lg mb-2">Which server role would you need for: <span id="role-question" class="text-yellow-400"></span></p>
+                        <div class="space-y-2 mt-4">
+                            <button class="answer-btn bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-lg w-full text-left"></button>
+                            <button class="answer-btn bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-lg w-full text-left"></button>
+                            <button class="answer-btn bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-lg w-full text-left"></button>
+                            <button class="answer-btn bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-lg w-full text-left"></button>
+                        </div>
+                    </div>
+                    <button id="next-question" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg mt-4">
+                        Next Question
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Load navigation
+        $(function(){
+            $("#nav-placeholder").load("nav.html");
+        });
+
+        // Quiz Logic
+        document.addEventListener('DOMContentLoaded', function() {
+            const questions = [
+                {
+                    question: "Automatically assigning IP addresses to computers",
+                    correct: "DHCP Server",
+                    options: ["DHCP Server", "DNS Server", "File Server", "Print Server"]
+                },
+                {
+                    question: "Managing shared files and folders",
+                    correct: "File Server",
+                    options: ["DHCP Server", "DNS Server", "File Server", "Print Server"]
+                },
+                {
+                    question: "Converting website names to IP addresses",
+                    correct: "DNS Server",
+                    options: ["DHCP Server", "DNS Server", "File Server", "Print Server"]
+                },
+                {
+                    question: "Managing network printers and print jobs",
+                    correct: "Print Server",
+                    options: ["DHCP Server", "DNS Server", "File Server", "Print Server"]
+                }
+            ];
+
+            let currentQuestion = 0;
+            const questionElement = document.getElementById('role-question');
+            const answerButtons = document.querySelectorAll('.answer-btn');
+            const nextButton = document.getElementById('next-question');
+
+            function loadQuestion() {
+                const question = questions[currentQuestion];
+                questionElement.textContent = question.question;
+                
+                // Shuffle options
+                const shuffledOptions = [...question.options].sort(() => Math.random() - 0.5);
+                
+                answerButtons.forEach((button, index) => {
+                    button.textContent = shuffledOptions[index];
+                    button.classList.remove('bg-green-500', 'bg-red-500');
+                    button.disabled = false;
+                });
+            }
+
+            function checkAnswer(selectedAnswer) {
+                const correct = questions[currentQuestion].correct;
+                answerButtons.forEach(button => {
+                    button.disabled = true;
+                    if (button.textContent === correct) {
+                        button.classList.add('bg-green-500');
+                    } else if (button.textContent === selectedAnswer && selectedAnswer !== correct) {
+                        button.classList.add('bg-red-500');
+                    }
+                });
+            }
+
+            answerButtons.forEach(button => {
+                button.addEventListener('click', () => checkAnswer(button.textContent));
+            });
+
+            nextButton.addEventListener('click', () => {
+                currentQuestion = (currentQuestion + 1) % questions.length;
+                loadQuestion();
+            });
+
+            // Initialize with first question
+            loadQuestion();
+        });
+    </script>
+</body>
+</html> 

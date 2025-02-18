@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Title | THE DARK WEB</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="globals.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/png" href="images/icon.png">
+</head>
+<body class="bg-gray-900 text-gray-100 font-sans min-h-screen">
+    <!-- Matrix Background -->
+    <canvas id="matrix" class="fixed top-0 left-0 w-full h-full opacity-20 -z-10"></canvas>
+
+    <!-- Navigation and Sidebar -->
+    <div id="nav-placeholder"></div>
+    <div id="sidebar-placeholder"></div>
+
+    <!-- Main content -->
+    <main class="lg:ml-64 transition-all duration-300">
+        <div class="container mx-auto px-4 py-8 mt-20">
+            <!-- Page specific content here -->
+        </div>
+    </main>
+
+    <script src="matrix.js"></script>
+    <script src="sidebar.js"></script>
+    <script>
+        // Load navigation and sidebar
+        fetch("nav.html")
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("nav-placeholder").innerHTML = data;
+            });
+
+        fetch("sidebar.html")
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("sidebar-placeholder").innerHTML = data;
+            });
+    </script>
+</body>
+</html> 

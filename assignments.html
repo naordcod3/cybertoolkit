@@ -6,56 +6,112 @@
     <title>Class Assignments</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles/globals.css">
     <link rel="icon" type="image/png" href="images/icon.png">
 
 </head>
-<body class="bg-black text-green-400 font-mono">
-   <!--navigation bar (from nav.html)-->
-   <div id="nav-placeholder"></div>
+<body class="bg-gray-900 text-gray-100 font-sans min-h-screen">
+    <!-- Navigation placeholder -->
+    <div id="nav-placeholder"></div>
 
-   <script>
-       // Load navigation bar from nav.html
-       fetch("nav.html")
-           .then(response => response.text())
-           .then(data => {
-               document.getElementById("nav-placeholder").innerHTML = data;
-           });
-   </script>
-
-
-
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const dropdownBtn = document.getElementById("networkingDropdownBtn");
-        const dropdownMenu = document.getElementById("networkingDropdown");
-
-        // Toggle dropdown on button click
-        dropdownBtn.addEventListener("click", function () {
-            dropdownMenu.classList.toggle("hidden");
+    <script>
+        $(function(){
+            $("#nav-placeholder").load("nav.html");
         });
+    </script>
 
-        // Close dropdown when clicking outside
-        document.addEventListener("click", function (event) {
-            if (!dropdownBtn.contains(event.target) && !dropdownMenu.contains(event.target)) {
-                dropdownMenu.classList.add("hidden");
-            }
-        });
-    });
-</script>
+    <!-- Main content -->
+    <div class="max-w-5xl mx-auto px-4 py-8 mt-20">
+        <section class="text-center mb-16">
+            <h1 class="text-6xl font-bold mb-6 bg-gradient-to-r from-green-400 to-blue-500 bg-clip-text text-transparent">
+                Class Assignments
+            </h1>
+            <p class="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+                A collection of hands-on assignments for system administration and security.
+            </p>
+        </section>
+        
+        <!-- Assignment Cards Container -->
+        <div class="space-y-8">
+            <!-- Assignment 1 Card -->
+            <div class="bg-gray-800/80 backdrop-blur rounded-xl shadow-lg overflow-hidden border-l-4 border-green-400 transition-all duration-200 hover:shadow-xl hover:bg-gray-800">
+                <button onclick="toggleAssignment('assignment1')" class="w-full px-8 py-6 text-left flex justify-between items-center hover:bg-gray-700/50 transition-colors">
+                    <div>
+                        <h2 class="text-3xl font-bold text-green-400 mb-2">Assignment 1</h2>
+                        <p class="text-gray-300 text-lg">PowerShell AD Setup</p>
+                    </div>
+                    <i class="fas fa-chevron-down text-green-400 transform transition-transform duration-200" id="chevron-assignment1"></i>
+                </button>
+                
+                <div id="assignment1" class="hidden">
+                    <div class="px-8 py-6 space-y-6">
+                        <!-- Assignment Description -->
+                        <div class="bg-gray-900/50 rounded-lg p-6">
+                            <h3 class="text-xl font-semibold text-green-400 mb-3">Overview</h3>
+                            <p class="text-gray-300 leading-relaxed">Set up a Domain Controller (`Gil.com`) and configure Active Directory with proper user management and security policies.</p>
+                        </div>
 
-    
-    <br>
-    <h1 class="text-center text-4xl mt-8">Class Assignments</h1>
-    
-    <section class="p-6">
-        <div class="bg-black bg-opacity-80 p-4 rounded-lg shadow-lg border border-green-400">
-            <button onclick="toggleAssignment('assignment1')" class="w-full text-left text-green-300 text-2xl font-bold flex justify-between items-center">
-                Assignment 1: PowerShell AD Setup <i class="fas fa-chevron-down"></i>
-            </button>
-            <div id="assignment1" class="hidden mt-4">
-                <p class="text-green-200">Set up a Domain Controller (`Gil.com`) and configure Active Directory.</p>
-                <pre class="bg-green-900 p-3 rounded text-black overflow-x-auto mt-2">
+                        <!-- Instructions section - Always visible -->
+                        <div class="bg-gray-900/50 rounded-lg p-6">
+                            <h3 class="text-xl font-semibold text-green-400 mb-4">Instructions</h3>
+                            <ul class="space-y-4 text-gray-300">
+                                <li class="flex items-start gap-3">
+                                    <i class="fas fa-check-circle text-green-400 mt-1"></i>
+                                    <span>Open PowerShell as Administrator</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i class="fas fa-check-circle text-green-400 mt-1"></i>
+                                    <span>Install Active Directory Services using:<br>
+                                    <code class="block bg-gray-800 p-2 rounded mt-2 text-green-400">Install-WindowsFeature -Name AD-Domain-Services -IncludeManagementTools</code></span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i class="fas fa-check-circle text-green-400 mt-1"></i>
+                                    <span>To set up the domain controller, run:<br>
+                                    <code class="block bg-gray-800 p-2 rounded mt-2 text-green-400">Install-ADDSForest -DomainName "Gil.com" -DomainNetBiosName "GIL" -InstallDns:$true -Force</code></span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i class="fas fa-check-circle text-green-400 mt-1"></i>
+                                    <span>Create OUs for each department</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i class="fas fa-check-circle text-green-400 mt-1"></i>
+                                    <span>Add users to appropriate OUs</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i class="fas fa-check-circle text-green-400 mt-1"></i>
+                                    <span>Create and configure security groups</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i class="fas fa-check-circle text-green-400 mt-1"></i>
+                                    <span>Join client machines to domain</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i class="fas fa-check-circle text-green-400 mt-1"></i>
+                                    <span>Block PowerShell for Marketing</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i class="fas fa-check-circle text-green-400 mt-1"></i>
+                                    <span>Block CMD for Finance</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Implementation Steps - In dropdown -->
+                        <div class="space-y-4">
+                            <button onclick="toggleInstructions('implementation1')" 
+                                    class="w-full bg-gray-700/50 hover:bg-gray-700 text-green-400 font-semibold py-4 px-6 rounded-lg flex items-center justify-between transition-colors">
+                                <span class="flex items-center gap-2">
+                                    <i class="fas fa-code"></i>
+                                    <span>View Implementation Steps</span>
+                                </span>
+                                <i class="fas fa-chevron-down transform transition-transform duration-200" id="chevron-implementation1"></i>
+                            </button>
+
+                            <div id="implementation1" class="hidden">
+                                <div class="relative bg-gray-900/50 rounded-lg p-6">
+                                    <pre class="text-green-400 overflow-x-auto font-mono text-sm leading-relaxed">
 # Install Active Directory Services
 Install-WindowsFeature -Name AD-Domain-Services -IncludeManagementTools
 
@@ -84,87 +140,106 @@ Add-Computer -DomainName "Gil.com" -Credential Gil\Admin -Restart
 
 # Block PowerShell for Marketing
 
-# Block CMD for Finance
-
-                </pre>
-                <button onclick="toggleInstructions('instructions1')" class="mt-2 bg-blue-600 hover:bg-blue-400 text-black font-bold py-2 px-4 rounded">Show Step-by-Step Instructions</button>
-                <div id="instructions1" class="hidden mt-4 p-3 bg-green-900 rounded">
-                    <ul class="list-disc pl-6 text-green-300">
-                        <li>Open PowerShell as Administrator.</li>
-                        <li>Click the assignment title to expand the details.</li>
-                        <li>To install Active Directory, run:<br> <code>Install-WindowsFeature -Name AD-Domain-Services -IncludeManagementTools</code></li>
-                        <li>To set up the domain controller, run:<br> <code>Install-ADDSForest -DomainName "Gil.com" -DomainNetBiosName "GIL" -InstallDns:$true -Force</code></li>
-                        <li>To create OUs, use:<br> <code>New-ADOrganizationalUnit -Name "DepartmentName"</code></li>
-                        <li>To add users, run:<br> <code>New-ADUser -Name "User1" -AccountPassword (ConvertTo-SecureString "Pass123!" -AsPlainText -Force) -Enabled $true -Path "OU=Department,DC=Gil,DC=com"</code></li>
-                        <li>To create security groups, run:<br> <code>New-ADGroup -Name "HRGroup" -GroupCategory Security -GroupScope Global -Path "OU=HR,DC=Gil,DC=com"</code></li>
-                        <li>To join client machines to the domain, use:<br> <code>Add-Computer -DomainName "Gil.com" -Credential Gil\Admin -Restart</code></li>
-                        <li><tr>
-                            <td>Block PowerShell for Marketing</td>
-                            <br>
-                            <td>Create a GPO to disable PowerShell script execution for all users in the Marketing OU</td>
-                            <td>
-                                <pre class="bg-green-900 p-3 rounded text-black overflow-x-auto">
-                        # Create the GPO
-                        New-GPO -Name "Block_PowerShell_Marketing"
-                        
-                        # Link the GPO to the Marketing OU
-                        New-GPLink -Name "Block_PowerShell_Marketing" -Target "OU=Marketing,DC=Gil,DC=com"
-                        
-                        # Disable PowerShell script execution via Registry in the GPO
-                        Set-GPRegistryValue -Name "Block_PowerShell_Marketing" -Key "HKLM\Software\Policies\Microsoft\Windows\System" -ValueName "EnableScripts" -Type DWord -Value 0
-                        
-                        # Apply the GPO immediately
-                        gpupdate /force
-                                </pre>
-                            </td>
-                            <td class="text-center">
-                                <button class="copy-btn text-green-400" onclick="copyCommand(this)">
-                                    <i class="fas fa-copy"></i>
-                                </button>
-                            </td>
-                        </tr>
-                        </li>
-                        <li>
-                            <td>Block CMD for Finance</td>
-                            <br>
-                            <td>Create a GPO to disable Command Prompt for all users in the Finance OU</td>
-                            <td>
-                                <pre class="bg-green-900 p-3 rounded text-black overflow-x-auto">
-                        # Create the GPO
-                        New-GPO -Name "Block_CMD_Finance"
-                        
-                        # Link the GPO to the Finance OU
-                        New-GPLink -Name "Block_CMD_Finance" -Target "OU=Finance,DC=Gil,DC=com"
-                        
-                        # Disable CMD via Registry in the GPO
-                        Set-GPRegistryValue -Name "Block_CMD_Finance" -Key "HKLM\Software\Policies\Microsoft\Windows\System" -ValueName "DisableCMD" -Type DWord -Value 1
-                        
-                        # Apply the GPO immediately
-                        gpupdate /force
-                                </pre>
-                            </td>
-                            <td class="text-center">
-                                <button class="copy-btn text-green-400" onclick="copyCommand(this)">
-                                    <i class="fas fa-copy"></i>
-                                </button>
-                            </td>
-                        </tr>
-                        </li>
-                
-                    </ul>
+# Block CMD for Finance</pre>
+                                    <button onclick="copyCode(this)" class="absolute top-4 right-4 bg-gray-700/80 p-2 rounded-lg hover:bg-gray-600 text-green-400 transition-colors">
+                                        <i class="fas fa-copy"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-        <!-- Assignment 2: Windows Server & AD Deployment -->
-<div class="bg-black bg-opacity-80 p-4 rounded-lg shadow-lg border border-green-400 mt-6">
-    <button onclick="toggleAssignment('assignment2')" class="w-full text-left text-green-300 text-2xl font-bold flex justify-between items-center">
-        Assignment 2: Windows Server & AD Deployment <i class="fas fa-chevron-down"></i>
-    </button>
-    <div id="assignment2" class="hidden mt-4">
-        <p class="text-green-200">
-            Set up a Windows Server environment with Active Directory, user groups, and storage management.
-        </p>
-        <pre class="bg-green-900 p-3 rounded text-black overflow-x-auto mt-2">
+
+            <!-- Assignment 2: Windows Server & AD Deployment -->
+            <div class="bg-gray-800/80 backdrop-blur rounded-xl shadow-lg overflow-hidden border-l-4 border-green-400 transition-all duration-200 hover:shadow-xl hover:bg-gray-800">
+                <button onclick="toggleAssignment('assignment2')" class="w-full px-8 py-6 text-left flex justify-between items-center hover:bg-gray-700/50 transition-colors">
+                    <div>
+                        <h2 class="text-3xl font-bold text-green-400 mb-2">Assignment 2</h2>
+                        <p class="text-gray-300 text-lg">Windows Server & AD Deployment</p>
+                    </div>
+                    <i class="fas fa-chevron-down text-green-400 transform transition-transform duration-200" id="chevron-assignment2"></i>
+                </button>
+                
+                <div id="assignment2" class="hidden">
+                    <div class="px-8 py-6 space-y-6">
+                        <!-- Assignment Description -->
+                        <div class="bg-gray-900/50 rounded-lg p-6">
+                            <h3 class="text-xl font-semibold text-green-400 mb-3">Overview</h3>
+                            <p class="text-gray-300 leading-relaxed">Set up a Windows Server environment with Active Directory, user groups, and storage management.</p>
+                        </div>
+
+                        <!-- Instructions section -->
+                        <div class="space-y-4">
+                            <button onclick="toggleInstructions('instructions2')" 
+                                    class="w-full bg-gray-700/50 hover:bg-gray-700 text-green-400 font-semibold py-4 px-6 rounded-lg flex items-center justify-between transition-colors">
+                                <span class="flex items-center gap-2">
+                                    <i class="fas fa-book"></i>
+                                    <span>Detailed Instructions</span>
+                                </span>
+                                <i class="fas fa-chevron-down transform transition-transform duration-200" id="chevron-instructions2"></i>
+                            </button>
+
+                            <div id="instructions2" class="hidden">
+                                <div class="bg-gray-900/50 rounded-lg p-6 space-y-4">
+                                    <ul class="space-y-4 text-gray-300">
+                                        <li class="flex items-start gap-3">
+                                            <i class="fas fa-check-circle text-green-400 mt-1"></i>
+                                            <span>Create 5 virtual machines (3 Windows 10, 2 Windows Server 2022 without GUI).</span>
+                                        </li>
+                                        <li class="flex items-start gap-3">
+                                            <i class="fas fa-check-circle text-green-400 mt-1"></i>
+                                            <span>Install VMware Tools and take a snapshot for each machine.</span>
+                                        </li>
+                                        <li class="flex items-start gap-3">
+                                            <i class="fas fa-check-circle text-green-400 mt-1"></i>
+                                            <span>Set up networking so all VMs can communicate within `172.16.0.0/16`.</span>
+                                        </li>
+                                        <li class="flex items-start gap-3">
+                                            <i class="fas fa-check-circle text-green-400 mt-1"></i>
+                                            <span>Promote the `172.16.0.100` server as a Domain Controller for `gil.com`.</span>
+                                        </li>
+                                        <li class="flex items-start gap-3">
+                                            <i class="fas fa-check-circle text-green-400 mt-1"></i>
+                                            <span>Join all machines, including servers, to the domain.</span>
+                                        </li>
+                                        <li class="flex items-start gap-3">
+                                            <i class="fas fa-check-circle text-green-400 mt-1"></i>
+                                            <span>Rename computers as specified in the network diagram.</span>
+                                        </li>
+                                        <li class="flex items-start gap-3">
+                                            <i class="fas fa-check-circle text-green-400 mt-1"></i>
+                                            <span>Create Organizational Units (OUs) in Active Directory.</span>
+                                        </li>
+                                        <li class="flex items-start gap-3">
+                                            <i class="fas fa-check-circle text-green-400 mt-1"></i>
+                                            <span>Create 6 departments and add 5 users per department.</span>
+                                        </li>
+                                        <li class="flex items-start gap-3">
+                                            <i class="fas fa-check-circle text-green-400 mt-1"></i>
+                                            <span>Set up a Storage Server (`172.16.0.110`) with six new HDDs.</span>
+                                        </li>
+                                        <li class="flex items-start gap-3">
+                                            <i class="fas fa-check-circle text-green-400 mt-1"></i>
+                                            <span>Partition disks into 4x `2.5GB` and 2x `10GB` partitions.</span>
+                                        </li>
+                                        <li class="flex items-start gap-3">
+                                            <i class="fas fa-check-circle text-green-400 mt-1"></i>
+                                            <span>Assign and configure shared storage with AD security groups.</span>
+                                        </li>
+                                        <li class="flex items-start gap-3">
+                                            <i class="fas fa-check-circle text-green-400 mt-1"></i>
+                                            <span>Verify that each department's users can access only their allocated storage.</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Code section with implementation steps -->
+                        <div class="relative">
+                            <h3 class="text-xl font-semibold text-green-400 mb-3">Implementation Steps</h3>
+                            <pre class="bg-gray-900/80 p-6 rounded-lg text-green-400 overflow-x-auto font-mono text-sm leading-relaxed">
 # Step 1: Create Virtual Machines
 # - 3 Windows 10 VMs
 # - 2 Windows Server 2022 VMs (No GUI)
@@ -209,47 +284,737 @@ New-SmbShare -Name "HR_Share" -Path "C:\HR" -FullAccess "HRGroup"
 # Step 9: Verify Access
 # - Log in with a user from each department
 # - Ensure users can only access their assigned shared folder
-        </pre>
+                            </pre>
+                            <button onclick="copyCode(this)" class="absolute top-12 right-4 bg-gray-700/80 p-2 rounded-lg hover:bg-gray-600 text-green-400 transition-colors">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
 
-        <button onclick="toggleInstructions('instructions2')" class="mt-2 bg-blue-600 hover:bg-blue-400 text-black font-bold py-2 px-4 rounded">
-            Show Step-by-Step Instructions
-        </button>
+                        <!-- File Access Section -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="bg-gray-900/50 p-4 rounded-lg">
+                                <h4 class="text-lg font-semibold text-green-400 mb-3">Resources</h4>
+                                <div class="space-y-2">
+                                    <a href="folder2/file1.txt" 
+                                       class="flex items-center gap-2 bg-gray-800/80 p-3 rounded hover:bg-gray-700 transition-colors">
+                                        <i class="fas fa-folder-open text-green-400"></i>
+                                        <span>Configuration Files</span>
+                                    </a>
+                                    <a href="file2.lnk" 
+                                       class="flex items-center gap-2 bg-gray-800/80 p-3 rounded hover:bg-gray-700 transition-colors">
+                                        <i class="fas fa-link text-green-400"></i>
+                                        <span>Quick Access</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-        <div id="instructions2" class="hidden mt-4 p-3 bg-green-900 rounded">
-            <ul class="list-disc pl-6 text-green-300">
-                <li>Create 5 virtual machines (3 Windows 10, 2 Windows Server 2022 without GUI).</li>
-                <li>Install VMware Tools and take a snapshot for each machine.</li>
-                <li>Set up networking so all VMs can communicate within `172.16.0.0/16`.</li>
-                <li>Promote the `172.16.0.100` server as a Domain Controller for `gil.com`.</li>
-                <li>Join all machines, including servers, to the domain.</li>
-                <li>Rename computers as specified in the network diagram.</li>
-                <li>Create Organizational Units (OUs) in Active Directory.</li>
-                <li>Create 6 departments and add 5 users per department.</li>
-                <li>Set up a Storage Server (`172.16.0.110`) with six new HDDs.</li>
-                <li>Partition disks into 4x `2.5GB` and 2x `10GB` partitions.</li>
-                <li>Assign and configure shared storage with AD security groups.</li>
-                <li>Verify that each department's users can access only their allocated storage.</li>
-            </ul>
+            <!-- Assignment 3: Linux User Management -->
+            <div class="bg-gray-800/80 backdrop-blur rounded-xl shadow-lg overflow-hidden border-l-4 border-green-400 transition-all duration-200 hover:shadow-xl hover:bg-gray-800">
+                <button onclick="toggleAssignment('assignment3')" class="w-full px-8 py-6 text-left flex justify-between items-center hover:bg-gray-700/50 transition-colors">
+                    <div>
+                        <h2 class="text-3xl font-bold text-green-400 mb-2">Assignment 3</h2>
+                        <p class="text-gray-300 text-lg">Linux User & Group Management</p>
+                    </div>
+                    <i class="fas fa-chevron-down text-green-400 transform transition-transform duration-200" id="chevron-assignment3"></i>
+                </button>
+                
+                <div id="assignment3" class="hidden">
+                    <div class="px-8 py-6 space-y-6">
+                        <!-- Assignment Description -->
+                        <div class="bg-gray-900/50 rounded-lg p-6">
+                            <h3 class="text-xl font-semibold text-green-400 mb-3">Overview</h3>
+                            <p class="text-gray-300 leading-relaxed">Configure user accounts, groups, and file permissions in Ubuntu Server (No GUI).</p>
+                        </div>
+
+                        <!-- Instructions section - Always visible -->
+                        <div class="bg-gray-900/50 rounded-lg p-6">
+                            <h3 class="text-xl font-semibold text-green-400 mb-4">Instructions</h3>
+                            <ul class="space-y-4 text-gray-300">
+                                <li class="flex items-start gap-3">
+                                    <i class="fas fa-check-circle text-green-400 mt-1"></i>
+                                    <span>Install Ubuntu Server without GUI interface</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i class="fas fa-check-circle text-green-400 mt-1"></i>
+                                    <span>Create users: gil, yael, daniel, shaked, roni</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i class="fas fa-check-circle text-green-400 mt-1"></i>
+                                    <span>Add gil and yael to sudo group</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i class="fas fa-check-circle text-green-400 mt-1"></i>
+                                    <span>Add gil, yael, and shaked to root group</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i class="fas fa-check-circle text-green-400 mt-1"></i>
+                                    <span>Create gil group and add daniel, shaked, roni</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i class="fas fa-check-circle text-green-400 mt-1"></i>
+                                    <span>Set passwords for users</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i class="fas fa-check-circle text-green-400 mt-1"></i>
+                                    <span>Create directory structure for users</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i class="fas fa-check-circle text-green-400 mt-1"></i>
+                                    <span>Create and distribute files to appropriate folders</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Implementation Steps - In dropdown -->
+                        <div class="space-y-4">
+                            <button onclick="toggleInstructions('implementation3')" 
+                                    class="w-full bg-gray-700/50 hover:bg-gray-700 text-green-400 font-semibold py-4 px-6 rounded-lg flex items-center justify-between transition-colors">
+                                <span class="flex items-center gap-2">
+                                    <i class="fas fa-code"></i>
+                                    <span>View Implementation Steps</span>
+                                </span>
+                                <i class="fas fa-chevron-down transform transition-transform duration-200" id="chevron-implementation3"></i>
+                            </button>
+
+                            <div id="implementation3" class="hidden">
+                                <div class="relative bg-gray-900/50 rounded-lg p-6">
+                                    <pre class="text-green-400 overflow-x-auto font-mono text-sm leading-relaxed">
+# 1. Create new users
+sudo useradd gil
+sudo useradd yael
+sudo useradd daniel
+sudo useradd shaked
+sudo useradd roni
+
+# 2. Add users to sudo group
+sudo usermod -aG sudo gil
+sudo usermod -aG sudo yael
+
+# 3. Add users to root group
+sudo usermod -aG root gil
+sudo usermod -aG root yael
+sudo usermod -aG root shaked
+
+# 4. Create gil group and add users
+sudo groupadd gil
+sudo usermod -aG gil daniel
+sudo usermod -aG gil shaked
+sudo usermod -aG gil roni
+
+# 5. Set passwords for users
+sudo passwd gil    # Set to: 123
+sudo passwd shaked # Set to: 2263
+sudo passwd yael   # Set to: 986825
+sudo passwd roni   # Set to: 1234
+
+# 6. Create directories for roni
+cd /home/roni
+mkdir folder1 folder2 folder3 folder4 folder5
+
+# 7. Create directories for gil
+cd /home/gil
+mkdir folder6 folder7 folder8 folder9 folder10
+
+# 8. Create directories for yael
+cd /home/yael
+mkdir folder11 folder12 folder13 folder14 folder15
+
+# 9. Create and distribute files
+touch file{1..15}
+
+# 10. Move files to corresponding folders
+mv file1 /home/roni/folder1
+mv file2 /home/roni/folder2
+mv file3 /home/roni/folder3
+mv file4 /home/roni/folder4
+mv file5 /home/roni/folder5
+mv file6 /home/gil/folder6
+mv file7 /home/gil/folder7
+mv file8 /home/gil/folder8
+mv file9 /home/gil/folder9
+mv file10 /home/gil/folder10
+mv file11 /home/yael/folder11
+mv file12 /home/yael/folder12
+mv file13 /home/yael/folder13
+mv file14 /home/yael/folder14
+mv file15 /home/yael/folder15</pre>
+                                    <button onclick="copyCode(this)" class="absolute top-4 right-4 bg-gray-700/80 p-2 rounded-lg hover:bg-gray-600 text-green-400 transition-colors">
+                                        <i class="fas fa-copy"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Assignment 4 Card -->
+            <div class="bg-gray-800/80 backdrop-blur rounded-xl shadow-lg overflow-hidden border-l-4 border-green-400">
+                <button onclick="toggleAssignment('assignment4')" class="w-full px-8 py-6 text-left flex justify-between items-center hover:bg-gray-700/50 transition-colors">
+                    <div>
+                        <h2 class="text-3xl font-bold text-green-400 mb-2">Assignment 4</h2>
+                        <p class="text-gray-300 text-lg">Kali Linux User & Group Management</p>
+                    </div>
+                    <i class="fas fa-chevron-down text-green-400 transform transition-transform duration-200" id="chevron-assignment4"></i>
+                </button>
+                
+                <div id="assignment4" class="hidden">
+                    <div class="px-8 py-6 space-y-6">
+                        <!-- Assignment Description -->
+                        <div class="bg-gray-900/50 rounded-lg p-6">
+                            <h3 class="text-xl font-semibold text-green-400 mb-3">Overview</h3>
+                            <p class="text-gray-300 leading-relaxed">Configure Linux users and groups using Kali Linux command line tools.</p>
+                        </div>
+
+                        <!-- Instructions section -->
+                        <div class="bg-gray-900/50 rounded-lg p-6">
+                            <h3 class="text-xl font-semibold text-green-400 mb-4">Requirements</h3>
+                            <ul class="space-y-4 text-gray-300" dir="rtl">
+                                <li class="flex items-start gap-3">
+                                    <i class="fas fa-check-circle text-green-400 mt-1"></i>
+                                    <span>צרו 10 משתמשים במערכת (yuval ,gal ,Daniel ,ofek ,raz, gil, roni, Yossi,Matan,Roee)</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i class="fas fa-check-circle text-green-400 mt-1"></i>
+                                    <span>צרו 5 קבוצות חדשות (Managers,HR,Finance,Marketing,Developmet)</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i class="fas fa-check-circle text-green-400 mt-1"></i>
+                                    <span>לכל קבוצה הכניסו 2 משתמשים, כל משתמש יהיה חבר בקבוצה אחת בלבד</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i class="fas fa-check-circle text-green-400 mt-1"></i>
+                                    <span>צרו בתקיית השורש תיקייה בשם Test ותנו הרשאות כניסה וקריאה לכולם (לא כתיבה)</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i class="fas fa-check-circle text-green-400 mt-1"></i>
+                                    <span>בתוך ה-Test צרו תיקייה אחת לכל קבוצה (Managers,HR,Finance,Marketing,Developmet)</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i class="fas fa-check-circle text-green-400 mt-1"></i>
+                                    <span>שנו את ה-Group של כל תיקייה לקבוצה הרלוונטית</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i class="fas fa-check-circle text-green-400 mt-1"></i>
+                                    <span>העניקו הרשאות גישה מלאות לכל תיקייה רק לחלק של הקבוצה וללא הרשאות לחלק של כל המשתמשים</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i class="fas fa-check-circle text-green-400 mt-1"></i>
+                                    <span>וודאו שלכל תיקייה רק המשתמשים הרלוונטים יכולים להיכנס</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Implementation Steps -->
+                        <div class="space-y-4">
+                            <button onclick="toggleInstructions('implementation4')" 
+                                    class="w-full bg-gray-700/50 hover:bg-gray-700 text-green-400 font-semibold py-4 px-6 rounded-lg flex items-center justify-between transition-colors">
+                                <span class="flex items-center gap-2">
+                                    <i class="fas fa-code"></i>
+                                    <span>View Implementation Steps</span>
+                                </span>
+                                <i class="fas fa-chevron-down transform transition-transform duration-200" id="chevron-implementation4"></i>
+                            </button>
+
+                            <div id="implementation4" class="hidden">
+                                <div class="relative bg-gray-900/50 rounded-lg p-6">
+                                    <pre class="text-green-400 overflow-x-auto font-mono text-sm leading-relaxed">
+# Step 1: Create Users (צרו 10 משתמשים במערכת)
+# Create each user one by one
+sudo useradd -m -s /bin/bash yuval
+sudo useradd -m -s /bin/bash gal
+sudo useradd -m -s /bin/bash Daniel
+sudo useradd -m -s /bin/bash ofek
+sudo useradd -m -s /bin/bash raz
+sudo useradd -m -s /bin/bash gil
+sudo useradd -m -s /bin/bash roni
+sudo useradd -m -s /bin/bash Yossi
+sudo useradd -m -s /bin/bash Matan
+sudo useradd -m -s /bin/bash Roee
+
+# Set password for each user
+sudo passwd yuval    # When prompted, enter: password123
+sudo passwd gal      # When prompted, enter: password123
+sudo passwd Daniel   # When prompted, enter: password123
+sudo passwd ofek     # When prompted, enter: password123
+sudo passwd raz      # When prompted, enter: password123
+sudo passwd gil      # When prompted, enter: password123
+sudo passwd roni     # When prompted, enter: password123
+sudo passwd Yossi    # When prompted, enter: password123
+sudo passwd Matan    # When prompted, enter: password123
+sudo passwd Roee     # When prompted, enter: password123
+
+# Verify users were created
+echo "Verifying users..."
+cat /etc/passwd | grep -E 'yuval|gal|Daniel|ofek|raz|gil|roni|Yossi|Matan|Roee'
+
+# Step 2: Create Groups (צרו 5 קבוצות חדשות)
+sudo groupadd Managers
+sudo groupadd HR
+sudo groupadd Finance
+sudo groupadd Marketing
+sudo groupadd Development
+
+# Verify groups were created
+echo "Verifying groups..."
+cat /etc/group | grep -E 'Managers|HR|Finance|Marketing|Development'
+
+# Step 3: Add Users to Groups (לכל קבוצה הכניסו 2 משתמשים)
+# Managers Group
+sudo usermod -a -G Managers yuval
+sudo usermod -a -G Managers gal
+
+# HR Group
+sudo usermod -a -G HR Daniel
+sudo usermod -a -G HR ofek
+
+# Finance Group
+sudo usermod -a -G Finance raz
+sudo usermod -a -G Finance gil
+
+# Marketing Group
+sudo usermod -a -G Marketing roni
+sudo usermod -a -G Marketing Yossi
+
+# Development Group
+sudo usermod -a -G Development Matan
+sudo usermod -a -G Development Roee
+
+# Step 4: Create Test Directory (צרו בתקיית השורש תיקייה בשם Test)
+sudo mkdir /Test
+sudo chmod 755 /Test  # Sets read & execute for all users
+
+# Step 5: Create Department Directories (בתוך ה-Test צרו תיקייה אחת לכל קבוצה)
+sudo mkdir /Test/Managers
+sudo mkdir /Test/HR
+sudo mkdir /Test/Finance
+sudo mkdir /Test/Marketing
+sudo mkdir /Test/Development
+
+# Step 6: Set Group Ownership (שנו את ה-Group של כל תיקייה לקבוצה הרלוונטית)
+sudo chgrp Managers /Test/Managers
+sudo chgrp HR /Test/HR
+sudo chgrp Finance /Test/Finance
+sudo chgrp Marketing /Test/Marketing
+sudo chgrp Development /Test/Development
+
+# Step 7: Set Permissions (העניקו הרשאות גישה מלאות לכל תיקייה רק לחלק של הקבוצה)
+sudo chmod 770 /Test/Managers     # rwxrwx---
+sudo chmod 770 /Test/HR          # rwxrwx---
+sudo chmod 770 /Test/Finance     # rwxrwx---
+sudo chmod 770 /Test/Marketing   # rwxrwx---
+sudo chmod 770 /Test/Development # rwxrwx---
+
+# Step 8: Verify Permissions (וודאו שלכל תיקייה רק המשתמשים הרלוונטים יכולים להיכנס)
+echo "Testing permissions for each directory..."
+ls -l /Test/
+
+# Optional: Test access with a specific user
+# Example: sudo su - yuval -c "ls -l /Test/Managers"
+
+# Error Handling Section:
+
+# If you see "NTFS signature is missing" or "Invalid argument":
+# This means you're trying to mount a non-NTFS partition as NTFS
+# Solution: Make sure to format with ext4 first:
+sudo mkfs.ext4 /dev/sdXY  # Replace X with disk letter, Y with partition number
+
+# If you see "Mount is denied because volume is already exclusively opened":
+# 1. Check what's using the partition:
+sudo fuser -m /dev/sdXY
+# 2. Check if it's already mounted:
+mount | grep sdXY
+# 3. Unmount if needed:
+sudo umount /dev/sdXY
+
+# If you see "systemd still uses the old version":
+sudo systemctl daemon-reload
+sudo mount -a
+
+# If mount fails after editing fstab:
+# 1. Check your fstab syntax:
+cat /etc/fstab
+# 2. Restore backup if needed:
+sudo cp /etc/fstab.backup /etc/fstab
+# 3. Try mounting manually to test:
+sudo mount /dev/sdXY /mnt/mount_point
+
+# General troubleshooting:
+# 1. Check partition exists:
+sudo fdisk -l
+# 2. Check filesystem type:
+sudo blkid /dev/sdXY
+# 3. Check mount point exists:
+ls -l /mnt
+# 4. Check mount point is empty:
+ls -la /mnt/mount_point</pre>
+                                    <button onclick="copyCode(this)" class="absolute top-4 right-4 bg-gray-700/80 p-2 rounded-lg hover:bg-gray-600 text-green-400 transition-colors">
+                                        <i class="fas fa-copy"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Assignment 5 Card -->
+            <div class="bg-gray-800/80 backdrop-blur rounded-xl shadow-lg overflow-hidden border-l-4 border-green-400">
+                <button onclick="toggleAssignment('assignment5')" class="w-full px-8 py-6 text-left flex justify-between items-center hover:bg-gray-700/50 transition-colors">
+                    <div>
+                        <h2 class="text-3xl font-bold text-green-400 mb-2">Assignment 5</h2>
+                        <p class="text-gray-300 text-lg">Multi-Disk Partition Configuration</p>
+                    </div>
+                    <i class="fas fa-chevron-down text-green-400 transform transition-transform duration-200" id="chevron-assignment5"></i>
+                </button>
+                
+                <div id="assignment5" class="hidden">
+                    <div class="px-8 py-6 space-y-6">
+                        <!-- Assignment Description -->
+                        <div class="bg-gray-900/50 rounded-lg p-6">
+                            <h3 class="text-xl font-semibold text-green-400 mb-3">Overview</h3>
+                            <p class="text-gray-300 leading-relaxed">Configure four 5GB HDDs with specific partition schemes according to the diagram.</p>
+                        </div>
+
+                        <!-- Implementation Steps -->
+                        <div class="bg-gray-900/50 rounded-lg p-6">
+                            <h3 class="text-xl font-semibold text-green-400 mb-4">Step by Step Instructions</h3>
+                            <pre class="text-gray-300 overflow-x-auto font-mono text-sm leading-relaxed">
+# Step 1: Add HDDs in VMware
+1. Shut down your VM
+2. Right-click VM → Settings
+3. Add 4 new hard disks:
+   - HDD1: 5GB
+   - HDD2: 5GB
+   - HDD3: 5GB
+   - HDD4: 5GB
+4. Start the VM
+
+# Step 2: Verify disks are recognized
+sudo fdisk -l
+lsblk
+
+# Step 3: Create partitions on HDD1 (should be /dev/sdb)
+sudo fdisk /dev/sdb
+n    # new partition
+p    # primary
+1    # partition number
+[Enter]  # default first sector
++5242880    # 2.5GB (2.5 × 2097152 sectors)
+t    # change type
+7    # NTFS
+
+n    # new partition
+p    # primary
+2    # partition number
+[Enter]  # default first sector
++5242880    # 2.5GB
+t    # change type
+2    # select partition 2
+7    # NTFS
+w    # write changes
+
+# Step 4: Create partitions on HDD2 (/dev/sdc)
+sudo fdisk /dev/sdc
+n    # new partition
+p    # primary
+1    # partition number
+[Enter]  # default first sector
++5242880    # 2.5GB
+t    # change type
+7    # NTFS
+
+n    # new partition
+p    # primary
+2    # partition number
+[Enter]  # default first sector
++5242880    # 2.5GB
+t    # change type
+2    # select partition 2
+7    # NTFS
+w    # write changes
+
+# Step 5: Create partitions on HDD3 (/dev/sdd)
+sudo fdisk /dev/sdd
+n    # new partition
+p    # primary
+1    # partition number
+[Enter]  # default first sector
++4194304    # 2GB (2 × 2097152 sectors)
+t    # change type
+83    # Linux (ext4)
+
+n    # new partition
+p    # primary
+2    # partition number
+[Enter]  # default first sector
++4194304    # 2GB
+t    # change type
+2    # select partition 2
+83    # Linux (ext4)
+
+n    # new partition
+p    # primary
+3    # partition number
+[Enter]  # default first sector
++2097152    # 1GB (2097152 sectors)
+t    # change type
+3    # select partition 3
+83    # Linux (ext4)
+w    # write changes
+
+# Step 6: Create partitions on HDD4 (/dev/sde)
+sudo fdisk /dev/sde
+n    # new partition
+p    # primary
+1    # partition number
+[Enter]  # default first sector
++5242880    # 2.5GB
+t    # change type
+83    # Linux (ext4)
+
+n    # new partition
+p    # primary
+2    # partition number
+[Enter]  # default first sector
++5242880    # 2.5GB
+t    # change type
+2    # select partition 2
+83    # Linux (ext4)
+w    # write changes
+
+# Step 7: Format partitions
+# NTFS partitions
+sudo mkfs.ntfs -F -f /dev/sdb1  # Partition1
+sudo mkfs.ntfs -F -f /dev/sdb2  # Partition2
+sudo mkfs.ntfs -F -f /dev/sdc1  # Partition3
+sudo mkfs.ntfs -F -f /dev/sdc2  # Partition4
+
+# ext4 partitions
+sudo mkfs.ext4 /dev/sdd1  # Partition5
+sudo mkfs.ext4 /dev/sdd2  # Partition6
+sudo mkfs.ext4 /dev/sdd3  # Partition7
+sudo mkfs.ext4 /dev/sde1  # Partition8
+sudo mkfs.ext4 /dev/sde2  # Partition9
+
+# Step 8: Create mount points
+sudo mkdir -p /mnt/Disk{1..9}
+
+# Step 9: Mount partitions
+sudo mount -t ntfs /dev/sdb1 /mnt/Disk1
+sudo mount -t ntfs /dev/sdb2 /mnt/Disk2
+sudo mount -t ntfs /dev/sdc1 /mnt/Disk3
+sudo mount -t ntfs /dev/sdc2 /mnt/Disk4
+sudo mount /dev/sdd1 /mnt/Disk5
+sudo mount /dev/sdd2 /mnt/Disk6
+sudo mount /dev/sdd3 /mnt/Disk7
+sudo mount /dev/sde1 /mnt/Disk8
+sudo mount /dev/sde2 /mnt/Disk9
+
+# Step 10: Configure automatic mounting
+sudo cp /etc/fstab /etc/fstab.backup
+sudo blkid  # Get UUIDs
+
+sudo nano /etc/fstab
+# Add these lines (replace xxx with actual UUIDs):
+UUID=xxx  /mnt/Disk1  ntfs   defaults  0  0
+UUID=xxx  /mnt/Disk2  ntfs   defaults  0  0
+UUID=xxx  /mnt/Disk3  ntfs   defaults  0  0
+UUID=xxx  /mnt/Disk4  ntfs   defaults  0  0
+UUID=xxx  /mnt/Disk5  ext4   defaults  0  0
+UUID=xxx  /mnt/Disk6  ext4   defaults  0  0
+UUID=xxx  /mnt/Disk7  ext4   defaults  0  0
+UUID=xxx  /mnt/Disk8  ext4   defaults  0  0
+UUID=xxx  /mnt/Disk9  ext4   defaults  0  0
+
+# Step 11: Apply changes
+sudo systemctl daemon-reload
+sudo mount -a
+
+# Step 12: Verify configuration
+lsblk -f
+df -h | grep "/mnt/Disk"</pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Assignment 5.5 Card -->
+            <div class="bg-gray-800/80 backdrop-blur rounded-xl shadow-lg overflow-hidden border-l-4 border-blue-400">
+                <button onclick="toggleAssignment('assignment5_5')" class="w-full px-8 py-6 text-left flex justify-between items-center hover:bg-gray-700/50 transition-colors">
+                    <div>
+                        <h2 class="text-3xl font-bold text-blue-400 mb-2">Assignment 5.5</h2>
+                        <p class="text-gray-300 text-lg">Merge NTFS Partitions using MD (Software RAID)</p>
+                    </div>
+                    <i class="fas fa-chevron-down text-blue-400 transform transition-transform duration-200" id="chevron-assignment5_5"></i>
+                </button>
+                
+                <div id="assignment5_5" class="hidden">
+                    <div class="px-8 py-6 space-y-6">
+                        <!-- Assignment Description -->
+                        <div class="bg-gray-900/50 rounded-lg p-6">
+                            <h3 class="text-xl font-semibold text-blue-400 mb-3">Overview</h3>
+                            <p class="text-gray-300 leading-relaxed">Merge four 2.5GB NTFS partitions into one 10GB drive using Linux MD (Multiple Devices) feature.</p>
+                        </div>
+
+                        <!-- Implementation Steps -->
+                        <div class="bg-gray-900/50 rounded-lg p-6">
+                            <h3 class="text-xl font-semibold text-blue-400 mb-4">Step by Step Instructions</h3>
+                            <pre class="text-gray-300 overflow-x-auto font-mono text-sm leading-relaxed">
+# Step 1: Install required tools
+sudo apt update
+sudo apt install mdadm ntfs-3g -y
+
+# Step 2: Unmount the partitions
+sudo umount /mnt/Disk1
+sudo umount /mnt/Disk2
+sudo umount /mnt/Disk3
+sudo umount /mnt/Disk4
+
+# Step 3: Create the MD array (RAID 0 for merging)
+sudo mdadm --create /dev/md0 --level=0 --raid-devices=4 /dev/sdb1 /dev/sdb2 /dev/sdc1 /dev/sdc2
+
+# Step 4: Format the merged drive as NTFS
+sudo mkfs.ntfs -F -f /dev/md0
+
+# Step 5: Create mount point
+sudo mkdir -p /mnt/merged_drive
+
+# Step 6: Mount the merged drive
+sudo mount -t ntfs /dev/md0 /mnt/merged_drive
+
+# Step 7: Add to fstab for persistence
+# First get UUID
+sudo blkid /dev/md0
+
+# Add to fstab
+sudo nano /etc/fstab
+# Add this line (replace xxx with actual UUID):
+UUID=xxx  /mnt/merged_drive  ntfs  defaults  0  0
+
+# Step 8: Save MD configuration
+sudo mdadm --detail --scan | sudo tee -a /etc/mdadm/mdadm.conf
+
+# Step 9: Update initramfs
+sudo update-initramfs -u
+
+# Step 10: Apply changes
+sudo systemctl daemon-reload
+sudo mount -a
+
+# Step 11: Verify
+df -h /mnt/merged_drive  # Should show ~10GB
+cat /proc/mdstat         # Check RAID status
+sudo mdadm --detail /dev/md0
+
+# If you need to start over:
+# sudo umount /mnt/merged_drive
+# sudo mdadm --stop /dev/md0
+# sudo mdadm --remove /dev/md0
+# sudo mdadm --zero-superblock /dev/sdb1 /dev/sdb2 /dev/sdc1 /dev/sdc2</pre>
+                        </div>
+
+                        <!-- Warning Section -->
+                        <div class="bg-gray-900/50 rounded-lg p-6">
+                            <h3 class="text-xl font-semibold text-yellow-400 mb-3">Important Notes</h3>
+                            <ul class="text-gray-300 list-disc list-inside space-y-2">
+                                <li>This will create a RAID 0 array (striping)</li>
+                                <li>All data on the partitions will be lost during merge</li>
+                                <li>The merged drive will be approximately 10GB (4 × 2.5GB)</li>
+                                <li>If any partition fails, all data will be lost (RAID 0 characteristic)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-</div>
 
-    </section>
-    
+    <!-- Updated JavaScript -->
     <script>
         function toggleAssignment(id) {
-            let element = document.getElementById(id);
+            const element = document.getElementById(id);
+            const chevron = document.getElementById(`chevron-${id}`);
             element.classList.toggle('hidden');
+            chevron.classList.toggle('rotate-180');
         }
+
         function toggleInstructions(id) {
-            let element = document.getElementById(id);
+            const element = document.getElementById(id);
+            const chevron = document.getElementById(`chevron-${id}`);
             element.classList.toggle('hidden');
+            chevron.classList.toggle('rotate-180');
         }
-        function copyAssignment(id) {
-            let text = document.querySelector(`#${id} pre`).innerText;
-            navigator.clipboard.writeText(text);
-            alert("Copied assignment commands to clipboard");
+
+        function copyCode(button) {
+            const pre = button.parentElement.querySelector('pre');
+            navigator.clipboard.writeText(pre.textContent);
+            
+            // Show feedback
+            const originalText = button.innerHTML;
+            button.innerHTML = '<i class="fas fa-check"></i>';
+            button.classList.add('bg-green-500');
+            
+            setTimeout(() => {
+                button.innerHTML = originalText;
+                button.classList.remove('bg-green-500');
+            }, 2000);
         }
+
+        // Add smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
     </script>
+
+    <!-- Add custom styles -->
+    <style>
+        /* Add smooth transitions */
+        .transition-all {
+            transition-property: all;
+            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+            transition-duration: 150ms;
+        }
+
+        /* Add scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #1f2937;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #4ade80;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #22c55e;
+        }
+
+        /* Add code block styling */
+        pre {
+            font-family: 'Fira Code', monospace;
+            line-height: 1.5;
+        }
+
+        /* Add focus styles */
+        button:focus {
+            outline: 2px solid #4ade80;
+            outline-offset: 2px;
+        }
+    </style>
 </body>
 </html>
